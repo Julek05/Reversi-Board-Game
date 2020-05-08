@@ -24,10 +24,13 @@ class Strategies {
                 }
             }
         }
-        const dataTurnDisks = this.chooseBestOption(allPossibilities);
+        return this.makeLastStep(allPossibilities, board);
+    }
 
-        this.engine.allDisksToTurn = dataTurnDisks[1];
-        return this.engine.turnDisks(board, dataTurnDisks[2], dataTurnDisks[3], 1);
+    makeLastStep(allPossibilities, board) {
+        const [trash, allDisksToTurn, y, x] = this.chooseBestOption(allPossibilities);
+        this.engine.allDisksToTurn = allDisksToTurn;
+        return this.engine.turnDisks(board, y, x, 1);
     }
 
     valuatingFieldsStrategy(board) {
@@ -39,9 +42,7 @@ class Strategies {
                 }
             }
         }
-        const dataTurnDisks = this.chooseBestOption(allPossibilities);
-        this.engine.allDisksToTurn = dataTurnDisks[1];
-        return this.engine.turnDisks(board, dataTurnDisks[2], dataTurnDisks[3], 1);
+        return this.makeLastStep(allPossibilities, board);
     }
 
     sortPossibilities(allPossibilities) {
@@ -84,9 +85,7 @@ class Strategies {
                 }
             }
         }
-        const dataTurnDisks = this.chooseBestOption(allPossibilities);
-        this.engine.allDisksToTurn = dataTurnDisks[1];
-        return this.engine.turnDisks(board, dataTurnDisks[2], dataTurnDisks[3], 1);
+        return this.makeLastStep(allPossibilities, board);
     }
 
     checkOpponentPossibilities(turnedDisks) {
@@ -204,8 +203,8 @@ class Strategies {
 
     isC_square(y, x) {
         const C_squareFields = [[0, 1], [1, 0], [0, 6], [1, 7], [6, 0], [7, 1], [6, 7], [7, 6]];
-        for (const C_squareField of C_squareFields) {
-            if (y === C_squareField[0] && x === C_squareField[1]) {
+        for (const [y_, x_] of C_squareFields) {
+            if (y === y_ && x === x_) {
                 return true;
             }
         }
@@ -214,8 +213,8 @@ class Strategies {
 
     isX_square(y, x) {
         const X_squareFields = [[1, 1], [1, 6], [6, 1], [6, 6]];
-        for (const X_squareField of X_squareFields) {
-            if (y === X_squareField[0] && x === X_squareField[1]) {
+        for (const [y_, x_] of X_squareFields) {
+            if (y === y_ && x === x_) {
                 return true;
             }
         }
@@ -223,8 +222,8 @@ class Strategies {
     }
 
     moveIsOnOneEdge(y, x, edge) {
-        for (const field of edge) {
-            if (y === field[0] && x === field[1]) {
+        for (const [y_, x_] of edge) {
+            if (y === y_ && x === x_) {
                 return true;
             }
         }
@@ -234,8 +233,8 @@ class Strategies {
     edgeHasTwoTypesOfDisks(edge, board) {
         let hasBlueDisk = false;
         let hasBlackDisk = false;
-        for (const field of edge) {
-            const actualFieldOnBoard = board[field[0]][field[1]];
+        for (const [y, x] of edge) {
+            const actualFieldOnBoard = board[y][x];
             if (actualFieldOnBoard === 1) {
                 hasBlueDisk = true;
             }
@@ -247,8 +246,8 @@ class Strategies {
     }
 
     actualMoveIsExclusion(movesToExclusion, bestOption) {
-        for (const moveToExclusion of movesToExclusion) {
-            if (bestOption[2] === moveToExclusion[0] && bestOption[3] === moveToExclusion[1]) {
+        for (const [y, x] of movesToExclusion) {
+            if (bestOption[2] === y && bestOption[3] === x) {
                 return true;
             }
         }
@@ -294,8 +293,8 @@ class Strategies {
 
     isCorner(y, x) {
         const corners = [[0, 0], [7, 0], [0, 7], [7, 7]];
-        for (const corner of corners) {
-            if (y === corner[0] && x === corner[1]) {
+        for (const [y_, x_] of corners) {
+            if (y === y_ && x === x_) {
                 return true;
             }
         }

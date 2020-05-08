@@ -99,7 +99,7 @@ class Game extends React.Component {
             }
             board.push(<div className="board-row" key={x}>{rowBoard}</div>);
         }
-        const actualPoints = this.gameController.engine.countPoints(this.gameController.gameState.getCurrentBoardState());
+        const [pointPlayer1, pointPlayer2] = this.gameController.engine.countPoints(this.gameController.gameState.getCurrentBoardState());
         const giveUpTurn = this.state.canMove ? 'hidden' : 'visible';
         const giveUpTurnButtonText = this.gameController.engine.setTextOfGiveUpTurnButton(this.gameController.gameState.getCurrentBoardState(),
               giveUpTurn, this.state.activePlayer);
@@ -112,11 +112,11 @@ class Game extends React.Component {
                     {board}
                 </div>
                 <div className="optionsContainer">
-                    <Options scoredDisksFirstPlayer={actualPoints[0]} scoredDisksSecondPlayer={actualPoints[1]}
+                    <Options scoredDisksFirstPlayer={pointPlayer1} scoredDisksSecondPlayer={pointPlayer2}
                              strategiesVisibility={this.props.strategiesVisibility} turnImage={this.state.turnImage}
                              backMovementButtonVisibility={this.props.backMovementButtonVisibility}
-                             backMovement={this.handleClickRevertLastMove.bind(this)}
-                             giveUpTurn={giveUpTurn} giveUpTurnClick={this.handleClickGiveUpTurn.bind(this)}
+                             backMovement={() => this.handleClickRevertLastMove()}
+                             giveUpTurn={giveUpTurn} giveUpTurnClick={ () => this.handleClickGiveUpTurn()}
                              giveUpTurnButtonText={giveUpTurnButtonText}
                     />
                 </div>

@@ -19,8 +19,8 @@ class Engine {
 
     turnDisks(board, y, x, activePlayer) {
         const boardCopy = this.deepCopy(board);
-        for (let i = 0; i < this.allDisksToTurn.length; i++) {
-            boardCopy[this.allDisksToTurn[i][0]][this.allDisksToTurn[i][1]] = activePlayer;
+        for (const [y, x] of this.allDisksToTurn) {
+            boardCopy[y][x] = activePlayer;
         }
         boardCopy[y][x] = activePlayer;
         return boardCopy;
@@ -68,18 +68,16 @@ class Engine {
         this.currentCheckingY = y;
         this.currentCheckingX = x;
 
-        for (let i = 0; i < indexesAroundDisk.length; i++) {
-            const tempY = indexesAroundDisk[i][0];
-            const tempX = indexesAroundDisk[i][1];
-            if (this.insideTheBoard(tempY, tempX) && this.nextToEnemyDisk(board, tempY, tempX, activePlayer)) {
-                this.options.push([tempY, tempX]);
+        for (const [y, x] of indexesAroundDisk) {
+            if (this.insideTheBoard(y, x) && this.nextToEnemyDisk(board[y][x], activePlayer)) {
+                this.options.push([y, x]);
             }
         }
         return this.options.length > 0;
     }
 
-    nextToEnemyDisk(board, y, x, activePlayer) {
-        return board[y][x] !== 0 && board[y][x] !== activePlayer;
+    nextToEnemyDisk(field, activePlayer) {
+        return field !== 0 && field !== activePlayer;
     }
 
     insideTheBoard(y, x) {
@@ -88,8 +86,8 @@ class Engine {
 
     checkAllDirections(board, activePlayer) {
         let minimumToAccept = false;
-        for (let i = 0; i < this.options.length; i++) {
-            if (this.checkOneDirection(board, this.options[i][0], this.options[i][1], activePlayer)) {
+        for (const [y, x] of this.options) {
+            if (this.checkOneDirection(board, y, x, activePlayer)) {
                 minimumToAccept = true;
             }
         }
@@ -97,8 +95,7 @@ class Engine {
     }
 
     checkOneDirection(board, positionY, positionX, activePlayer) {
-        const tempToTurn = [];
-        tempToTurn.push([positionY, positionX]);
+        const tempToTurn = [[positionY, positionX]];
         const moveY = positionY - this.currentCheckingY;
         const moveX = positionX - this.currentCheckingX;
         let nextMoveY = positionY + moveY;
@@ -112,8 +109,8 @@ class Engine {
                 nextMoveY += moveY;
                 nextMoveX += moveX;
             } else {
-                for (let i = 0; i < tempToTurn.length; i++) {
-                    this.allDisksToTurn.push(tempToTurn[i]);
+                for (const tmp of tempToTurn) {
+                    this.allDisksToTurn.push(tmp);
                 }
                 return true;
             }
@@ -124,29 +121,29 @@ class Engine {
     countPoints(board) {
         let player1Points = 0;
         let player2Points = 0;
-        for (let y = 0; y < 8; y++) {
-            for (let x = 0; x < 8; x++) {
-                if (board[y][x] === 1) {
-                    player1Points += 1;
-                } else if (board[y][x] === 2) {
-                    player2Points += 1;
+        for (const row of board) {
+            for (const field of row) {
+                if (field === 1) {
+                    player1Points++;
+                } else if (field === 2) {
+                    player2Points++;
                 }
             }
         }
         return [player1Points, player2Points];
     }
 
-    endGameAlert(actualPoints) {
+    endGameAlert(pointPlayer1, pointPlayer2) {
         setTimeout(() => {
             let result;
-            if (actualPoints[0] > actualPoints[1]) {
-                result = "Wygrał gracz z niebieskimi pionkami, zdobył " + actualPoints[0] + " " + this.correctVariant(actualPoints[0]) +
-                    "\n\nGracz z czarnymi pionkami, zdobył " + actualPoints[1] + " " + this.correctVariant(actualPoints[1]);
-            } else if (actualPoints[0] < actualPoints[1]) {
-                result = "Wygrał gracz z czarnymi pionkami, zdobył " + actualPoints[1] + " " + this.correctVariant(actualPoints[1]) +
-                    "\n\nGracz z niebieskimi pionkami, zdobył " + actualPoints[0] + " " + this.correctVariant(actualPoints[0]);
+            if (pointPlayer1 > pointPlayer2) {
+                result = "Wygrał gracz z niebieskimi pionkami, zdobył " + pointPlayer1 + " " + this.correctVariant(pointPlayer1) +
+                    "\n\nGracz z czarnymi pionkami, zdobył " + pointPlayer2 + " " + this.correctVariant(pointPlayer2);
+            } else if (pointPlayer1 < pointPlayer2) {
+                result = "Wygrał gracz z czarnymi pionkami, zdobył " + pointPlayer2 + " " + this.correctVariant(pointPlayer2) +
+                    "\n\nGracz z niebieskimi pionkami, zdobył " + pointPlayer1 + " " + this.correctVariant(pointPlayer1);
             } else {
-                result = "Remis, obydwaj gracze zdobyli po " + actualPoints[0] + " " + this.correctVariant(actualPoints[0]);
+                result = "Remis, obydwaj gracze zdobyli po " + pointPlayer1 + " " + this.correctVariant(pointPlayer1);
             }
             alert("Obydwaj gracze nie mogą wykonać żadnego ruchu - koniec gry!\n\n" + result);
         }, 250);
@@ -182,11 +179,7 @@ class Engine {
     }
 
     playerCanMove(board, activePlayer) {
-        if (activePlayer === 1) {
-            return board.some(row => row.includes(3));
-        } else {
-            return board.some(row => row.includes(4));
-        }
+        return board.some(row => row.includes((activePlayer + 2)));
     }
 
     deepCopy(objectToCopy) {
@@ -194,12 +187,7 @@ class Engine {
     }
 
     setTextOfGiveUpTurnButton(board, giveUpTurn, activePlayer) {
-        if (giveUpTurn) {
-            if (this.isLastMove(board, activePlayer)) {
-                return 'Koniec Gry';
-            }
-        }
-        return 'Oddaj Turę';
+        return giveUpTurn && this.isLastMove(board, activePlayer) ? 'Koniec Gry' : 'Oddaj Turę';
     }
 
     isLastMove(board, activePlayer) {
@@ -213,8 +201,8 @@ class Engine {
         if (document.getElementById("backMovement").style.visibility === "hidden") {
             document.getElementById("turnWrapper").style.visibility = "hidden";
         }
-        const actualPoints = this.countPoints(board);
-        this.endGameAlert(actualPoints);
+        const [pointPlayer1, pointPlayer2] = this.countPoints(board);
+        this.endGameAlert(pointPlayer1, pointPlayer2);
         return null;
     }
 
