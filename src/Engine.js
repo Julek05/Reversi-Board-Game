@@ -12,12 +12,9 @@ class Engine {
             this.options = [];
             if (this.findAllOptions(board, y, x, activePlayer)) {
                 return (this.checkAllDirections(board, activePlayer));
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     turnDisks(board, y, x, activePlayer) {
@@ -30,11 +27,7 @@ class Engine {
     }
 
     changeActivePlayer(activePlayer) {
-        if (activePlayer === 1) {
-            return 2;
-        } else {
-            return 1;
-        }
+        return activePlayer === 1 ? 2 : 1;
     }
 
     addMovePossibilities(board, activePlayer) {

@@ -3,8 +3,6 @@ const Engine = require('./Engine');
 class Strategies {
     constructor() {
         this.engine = new Engine();
-        this.X_squareFields = [[1, 1], [1, 6], [6, 1], [6, 6]];
-        this.C_squareFields = [[0, 1], [1, 0], [0, 6], [1, 7], [6, 0], [7, 1], [6, 7], [7, 6]];
         this.boardValues = [
             [99, -8, 12, 6, 6, 12, -8, 99],
             [-8, -24, -4, -3, -3, -4, -24, -8],
@@ -98,15 +96,10 @@ class Strategies {
             for (let x = 0; x < 8; x++) {
                 if (this.engine.isMoveCorrect(turnedDisks, y, x, 2)) {
                     amountOfPossibilities++;
-                    for (let i = 0; i < this.X_squareFields.length; i++) {
-                        if (y === this.X_squareFields[i][0] && x === this.X_squareFields[i][1]) {
-                            amountOfWorstFields += 3;
-                        }
-                    }
-                    for (let i = 0; i < this.C_squareFields.length; i++) {
-                        if (y === this.C_squareFields[i][0] && x === this.C_squareFields[i][1]) {
-                            amountOfWorstFields++;
-                        }
+                    if (this.isX_square(y, x)) {
+                        amountOfWorstFields += 3;
+                    } else if (this.isC_square(y, x)) {
+                        amountOfWorstFields++;
                     }
                 }
             }
@@ -201,19 +194,28 @@ class Strategies {
         const edges = [topEdge, downEdge, leftEdge, rightEdge];
 
         for (const edge of edges) {
-            if (this.moveIsOnOneEdge(y, x, edge)) {
-                if (this.edgeHasTwoTypesOfDisks(edge, board)) {
-                    const turnedDisks = this.engine.turnDisks(board, y, x, 1);
-                    return !this.edgeHasTwoTypesOfDisks(edge, turnedDisks);
-                }
+            if (this.moveIsOnOneEdge(y, x, edge) && this.edgeHasTwoTypesOfDisks(edge, board)) {
+                const turnedDisks = this.engine.turnDisks(board, y, x, 1);
+                return !this.edgeHasTwoTypesOfDisks(edge, turnedDisks);
             }
         }
         return false;
     }
 
     isC_square(y, x) {
-        for (let i = 0; i < this.C_squareFields.length; i++) {
-            if (y === this.C_squareFields[i][0] && x === this.C_squareFields[i][1]) {
+        const C_squareFields = [[0, 1], [1, 0], [0, 6], [1, 7], [6, 0], [7, 1], [6, 7], [7, 6]];
+        for (const C_squareField of C_squareFields) {
+            if (y === C_squareField[0] && x === C_squareField[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    isX_square(y, x) {
+        const X_squareFields = [[1, 1], [1, 6], [6, 1], [6, 6]];
+        for (const X_squareField of X_squareFields) {
+            if (y === X_squareField[0] && x === X_squareField[1]) {
                 return true;
             }
         }
@@ -292,8 +294,8 @@ class Strategies {
 
     isCorner(y, x) {
         const corners = [[0, 0], [7, 0], [0, 7], [7, 7]];
-        for (let i = 0; i < corners.length; i++) {
-            if (y === corners[i][0] && x === corners[i][1]) {
+        for (const corner of corners) {
+            if (y === corner[0] && x === corner[1]) {
                 return true;
             }
         }
@@ -301,17 +303,7 @@ class Strategies {
     }
 
     isAroundCorner(y, x) {
-        for (let i = 0; i < this.X_squareFields.length; i++) {
-            if (y === this.X_squareFields[i][0] && x === this.X_squareFields[i][1]) {
-                return true;
-            }
-        }
-        for (let i = 0; i < this.C_squareFields.length; i++) {
-            if (y === this.C_squareFields[i][0] && x === this.C_squareFields[i][1]) {
-                return true;
-            }
-        }
-        return false;
+        return this.isC_square(y, x) || this.isX_square(y, x);
     }
 }
 
