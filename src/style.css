@@ -1,0 +1,158 @@
+#mainPageButton {
+    color: whitesmoke;
+}
+
+#subpagesRow {
+    width: 600px;
+    background-color: deepskyblue;
+    color: whitesmoke;
+    margin-left: 0;
+    margin-right: 0;
+    cursor: pointer;
+}
+
+#subpages {
+    color: coral;
+    font-size: 22px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainPageImage {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gameContainer {
+    display: flex;
+}
+
+.boardContainer {
+    position: relative;
+    left: 150px;
+    margin: 0.5rem;
+    width: 50%;
+}
+
+.optionsContainer {
+    position: relative;
+    left: 190px;
+    margin: 0.5rem;
+    width: 50%;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+}
+
+.options > * {
+    margin-top: 1rem;
+}
+
+.board-row {
+    width: 5rem;
+}
+
+.field {
+    float: left;
+    padding: 0;
+    height: 5rem;
+    width: 5rem;
+    border: 0.05rem solid darkblue;
+    background: darkgreen;
+    outline: none !important;
+}
+
+.disk {
+    width: 4.5rem;
+}
+
+.turnImage {
+    width: 5rem;
+    background-color: lightgrey;
+    border-radius: 40px;
+}
+
+#turnWrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 12rem;
+    max-height: 15rem;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+#turn {
+    background-color: lightgrey;
+    border-radius: 40px;
+    border-color: lightgrey;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#giveUpTurnButton {
+    color: white;
+    background-color: lightseagreen;
+}
+
+.gameButton {
+    width: 8rem;
+    height: 3rem;
+    font-size: 20px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.gameDiv {
+    position: relative;
+    top: 0;
+}
+
+#scoredDisks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scoredPlayersDisks {
+    width: 4rem;
+    margin-right: 1rem;
+}
+
+#result {
+    flex-direction: row;
+    max-width: 24rem;
+    max-height: 20rem;
+}
+
+#game {
+    display: flex;
+    flex-direction: row;
+}
+
+#strategies {
+    max-width: 22rem;
+}
+
+.points {
+    border-color: tomato;
+    margin-right: 1rem;
+    color: coral;
+    font-size: 50px;
+}
+
+.advicesAndRules {
+    max-width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+h5 {
+    text-align: left;
+}
