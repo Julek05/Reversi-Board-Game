@@ -28,7 +28,7 @@ class Strategies {
     }
 
     makeLastStep(allPossibilities, board) {
-        const [trash, allDisksToTurn, y, x] = this.chooseBestOption(allPossibilities);
+        const [allDisksToTurn, y, x] = this.chooseBestOption(allPossibilities);
         this.engine.allDisksToTurn = allDisksToTurn;
         return this.engine.turnDisks(board, y, x, 1);
     }
@@ -58,19 +58,20 @@ class Strategies {
         const sortedAllPossibilities = this.sortPossibilities(allPossibilities);
 
         let sameBestOptions = 0;
+        const firstPossibility = sortedAllPossibilities[0][0];
         for (let i = 1; i < sortedAllPossibilities.length; i++) {
-            if (sortedAllPossibilities[0][0] !== sortedAllPossibilities[i][0]) {
+            if (firstPossibility !== sortedAllPossibilities[i][0]) {
                 break;
             }
             sameBestOptions++;
         }
-
+        let index = 0;
         if (sameBestOptions > 0) {
-            const randomNumber = Math.floor(Math.random() * (sameBestOptions + 1));
-            return sortedAllPossibilities[randomNumber];
-        } else {
-            return sortedAllPossibilities[0];
+            index = Math.floor(Math.random() * (sameBestOptions + 1));
         }
+        const bestOption = sortedAllPossibilities[index];
+        bestOption.shift();
+        return bestOption;
     }
 
     mobilityStrategy(board) {
@@ -106,9 +107,9 @@ class Strategies {
         return amountOfWorstFields - amountOfPossibilities;
     }
 
-    doTurnDisks(board, bestOptions, index) {
-        this.engine.allDisksToTurn = bestOptions[index][1];
-        return this.engine.turnDisks(board, bestOptions[index][2], bestOptions[index][3], 1);
+    doTurnDisks(board, bestOption) {
+        this.engine.allDisksToTurn = bestOption[1];
+        return this.engine.turnDisks(board, bestOption[2], bestOption[3], 1);
     }
 
     allStrategiesFixed(board) {
@@ -128,7 +129,7 @@ class Strategies {
 
             for (let i = bestOptions.length - 1; i >= 0; i--) {
                 if (!this.actualMoveIsExclusion(secondEdgePriorityResult, bestOptions[i])) {
-                    return this.doTurnDisks(board, bestOptions, i);
+                    return this.doTurnDisks(board, bestOptions[i]);
                 }
             }
             return this.doTurnDisks(board, bestOptions, 2);
@@ -136,10 +137,10 @@ class Strategies {
         const bestOptions = this.doAllStrategies(board);
 
         if (this.moveAccordingToMobilityAndMaximisationStrategies(bestOptions)) {
-            return this.doTurnDisks(board, bestOptions, 0);
+            return this.doTurnDisks(board, bestOptions[0]);
         }
 
-        return this.doTurnDisks(board, bestOptions, 2);
+        return this.doTurnDisks(board, bestOptions[2]);
     }
 
     cornerPriority(board) {
@@ -179,10 +180,7 @@ class Strategies {
                 }
             }
         }
-        if (allMovesToExclusion.length !== 0) {
-            return allMovesToExclusion;
-        }
-        return false;
+        return allMovesToExclusion.length > 0 ? allMovesToExclusion : false;
     }
 
     checkAllEdges(y, x, board) {

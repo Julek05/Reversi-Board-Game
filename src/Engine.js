@@ -133,17 +133,17 @@ class Engine {
         return [player1Points, player2Points];
     }
 
-    endGameAlert(pointPlayer1, pointPlayer2) {
+    endGameAlert(pointsPlayer1, pointsPlayer2) {
         setTimeout(() => {
             let result;
-            if (pointPlayer1 > pointPlayer2) {
-                result = "Wygrał gracz z niebieskimi pionkami, zdobył " + pointPlayer1 + " " + this.correctVariant(pointPlayer1) +
-                    "\n\nGracz z czarnymi pionkami, zdobył " + pointPlayer2 + " " + this.correctVariant(pointPlayer2);
-            } else if (pointPlayer1 < pointPlayer2) {
-                result = "Wygrał gracz z czarnymi pionkami, zdobył " + pointPlayer2 + " " + this.correctVariant(pointPlayer2) +
-                    "\n\nGracz z niebieskimi pionkami, zdobył " + pointPlayer1 + " " + this.correctVariant(pointPlayer1);
+            if (pointsPlayer1 > pointsPlayer2) {
+                result = "Wygrał gracz z niebieskimi pionkami, zdobył " + pointsPlayer1 + " " + this.correctVariant(pointsPlayer1) +
+                    "\n\nGracz z czarnymi pionkami, zdobył " + pointsPlayer2 + " " + this.correctVariant(pointsPlayer2);
+            } else if (pointsPlayer1 < pointsPlayer2) {
+                result = "Wygrał gracz z czarnymi pionkami, zdobył " + pointsPlayer2 + " " + this.correctVariant(pointsPlayer2) +
+                    "\n\nGracz z niebieskimi pionkami, zdobył " + pointsPlayer1 + " " + this.correctVariant(pointsPlayer1);
             } else {
-                result = "Remis, obydwaj gracze zdobyli po " + pointPlayer1 + " " + this.correctVariant(pointPlayer1);
+                result = "Remis, obydwaj gracze zdobyli po " + pointsPlayer1 + " " + this.correctVariant(pointsPlayer1);
             }
             alert("Obydwaj gracze nie mogą wykonać żadnego ruchu - koniec gry!\n\n" + result);
         }, 250);
@@ -201,8 +201,8 @@ class Engine {
         if (document.getElementById("backMovement").style.visibility === "hidden") {
             document.getElementById("turnWrapper").style.visibility = "hidden";
         }
-        const [pointPlayer1, pointPlayer2] = this.countPoints(board);
-        this.endGameAlert(pointPlayer1, pointPlayer2);
+        const [pointsPlayer1, pointsPlayer2] = this.countPoints(board);
+        this.endGameAlert(pointsPlayer1, pointsPlayer2);
         return null;
     }
 
