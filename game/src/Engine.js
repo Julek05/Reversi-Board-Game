@@ -1,3 +1,4 @@
+import axios from 'axios';
 class Engine {
     constructor() {
         this.options = [];
@@ -197,12 +198,39 @@ class Engine {
         return !this.playerCanMove(nextMoveBoard, nextMoveActivePlayer);
     }
 
-    endGame(board) {
+    getLevel() {
+        const chosenStrategy = this.getChosenStrategy();
+        const levels = ['easy', 'medium', 'hard', 'expert'];
+
+        return levels[chosenStrategy];
+    }
+
+    sendDataToApi(computerPoints, playerPoints) {
+        const data = {
+            'player_name': localStorage.getItem("player_name"),
+            'level': this.getLevel(),
+            'player_points': playerPoints,
+            'computer_points': computerPoints,
+        }
+
+        axios.post('http://localhost:8000/api/game', data).then(response => {
+            document.getElementById("giveUpTurnButton").style.visibility = "hidden"
+            console.log(response);
+        }).then(error => {
+            console.log(error);
+        });
+    }
+
+    endGame(board, computerMode) {
         if (document.getElementById("backMovement").style.visibility === "hidden") {
             document.getElementById("turnWrapper").style.visibility = "hidden";
         }
         const [pointsPlayer1, pointsPlayer2] = this.countPoints(board);
-        this.endGameAlert(pointsPlayer1, pointsPlayer2);
+        // const winnerPoints = pointsPlayer1 >= pointsPlayer2 ? pointsPlayer1 : pointsPlayer2;
+        if (computerMode) {
+            this.sendDataToApi(pointsPlayer1, pointsPlayer2);
+        }
+        // this.endGameAlert(pointsPlayer1, pointsPlayer2);
         return null;
     }
 
@@ -211,4 +239,4 @@ class Engine {
     }
 }
 
-module.exports = Engine;
+export default Engine;

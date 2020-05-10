@@ -11,16 +11,17 @@ import Rules from './Rules'
 import Advices from './Advices'
 import SelfTeaching from './SelfTeaching'
 import ComputerGame from './ComputerGame'
+import Authentication from "./Authentication";
 
 class App extends React.Component {
     static mainMenu() {
         if (window.location.href.includes('tryb_dla_dwoch_graczy') || window.location.href.includes('gra_z_komputerem')
             || window.location.href.includes('samouczek')) {
             if (window.confirm("Czy na pewno chcesz przejść do głównego menu?")) {
-                window.location.href = '/';
+                window.location.href = '/strona_glowna';
             }
         } else {
-            window.location.href = '/';
+            window.location.href = '/strona_glowna';
         }
     }
 
@@ -36,7 +37,8 @@ class App extends React.Component {
                     </div>
                 </div>
             </div>
-            <Route exact path="/" component={MainPage}/>
+            <Route exact path="/" component={Authentication}/>
+            <Route exact path="/strona_glowna" component={MainPage}/>
             <Route path="/tryb_dla_dwoch_graczy" component={PlayerGame}/>
             <Route path="/gra_z_komputerem" component={ComputerGame}/>
             <Route path="/samouczek" component={SelfTeaching}/>

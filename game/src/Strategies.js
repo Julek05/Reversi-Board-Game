@@ -1,4 +1,4 @@
-const Engine = require('./Engine');
+import Engine from "./Engine";
 
 class Strategies {
     constructor() {
@@ -304,4 +304,4 @@ class Strategies {
     }
 }
 
-module.exports = Strategies;
+export default Strategies;

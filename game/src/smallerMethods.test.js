@@ -1,7 +1,6 @@
-const Engine = require('./Engine');
+import Engine from "./Engine";
 const engine = new Engine();
-
-const Strategies = require('./Strategies');
+import Strategies from "./Strategies";
 const strategies = new Strategies();
 
 const testBoard1 = [

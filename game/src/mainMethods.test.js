@@ -1,5 +1,5 @@
-const GameController = require('./GameController');
-const GameState = require('./GameState');
+import GameController from "./GameController";
+import GameState from "./GameState";
 
 const testBoard = [
     [0, 0, 0, 0, 0, 0, 0, 0],

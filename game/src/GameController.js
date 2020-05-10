@@ -1,6 +1,6 @@
-const Engine = require('./Engine');
-const Strategies = require('./Strategies');
-const GameState = require('./GameState');
+import Engine from "./Engine";
+import Strategies from "./Strategies";
+import GameState from "./GameState";
 
 class GameController {
     constructor(gameState) {
@@ -97,7 +97,7 @@ class GameController {
             this.gameState = new GameState(newBoards, activePlayerAfterGiveUpTurn, canMove, uiBlock, computerBlock, moveComputerAfterHumanGiveUpTurn);
             return this.gameState;
         } else {
-            return this.engine.endGame(this.gameState.getCurrentBoardState());
+            return this.engine.endGame(this.gameState.getCurrentBoardState(), computerMode);
         }
     }
 
@@ -116,4 +116,4 @@ class GameController {
     }
 }
 
-module.exports = GameController;
+export default GameController;

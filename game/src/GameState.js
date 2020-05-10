@@ -15,4 +15,4 @@ class GameState {
     }
 }
 
-module.exports = GameState;
+export default GameState;
