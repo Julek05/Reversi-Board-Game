@@ -12,6 +12,7 @@ import Advices from './Advices'
 import SelfTeaching from './SelfTeaching'
 import ComputerGame from './ComputerGame'
 import Authentication from "./Authentication";
+import Ranking from "./Ranking";
 
 class App extends React.Component {
     static mainMenu() {
@@ -44,6 +45,7 @@ class App extends React.Component {
             <Route path="/samouczek" component={SelfTeaching}/>
             <Route path="/zasady_gry" component={Rules}/>
             <Route path="/porady_strategie" component={Advices}/>
+            <Route path="/ranking" component={Ranking}/>
         </Router>
     }
 }

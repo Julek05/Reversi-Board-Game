@@ -15,6 +15,8 @@ function MainPage() {
                        href="/zasady_gry">Zasady gry</a>
                     <a className="list-group-item list-group-item-action" id="subpagesRow"
                        href="/porady_strategie">Strategie i porady</a>
+                    <a className="list-group-item list-group-item-action" id="subpagesRow"
+                       href="/ranking">Ranking</a>
                 </div>
             </div>
             <div className="row">

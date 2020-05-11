@@ -16,14 +16,8 @@ class Authentication extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        // axios.post('/api/name', this.state.value).then(response => {
-        //     this.redirect();
-        // }).then(error => {
-        //     console.log(error);
-        // });
         localStorage.setItem("player_name", this.state.value);
         this.redirectToMainPage();
-        // localStorage = this.state.value;
     }
 
     redirectToMainPage() {

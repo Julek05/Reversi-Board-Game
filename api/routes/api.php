@@ -19,5 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('game', 'GamesController');
+//Route::resource('games', 'GamesController');
 //Route::resource('name', 'GamesController@saveName');
 
