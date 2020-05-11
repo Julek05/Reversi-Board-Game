@@ -26,9 +26,9 @@ class Authentication extends React.Component {
     render() {
 
         return (
-            <form id='nameForm' onSubmit={this.handleSubmit}>
+            <form id='nameForm' onSubmit={this.handleSubmit}><br/><br/>
                 <label>
-                    Wpisz swoje imię:
+                    Wpisz swoje imię:<br/><br/>
                     <input className="form-control" name="value" type="text" value={this.state.value} id='formInput' onChange={this.handleChange}/>
                 </label>
                 <input className="btn btn-primary" type="submit" value="Submit"/>
