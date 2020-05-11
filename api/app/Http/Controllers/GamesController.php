@@ -36,7 +36,11 @@ class GamesController extends Controller
      */
     public function store(Request $request)
     {
-        Game::create($request->all());
+        $game = $request->all();
+        if ($game['player_name'] == null || trim($game['player_name']) == '') {
+            $game['player_name'] = 'Gość' . (Game::getLastId() + 1);
+        }
+        Game::create($game);
     }
 
     /**

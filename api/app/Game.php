@@ -10,14 +10,23 @@ class Game extends Model
         'player_name',
         'level',
         'player_points',
-        'computer_points'
+        'computer_points',
+        'created_at'
     ];
 
     public static function getBestGames($level)
     {
         return Game::where('level', $level)
-            ->orderBy('player_points', 'desc')
+            ->orderByRaw('player_points - computer_points DESC')
             ->take(10)
             ->get();
+    }
+
+    public static function getLastId()
+    {
+        return Game::select('id')
+            ->orderByDesc('id')
+            ->first()
+            ->id;
     }
 }

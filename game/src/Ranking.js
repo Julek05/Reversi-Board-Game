@@ -16,7 +16,6 @@ class Ranking extends React.Component {
     }
 
     getGames(level) {
-        // event.preventDefault();
         axios.get(`http://localhost:8000/api/game/${level}`).then(response => {
         console.log(response.data)
             this.setState({
@@ -26,11 +25,10 @@ class Ranking extends React.Component {
     }
 
     render() {
-        //
         return (
             <div className='ranking'><br/>
                 <ButtonGroup aria-label="Basic example" >
-                    <Button className='levels' variant="info" onClick={() => this.getGames('easy')}>Łatwy</Button>
+                    <Button variant="info" onClick={() => this.getGames('easy')}>Łatwy</Button>
                     <Button variant="info" onClick={() => this.getGames('medium')}>Średni</Button>
                     <Button variant="info" onClick={() => this.getGames('hard')}>Trudny</Button>
                     <Button variant="info" onClick={() => this.getGames('expert')}>Ekspert</Button>
@@ -44,18 +42,20 @@ class Ranking extends React.Component {
                         <th>Poziom trudności</th>
                         <th>Punkty gracza</th>
                         <th>Punkty komputera</th>
+                        <th>Data</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.games.map((item, index) =>
-                        <tr key={item.id}>
-                            <td>{index + 1}</td>
-                            <td>{item.player_name}</td>
-                            <td>{item.level}</td>
-                            <td>{item.player_points}</td>
-                            <td>{item.computer_points}</td>
-                        </tr>
-                    )}
+                        {this.state.games.map((item, index) =>
+                            <tr key={item.id}>
+                                <td>{index + 1}</td>
+                                <td>{item.player_name}</td>
+                                <td>{item.level}</td>
+                                <td>{item.player_points}</td>
+                                <td>{item.computer_points}</td>
+                                <td>{item.created_at.substr(0, 10)}</td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table>
             </div>
