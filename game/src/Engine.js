@@ -198,9 +198,8 @@ class Engine {
         return !this.playerCanMove(nextMoveBoard, nextMoveActivePlayer);
     }
 
-    getLevel() {
-        const chosenStrategy = this.getChosenStrategy();
-        const levels = ['easy', 'medium', 'hard', 'expert'];
+    getLevel(chosenStrategy) {
+        const levels = ['łatwy', 'średni', 'trudny', 'ekspert'];
 
         return levels[chosenStrategy];
     }
@@ -208,29 +207,29 @@ class Engine {
     sendDataToApi(computerPoints, playerPoints) {
         const data = {
             'player_name': localStorage.getItem("player_name"),
-            'level': this.getLevel(),
+            'level': this.getLevel(this.getChosenStrategy()),
             'player_points': playerPoints,
             'computer_points': computerPoints,
         }
 
         axios.post('http://localhost:8000/api/game', data).then(response => {
             document.getElementById("giveUpTurnButton").style.visibility = "hidden"
-            console.log(response);
+            this.endGameAlert(computerPoints, playerPoints);
         }).then(error => {
             console.log(error);
         });
     }
 
     endGame(board, computerMode) {
-        if (document.getElementById("backMovement").style.visibility === "hidden") {
-            document.getElementById("turnWrapper").style.visibility = "hidden";
-        }
+        document.getElementById("backMovement").style.visibility = "hidden";
+        document.getElementById("turnWrapper").style.visibility = "hidden";
+
         const [pointsPlayer1, pointsPlayer2] = this.countPoints(board);
-        // const winnerPoints = pointsPlayer1 >= pointsPlayer2 ? pointsPlayer1 : pointsPlayer2;
         if (computerMode) {
             this.sendDataToApi(pointsPlayer1, pointsPlayer2);
+        } else {
+            this.endGameAlert(pointsPlayer1, pointsPlayer2);
         }
-        // this.endGameAlert(pointsPlayer1, pointsPlayer2);
         return null;
     }
 

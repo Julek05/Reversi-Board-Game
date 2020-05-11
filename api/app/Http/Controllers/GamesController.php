@@ -38,7 +38,7 @@ class GamesController extends Controller
     {
         $game = $request->all();
         if ($game['player_name'] == null || trim($game['player_name']) == '') {
-            $game['player_name'] = 'Gość' . (Game::getLastId() + 1);
+            $game['player_name'] = 'Gość' . (1 + Game::getLastId());
         }
         Game::create($game);
     }

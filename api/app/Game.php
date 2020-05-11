@@ -24,9 +24,13 @@ class Game extends Model
 
     public static function getLastId()
     {
-        return Game::select('id')
-            ->orderByDesc('id')
-            ->first()
-            ->id;
+        if (Game::count() == 0) {
+            return 0;
+        } else {
+            return Game::select('id')
+                ->orderByDesc('id')
+                ->first()
+                ->id;
+        }
     }
 }

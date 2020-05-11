@@ -11,8 +11,9 @@ class Ranking extends React.Component {
             games: []
         };
     }
+
     componentDidMount() {
-        this.getGames('easy');
+        this.getGames('łatwy');
     }
 
     getGames(level) {
@@ -28,10 +29,10 @@ class Ranking extends React.Component {
         return (
             <div className='ranking'><br/>
                 <ButtonGroup aria-label="Basic example" >
-                    <Button variant="info" onClick={() => this.getGames('easy')}>Łatwy</Button>
-                    <Button variant="info" onClick={() => this.getGames('medium')}>Średni</Button>
-                    <Button variant="info" onClick={() => this.getGames('hard')}>Trudny</Button>
-                    <Button variant="info" onClick={() => this.getGames('expert')}>Ekspert</Button>
+                    <Button variant="info" onClick={() => this.getGames('łatwy')}>Łatwy</Button>
+                    <Button variant="info" onClick={() => this.getGames('średni')}>Średni</Button>
+                    <Button variant="info" onClick={() => this.getGames('trudny')}>Trudny</Button>
+                    <Button variant="info" onClick={() => this.getGames('ekspert')}>Ekspert</Button>
                 </ButtonGroup><br/><br/>
                 <h2 id='headerRanking'>Ranking najlepszych graczy:</h2><br/>
                 <Table striped bordered hover size>
