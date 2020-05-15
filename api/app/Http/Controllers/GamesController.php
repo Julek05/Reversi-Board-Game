@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class GamesController extends Controller
 {
@@ -37,6 +38,12 @@ class GamesController extends Controller
     public function store(Request $request)
     {
         $game = $request->all();
+        //dodac walidacje zdjecia
+        if ($image = $request->file('image')) {
+            $imagePath = Storage::disk('public_uploads')->put('photos', $image);
+            $game['image_path'] = $imagePath;
+        }
+
         if ($game['player_name'] == null || trim($game['player_name']) == '') {
             $game['player_name'] = 'Gość' . (1 + Game::getLastId());
         }

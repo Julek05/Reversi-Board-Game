@@ -19,6 +19,7 @@ class CreateGamesTable extends Migration
             $table->enum('level', ['łatwy', 'średni', 'trudny', 'ekspert']);
             $table->tinyInteger('player_points');
             $table->tinyInteger('computer_points');
+            $table->string('image_path')->default('');
             $table->timestamps();
         });
     }

@@ -25,6 +25,10 @@ class Ranking extends React.Component {
         });
     }
 
+    redirectToScreenPage(imagePath) {
+        window.location.replace(`/screen/${imagePath}`);
+    }
+
     render() {
         return (
             <div className='ranking'><br/>
@@ -43,6 +47,7 @@ class Ranking extends React.Component {
                         <th>Poziom trudności</th>
                         <th>Punkty gracza</th>
                         <th>Punkty komputera</th>
+                        <th>Screen - końcowa<br/>plansza</th>
                         <th>Data</th>
                     </tr>
                     </thead>
@@ -54,6 +59,7 @@ class Ranking extends React.Component {
                                 <td>{item.level}</td>
                                 <td>{item.player_points}</td>
                                 <td>{item.computer_points}</td>
+                                <td><Button variant="success" onClick={() => this.redirectToScreenPage(item.image_path.substr(7))}>Pokaż screen</Button></td>
                                 <td>{item.created_at.substr(0, 10)}</td>
                             </tr>
                         )}

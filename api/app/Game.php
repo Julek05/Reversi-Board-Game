@@ -11,6 +11,7 @@ class Game extends Model
         'level',
         'player_points',
         'computer_points',
+        'image_path',
         'created_at'
     ];
 

@@ -23,8 +23,8 @@ class Authentication extends React.Component {
     redirectToMainPage() {
         window.location.replace("/strona_glowna");
     }
-    render() {
 
+    render() {
         return (
             <form id='nameForm' onSubmit={this.handleSubmit}><br/><br/>
                 <label id='labelForm'>
