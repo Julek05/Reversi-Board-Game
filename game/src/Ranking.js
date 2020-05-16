@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Modal from "react-modal";
+Modal.setAppElement('#root');
 
 class Ranking extends React.Component {
     constructor(props) {
@@ -23,10 +25,6 @@ class Ranking extends React.Component {
                 games: response.data
             });
         });
-    }
-
-    redirectToScreenPage(imagePath) {
-        window.location.replace(`/screen/${imagePath}`);
     }
 
     render() {
@@ -61,7 +59,7 @@ class Ranking extends React.Component {
                                 <td>{item.computer_points}</td>
                                 <td>
                                     {item.image_path !== ''
-                                        ? <Button variant="success" onClick={() => this.redirectToScreenPage(item.image_path.substr(7))}>Pokaż screen</Button>
+                                        ? <Screen imagePath={item.image_path}/>
                                         : <p>Brak screenu</p>}
                                 </td>
                                 <td>{item.created_at.substr(0, 10)}</td>
@@ -72,6 +70,40 @@ class Ranking extends React.Component {
             </div>
         );
     }
+}
+
+function Screen(props) {
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    return (
+        <div>
+            <Button variant="success" onClick={() => setModalIsOpen(true)}>Pokaż zdjęcie</Button>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={{
+                    content : {
+                        top                   : '50%',
+                        left                  : '50%',
+                        right                 : 'auto',
+                        bottom                : 'auto',
+                        marginRight           : '-50%',
+                        transform             : 'translate(-50%, -50%)'
+                    }
+                }
+                }
+            >
+                <img height='540' width='580' src={`${getImgPath(props.imagePath)}`} alt=''/>
+                <div>
+                    <Button variant="success" onClick={() => setModalIsOpen(false)}>Zamknij</Button>
+                </div>
+            </Modal>
+        </div>
+    );
+}
+
+function getImgPath(imagePath) {
+    return 'http://localhost:8000/uploads/' + imagePath;
 }
 
 export default Ranking

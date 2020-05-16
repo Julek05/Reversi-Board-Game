@@ -21,7 +21,6 @@ class Options extends React.Component {
 
         // axios.post(`http://localhost:8000/api/game/${id}`, screen).then(response => {
         axios.post(`http://localhost:8000/api/game/1`, screen).then(response => {
-            console.log(response.data)
             document.getElementById("screenSender").style.visibility = "hidden";
         }).then(error => {
             console.log(error);
@@ -48,7 +47,8 @@ class Options extends React.Component {
                     <h5>Czy chcesz wysłać screena?</h5>
                     <form onSubmit={this.handleSubmit}>
                         <input type="file" onChange={this.fileSelectedHandler}/>
-                        <button type="submit" className="btn btn-success gameButton screenButton">Wyślij Screen</button>&nbsp;&nbsp;
+                        <button type="submit" className="btn btn-success gameButton screenButton">
+                            Wyślij Screen</button>&nbsp;&nbsp;
                     </form>
                 </div>
                 <br/>

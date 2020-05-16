@@ -94,7 +94,8 @@ class GameController {
         const moveComputerAfterHumanGiveUpTurn = !computerBlock;
 
         if (canMove) {
-            this.gameState = new GameState(newBoards, activePlayerAfterGiveUpTurn, canMove, uiBlock, computerBlock, moveComputerAfterHumanGiveUpTurn);
+            this.gameState = new GameState(newBoards, activePlayerAfterGiveUpTurn, canMove, uiBlock,
+                computerBlock, moveComputerAfterHumanGiveUpTurn);
             return this.gameState;
         } else {
             return this.engine.endGame(this.gameState.getCurrentBoardState(), computerMode);
