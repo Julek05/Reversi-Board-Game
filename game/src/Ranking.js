@@ -59,7 +59,11 @@ class Ranking extends React.Component {
                                 <td>{item.level}</td>
                                 <td>{item.player_points}</td>
                                 <td>{item.computer_points}</td>
-                                <td><Button variant="success" onClick={() => this.redirectToScreenPage(item.image_path.substr(7))}>Pokaż screen</Button></td>
+                                <td>
+                                    {item.image_path !== ''
+                                        ? <Button variant="success" onClick={() => this.redirectToScreenPage(item.image_path.substr(7))}>Pokaż screen</Button>
+                                        : <p>Brak screenu</p>}
+                                </td>
                                 <td>{item.created_at.substr(0, 10)}</td>
                             </tr>
                         )}

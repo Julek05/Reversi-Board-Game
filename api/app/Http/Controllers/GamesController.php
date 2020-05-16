@@ -33,21 +33,17 @@ class GamesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return int
      */
     public function store(Request $request)
     {
         $game = $request->all();
-        //dodac walidacje zdjecia
-        if ($image = $request->file('image')) {
-            $imagePath = Storage::disk('public_uploads')->put('photos', $image);
-            $game['image_path'] = $imagePath;
-        }
 
         if ($game['player_name'] == null || trim($game['player_name']) == '') {
             $game['player_name'] = 'Gość' . (1 + Game::getLastId());
         }
         Game::create($game);
+        return Game::getLastId();
     }
 
     /**
@@ -81,7 +77,12 @@ class GamesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $game = Game::find($request->get('id'));
+        if ($image = $request->all()['image']) {
+            $imagePath = Storage::disk('public_uploads')->put('photos', $image);
+            $game['image_path'] = $imagePath;
+        }
+        $game->save();
     }
 
     /**

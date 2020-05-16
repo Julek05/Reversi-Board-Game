@@ -209,11 +209,13 @@ class Engine {
             'player_name': localStorage.getItem("player_name"),
             'level': this.getLevel(this.getChosenStrategy()),
             'player_points': playerPoints,
-            'computer_points': computerPoints,
+            'computer_points': computerPoints
         }
 
         axios.post('http://localhost:8000/api/game', data).then(response => {
+            localStorage.setItem('id', response.data);
             document.getElementById("giveUpTurnButton").style.visibility = "hidden"
+            document.getElementById("screenSender").style.visibility = "visible";
             this.endGameAlert(computerPoints, playerPoints);
         }).then(error => {
             console.log(error);
