@@ -162,17 +162,10 @@ class Engine {
     }
 
     setImgPath(valueField) {
-        if (valueField === 1) {
-            return 'images/blue_disk.png';
-        } else if (valueField === 2) {
-            return 'images/black_disk.png';
-        } else if (valueField === 3) {
-            return 'images/blue_possibility.png';
-        } else if (valueField === 4) {
-            return 'images/black_possibility.png';
-        } else {
-            return '';
-        }
+        const imgPaths = ['', 'images/blue_disk.png', 'images/black_disk.png',
+            'images/blue_possibility.png', 'images/black_possibility.png'];
+
+        return imgPaths[valueField];
     }
 
     boardsAreEqual(boardBeforeAction, boardAfterAction) {
