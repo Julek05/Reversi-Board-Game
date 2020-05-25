@@ -21,6 +21,7 @@ class GameSeeder extends Seeder
                 'level' => 'łatwy',
                 'player_points' => $i + 20,
                 'computer_points' => $i + 17,
+                'image_path' => 'photos/plansza2.PNG',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
@@ -32,6 +33,7 @@ class GameSeeder extends Seeder
                 'level' => 'średni',
                 'player_points' => $i + 30,
                 'computer_points' => $i + 10,
+                'image_path' => 'photos/plansza2.PNG',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
@@ -43,6 +45,7 @@ class GameSeeder extends Seeder
                 'level' => 'trudny',
                 'player_points' => $i + 10,
                 'computer_points' => $i + 30,
+                'image_path' => 'photos/plansza2.PNG',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
@@ -54,6 +57,7 @@ class GameSeeder extends Seeder
                 'level' => 'ekspert',
                 'player_points' => $i + 25,
                 'computer_points' => $i + 15,
+                'image_path' => 'photos/plansza2.PNG',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
