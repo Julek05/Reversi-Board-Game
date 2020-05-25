@@ -22,9 +22,8 @@ class App extends React.Component {
             if (window.confirm("Czy na pewno chcesz przejść do głównego menu?")) {
                 window.location.href = '/strona_glowna';
             }
-        } else {
-            window.location.href = '/strona_glowna';
         }
+        window.location.href = '/strona_glowna';
     }
 
     render() {

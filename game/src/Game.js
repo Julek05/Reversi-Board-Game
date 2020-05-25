@@ -18,7 +18,7 @@ class Game extends React.Component {
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 4, 0, 0, 0, 0],
-            [0, 0, 4, 2, 2, 0, 0, 0],
+            [0, 0, 4, 1, 2, 0, 0, 0],
             [0, 0, 0, 2, 1, 4, 0, 0],
             [0, 0, 0, 0, 4, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
@@ -116,7 +116,7 @@ class Game extends React.Component {
                              strategiesVisibility={this.props.strategiesVisibility} turnImage={this.state.turnImage}
                              backMovementButtonVisibility={this.props.backMovementButtonVisibility}
                              backMovement={() => this.handleClickRevertLastMove()}
-                             giveUpTurn={giveUpTurn} giveUpTurnClick={ () => this.handleClickGiveUpTurn()}
+                             giveUpTurn={giveUpTurn} giveUpTurnClick={() => this.handleClickGiveUpTurn()}
                              giveUpTurnButtonText={giveUpTurnButtonText}
                     />
                 </div>
