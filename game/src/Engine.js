@@ -57,14 +57,9 @@ class Engine {
     }
 
     findAllOptions(board, y, x, activePlayer) {
-        const top = [y - 1, x];
-        const down = [y + 1, x];
-        const right = [y, x + 1];
-        const left = [y, x - 1];
-        const topLeft = [y - 1, x - 1];
-        const topRight = [y - 1, x + 1];
-        const downLeft = [y + 1, x - 1];
-        const downRight = [y + 1, x + 1];
+        const top = [y - 1, x], down = [y + 1, x], right = [y, x + 1], left = [y, x - 1];
+        const topLeft = [y - 1, x - 1], topRight = [y - 1, x + 1], downLeft = [y + 1, x - 1], downRight = [y + 1, x + 1];
+
         const indexesAroundDisk = [top, down, right, left, topLeft, topRight, downLeft, downRight];
         this.currentCheckingY = y;
         this.currentCheckingX = x;
@@ -78,11 +73,12 @@ class Engine {
     }
 
     nextToEnemyDisk(field, activePlayer) {
-        return field !== 0 && field !== activePlayer;
+        return ![0, activePlayer].includes(field);
+        // return field !== 0 && field !== activePlayer;
     }
 
     insideTheBoard(y, x) {
-        return (y >= 0 && y <= 7 && x >= 0 && x <= 7);
+        return [0, 1, 2, 3, 4, 5, 6, 7].includes(y, x);
     }
 
     checkAllDirections(board, activePlayer) {
@@ -122,13 +118,12 @@ class Engine {
     countPoints(board) {
         let player1Points = 0;
         let player2Points = 0;
-        for (const row of board) {
-            for (const field of row) {
-                if (field === 1) {
-                    player1Points++;
-                } else if (field === 2) {
-                    player2Points++;
-                }
+
+        for (const field of board.flat()) {
+            if (field === 1) {
+                player1Points++;
+            } else if (field === 2) {
+                player2Points++;
             }
         }
         return [player1Points, player2Points];
@@ -173,7 +168,8 @@ class Engine {
     }
 
     playerCanMove(board, activePlayer) {
-        return board.some(row => row.includes((activePlayer + 2)));
+        // return board.some(row => row.includes((activePlayer + 2)));
+        return board.flat().includes(activePlayer + 2);
     }
 
     deepCopy(objectToCopy) {
@@ -214,9 +210,8 @@ class Engine {
             console.log(error);
         });
     }
-
+    //TODO zablokowac, zeby z samouczka nie mozna bylo wysylac screena i gra sie nie zapisywala
     endGame(board, computerMode) {
-        document.getElementById("backMovement").style.visibility = "hidden";
         document.getElementById("turnWrapper").style.visibility = "hidden";
 
         const [pointsPlayer1, pointsPlayer2] = this.countPoints(board);
@@ -225,7 +220,7 @@ class Engine {
         } else {
             this.endGameAlert(pointsPlayer1, pointsPlayer2);
         }
-        return null;
+        return false;
     }
 
     getChosenStrategy() {

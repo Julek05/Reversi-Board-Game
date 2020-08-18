@@ -29,7 +29,8 @@ class Game extends React.Component {
             turnImage: <img src='images/black_disk.png' className='turnImage' alt=""/>,
             activePlayer: 2,
             canMove: true,
-            uiBlock: false
+            uiBlock: false,
+            moveComputerAfterHumanGiveUpTurn: false
         };
         const actualGameState = new GameState([board], 2, true, false);
         this.gameController = new GameController(actualGameState);
@@ -103,9 +104,6 @@ class Game extends React.Component {
         const giveUpTurn = this.state.canMove ? 'hidden' : 'visible';
         const giveUpTurnButtonText = this.gameController.engine.setTextOfGiveUpTurnButton(this.gameController.gameState.getCurrentBoardState(),
               giveUpTurn, this.state.activePlayer);
-        if (this.gameController.firstMove) {
-            document.getElementById("selectStrategies").disabled = true;
-        }
         return (
             <div className="gameContainer">
                 <div id='game' className="boardContainer">
@@ -118,6 +116,7 @@ class Game extends React.Component {
                              backMovement={() => this.handleClickRevertLastMove()}
                              giveUpTurn={giveUpTurn} giveUpTurnClick={() => this.handleClickGiveUpTurn()}
                              giveUpTurnButtonText={giveUpTurnButtonText}
+                             selectStrategies={this.gameController.firstMove}
                     />
                 </div>
             </div>

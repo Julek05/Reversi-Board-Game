@@ -46,12 +46,9 @@ class Strategies {
     }
 
     sortPossibilities(allPossibilities) {
-        allPossibilities.sort((a, b) => {
-            return a[0] - b[0]
-        });
-        allPossibilities.reverse();
-
-        return allPossibilities;
+        return allPossibilities.sort((a, b) => {
+                return a[0] - b[0]
+            }).reverse();
     }
 
     chooseBestOption(allPossibilities) {
@@ -59,16 +56,17 @@ class Strategies {
 
         let sameBestOptions = 0;
         const firstPossibility = sortedAllPossibilities[0][0];
-        for (let i = 1; i < sortedAllPossibilities.length; i++) {
-            if (firstPossibility !== sortedAllPossibilities[i][0]) {
+        for (const possibility of sortedAllPossibilities) {
+            if (firstPossibility !== possibility[0]) {
                 break;
             }
             sameBestOptions++;
         }
-        let index = 0;
-        if (sameBestOptions > 0) {
-            index = Math.floor(Math.random() * (sameBestOptions + 1));
-        }
+
+        const index = sameBestOptions > 0 ?
+            Math.floor(Math.random() * (sameBestOptions + 1))
+            : sameBestOptions;
+
         const bestOption = sortedAllPossibilities[index];
         bestOption.shift();
         return bestOption;
@@ -107,20 +105,20 @@ class Strategies {
         return amountOfWorstFields - amountOfPossibilities;
     }
 
-    doTurnDisks(board, bestOption) {
-        this.engine.allDisksToTurn = bestOption[1];
-        return this.engine.turnDisks(board, bestOption[2], bestOption[3], 1);
+    doTurnDisks(board, [allDisksToTurn, y, x]) {
+        this.engine.allDisksToTurn = allDisksToTurn;
+        return this.engine.turnDisks(board, y, x, 1);
     }
 
     allStrategiesFixed(board) {
-        const cornerPriorityResult = this.cornerPriority(board);
-        if (Array.isArray(cornerPriorityResult)) {
-            return this.engine.turnDisks(board, cornerPriorityResult[0], cornerPriorityResult[1], 1);
+        const [y1, x1] = this.cornerPriority(board);
+        if (y1 !== null) {
+            return this.engine.turnDisks(board, y1, x1, 1);
         }
 
-        const firstEdgePriorityResult = this.firstEdgePriority(board);
-        if (Array.isArray(firstEdgePriorityResult)) {
-            return this.engine.turnDisks(board, firstEdgePriorityResult[0], firstEdgePriorityResult[1], 1);
+        const [y2, x2] = this.firstEdgePriority(board);
+        if (y2 !== null) {
+            return this.engine.turnDisks(board, y2, x2, 1);
         }
 
         const secondEdgePriorityResult = this.secondEdgePriority(board);
@@ -132,15 +130,16 @@ class Strategies {
                     return this.doTurnDisks(board, bestOptions[i]);
                 }
             }
-            return this.doTurnDisks(board, bestOptions, 2);
+            return this.doTurnDisks(board, bestOptions);
         }
-        const bestOptions = this.doAllStrategies(board);
+        const [option1, option2, option3] = this.doAllStrategies(board);
 
-        if (this.moveAccordingToMobilityAndMaximisationStrategies(bestOptions)) {
-            return this.doTurnDisks(board, bestOptions[0]);
+        if (this.moveAccordingToMobilityAndMaximisationStrategies(option1[2], option1[3], option2[2],
+            option2[3], option3[2], option3[3])) {
+            return this.doTurnDisks(board, option1);
         }
 
-        return this.doTurnDisks(board, bestOptions[2]);
+        return this.doTurnDisks(board, option3);
     }
 
     cornerPriority(board) {
@@ -153,7 +152,7 @@ class Strategies {
                 }
             }
         }
-        return false;
+        return [null, null];
     }
 
     firstEdgePriority(board) {
@@ -166,7 +165,7 @@ class Strategies {
                 }
             }
         }
-        return false;
+        return [null, null];
     }
 
     secondEdgePriority(board) {
@@ -270,18 +269,12 @@ class Strategies {
                 }
             }
         }
-        return [this.sortPossibilities(allPossibilitiesMaximisationStrategy)[0],
-                this.sortPossibilities(allPossibilitiesMobilityStrategy)[0],
-                this.sortPossibilities(allPossibilitiesValuatingFieldsStrategy)[0]];
+        return [this.sortPossibilities(allPossibilitiesMaximisationStrategy)[0].shift(),
+                this.sortPossibilities(allPossibilitiesMobilityStrategy)[0].shift(),
+                this.sortPossibilities(allPossibilitiesValuatingFieldsStrategy)[0]].shift();
     }
 
-    moveAccordingToMobilityAndMaximisationStrategies(bestOptions) {
-        const y1 = bestOptions[0][2];
-        const x1 = bestOptions[0][3];
-        const y2 = bestOptions[1][2];
-        const x2 = bestOptions[1][3];
-        const y3 = bestOptions[2][2];
-        const x3 = bestOptions[2][3];
+    moveAccordingToMobilityAndMaximisationStrategies(y1, x1, y2, x2, y3, x3) {
         return this.areEqualBestOptions(y1, x1, y2, x2) && !this.isCorner(y3, x3) && !this.isAroundCorner(y1, x1);
     }
 

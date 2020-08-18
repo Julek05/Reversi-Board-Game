@@ -5,7 +5,8 @@ class Options extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-           image: ''
+           image: '',
+           // screenSenderVisibility: 'hidden'
         });
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
@@ -43,7 +44,8 @@ class Options extends React.Component {
         return <div className="options">
             <div className="gameDiv">
                 <button type="button" className="btn btn-primary gameButton" onClick={Options.newGame}>Nowa Gra</button>
-                <div id='screenSender' style={{visibility: "hidden"}}>
+                {/*<div id='screenSender' style={{visibility: this.state.screenSenderVisibility}}>*/}
+                <div id='screenSender' style={{visibility: 'hidden'}}>
                     <h5>Czy chcesz wysłać screena?</h5>
                     <form onSubmit={this.handleSubmit}>
                         <input type="file" onChange={this.fileSelectedHandler}/>
@@ -83,7 +85,7 @@ class Options extends React.Component {
                 <div className="input-group-prepend">
                     <label className="input-group-text" htmlFor="selectStrategies">Poziom trudności</label>
                 </div>
-                <select className="custom-select" id="selectStrategies" defaultValue={"4"}>
+                <select className="custom-select" id="selectStrategies" defaultValue={"4"} disabled={this.props.selectStrategies}>
                     <option id="maximisationStrategy" value="1">Łatwy</option>
                     <option id="mobilityStrategy" value="2">Średni</option>
                     <option id="valuatingFieldsStrategy" value="3">Trudny</option>

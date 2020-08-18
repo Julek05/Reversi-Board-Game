@@ -13,7 +13,7 @@ import SelfTeaching from './SelfTeaching'
 import ComputerGame from './ComputerGame'
 import Authentication from "./Authentication";
 import Ranking from "./Ranking";
-import Screen from "./Screen";
+// import Screen from "./Screen";
 
 class App extends React.Component {
     static mainMenu() {
