@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH,
+    LEVELS, POINTS_VARATIONS, TURN_BUTTON_INFO} from './constans';
+
 class Engine {
     constructor() {
         this.options = [];
@@ -78,7 +81,8 @@ class Engine {
     }
 
     insideTheBoard(y, x) {
-        return [0, 1, 2, 3, 4, 5, 6, 7].includes(y, x);
+        return (y >= 0 && y <= 7 && x >= 0 && x <= 7);
+        // return [0, 1, 2, 3, 4, 5, 6, 7].includes(y, x);
     }
 
     checkAllDirections(board, activePlayer) {
@@ -131,34 +135,42 @@ class Engine {
 
     endGameAlert(pointsPlayer1, pointsPlayer2) {
         setTimeout(() => {
-            let result;
-            if (pointsPlayer1 > pointsPlayer2) {
-                result = "Wygrał gracz z niebieskimi pionkami, zdobył " + pointsPlayer1 + " " + this.correctVariant(pointsPlayer1) +
-                    "\n\nGracz z czarnymi pionkami, zdobył " + pointsPlayer2 + " " + this.correctVariant(pointsPlayer2);
-            } else if (pointsPlayer1 < pointsPlayer2) {
-                result = "Wygrał gracz z czarnymi pionkami, zdobył " + pointsPlayer2 + " " + this.correctVariant(pointsPlayer2) +
-                    "\n\nGracz z niebieskimi pionkami, zdobył " + pointsPlayer1 + " " + this.correctVariant(pointsPlayer1);
-            } else {
-                result = "Remis, obydwaj gracze zdobyli po " + pointsPlayer1 + " " + this.correctVariant(pointsPlayer1);
-            }
-            alert("Obydwaj gracze nie mogą wykonać żadnego ruchu - koniec gry!\n\n" + result);
+            alert(`Obydwaj gracze nie mogą wykonać żadnego ruchu - koniec gry!\n\n 
+                ${this.getAlertMessage(pointsPlayer1, pointsPlayer2)}`);
         }, 250);
+    }
+
+    getAlertMessage(pointsPlayer1, pointsPlayer2) {
+        if (pointsPlayer1 > pointsPlayer2) {
+            return `Wygrał gracz z niebieskimi pionkami, zdobył ${pointsPlayer1} ${this.correctVariant(pointsPlayer1)}
+                    \n\nGracz z czarnymi pionkami, zdobył ${pointsPlayer2} ${this.correctVariant(pointsPlayer2)}`;
+        } else if (pointsPlayer1 < pointsPlayer2) {
+            return `Wygrał gracz z czarnymi pionkami, zdobył ${pointsPlayer2} ${this.correctVariant(pointsPlayer2)}
+                    \n\nGracz z niebieskimi pionkami, zdobył ${pointsPlayer1} ${this.correctVariant(pointsPlayer1)}`;
+        }
+
+        return `Remis, obydwaj gracze zdobyli po ${pointsPlayer1} ${this.correctVariant(pointsPlayer1)}`;
     }
 
     correctVariant(playerPoints) {
         if ((playerPoints % 10 === 2 && playerPoints !== 12) || (playerPoints % 10 === 3 && playerPoints !== 13)
             || (playerPoints % 10 === 4 && playerPoints !== 14)) {
-            return "punkty";
+            return POINTS_VARATIONS.FIRST_OPTION;
         } else if (playerPoints === 1) {
-            return "punkt";
+            return POINTS_VARATIONS.SECOND_OPTION;
         } else {
-            return "punktów";
+            return POINTS_VARATIONS.THIRD_OPTION;
         }
     }
 
     setImgPath(valueField) {
-        const imgPaths = ['', 'images/blue_disk.png', 'images/black_disk.png',
-            'images/blue_possibility.png', 'images/black_possibility.png'];
+        const imgPaths = [
+            '',
+            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.BLUE}`,
+            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.BLACK}`,
+            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.POSSIBILITY_BLUE}`,
+            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.POSSIBILITY_BLACK}`
+        ];
 
         return imgPaths[valueField];
     }
@@ -177,7 +189,9 @@ class Engine {
     }
 
     setTextOfGiveUpTurnButton(board, giveUpTurn, activePlayer) {
-        return giveUpTurn && this.isLastMove(board, activePlayer) ? 'Koniec Gry' : 'Oddaj Turę';
+        return giveUpTurn && this.isLastMove(board, activePlayer)
+            ? TURN_BUTTON_INFO.END_OF_GAME
+            : TURN_BUTTON_INFO.GIVE_UP_TURN;
     }
 
     isLastMove(board, activePlayer) {
@@ -188,7 +202,7 @@ class Engine {
     }
 
     getLevel(chosenStrategy) {
-        const levels = ['łatwy', 'średni', 'trudny', 'ekspert'];
+        const levels = [LEVELS.EASY, LEVELS.MIDDLE, LEVELS.HARD];
 
         return levels[chosenStrategy];
     }
@@ -201,7 +215,7 @@ class Engine {
             'computer_points': computerPoints
         }
 
-        axios.post('http://localhost:8000/api/game', data).then(response => {
+        axios.post(API_URLS.GAMES, data).then(response => {
             localStorage.setItem('id', response.data);
             document.getElementById("giveUpTurnButton").style.visibility = "hidden"
             document.getElementById("screenSender").style.visibility = "visible";
@@ -225,6 +239,10 @@ class Engine {
 
     getChosenStrategy() {
         return document.getElementById("selectStrategies").options.selectedIndex.valueOf();
+    }
+
+    upperCaseFirstCharacter(phrase) {
+        return `${phrase.slice(0, 1).toUpperCase()}${phrase.slice(1, phrase.length)}`
     }
 }
 

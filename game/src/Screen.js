@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 // import {useParams} from "react-router-dom";
 import Modal from 'react-modal';
 import Button from "react-bootstrap/Button";
+import {API_URLS} from "./constans";
 
 Modal.setAppElement('#root');
 
@@ -37,7 +38,7 @@ function Screen({ imagePath }) {
 }
 
 function getImgPath(imagePath) {
-    return 'http://localhost:8000/uploads/' + imagePath;
+    return `${API_URLS.UPLOADS}/${imagePath}`;
 }
 
 export default Screen

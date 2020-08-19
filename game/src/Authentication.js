@@ -1,5 +1,5 @@
 import React from 'react';
-// import axios from 'axios';
+import {PAGE_URLS} from "./constans";
 
 class Authentication extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class Authentication extends React.Component {
     }
 
     redirectToMainPage() {
-        window.location.replace("/strona_glowna");
+        window.location.replace(PAGE_URLS.MAIN_PAGE);
     }
 
     render() {

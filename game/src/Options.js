@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from "axios";
+import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH} from "./constans";
 
 class Options extends React.Component {
     constructor(props) {
@@ -20,8 +21,8 @@ class Options extends React.Component {
         localStorage.removeItem('id');
         screen.append('_method', 'PATCH');
 
-        // axios.post(`http://localhost:8000/api/game/${id}`, screen).then(response => {
-        axios.post(`http://localhost:8000/api/game/1`, screen).then(response => {
+        // axios.post(`${API_URLS.GAMES}/${id}`, screen).then(response => {
+        axios.post(`${API_URLS.GAMES}/1`, screen).then(response => {
             document.getElementById("screenSender").style.visibility = "hidden";
         }).then(error => {
             console.log(error);
@@ -74,9 +75,9 @@ class Options extends React.Component {
             <div className="card border-primary mb-3" id="result">
                 <div className="card-header" style={{fontSize: 18}}>Punkty</div>
                 <div id="scoredDisks">
-                    <img src='images/black_disk_turn.png' className="disk scoredPlayersDisks" alt=""/>
+                    <img src={`${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.TURN_BLACK}`} className="disk scoredPlayersDisks" alt=""/>
                     <div className="points">{this.props.scoredDisksSecondPlayer}</div>
-                    <img src='images/blue_disk_turn.png' className="disk scoredPlayersDisks" alt=""/>
+                    <img src={`${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.TURN_BLACK}`} className="disk scoredPlayersDisks" alt=""/>
                     <div className="points">{this.props.scoredDisksFirstPlayer}</div>
                 </div>
             </div>
@@ -89,7 +90,6 @@ class Options extends React.Component {
                     <option id="maximisationStrategy" value="1">Łatwy</option>
                     <option id="mobilityStrategy" value="2">Średni</option>
                     <option id="valuatingFieldsStrategy" value="3">Trudny</option>
-                    <option id="allStrategiesFixed" value="4">Ekspert</option>
                 </select>
             </div>
         </div>

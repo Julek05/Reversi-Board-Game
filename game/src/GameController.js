@@ -53,15 +53,12 @@ class GameController {
         const boardCopy = this.engine.deepCopy(board);
 
         if (chosenStrategy === 0) {
-            board = this.strategies.maximisationStrategy(boardCopy);
+            return this.strategies.maximisationStrategy(boardCopy);
         } else if (chosenStrategy === 1) {
-            board = this.strategies.mobilityStrategy(boardCopy);
+            return this.strategies.mobilityStrategy(boardCopy);
         } else if (chosenStrategy === 2) {
-            board = this.strategies.valuatingFieldsStrategy(boardCopy);
-        } else {
-            board = this.strategies.allStrategiesFixed(boardCopy);
+            return this.strategies.valuatingFieldsStrategy(boardCopy);
         }
-        return board;
     }
 
     revertLastMove() {

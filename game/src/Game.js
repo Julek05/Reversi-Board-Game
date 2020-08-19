@@ -2,6 +2,7 @@ import React from 'react'
 import Options from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
+import {DISKS_IMAGES, IMAGES_FOLDER_PATH} from "./constans";
 
 function Field(props) {
     return (
@@ -26,7 +27,7 @@ class Game extends React.Component {
         ];
         this.state = {
             boards: [board],
-            turnImage: <img src='images/black_disk.png' className='turnImage' alt=""/>,
+            turnImage: <img src={`${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.BLACK}`} className='turnImage' alt=""/>,
             activePlayer: 2,
             canMove: true,
             uiBlock: false,

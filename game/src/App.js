@@ -13,42 +13,55 @@ import SelfTeaching from './SelfTeaching'
 import ComputerGame from './ComputerGame'
 import Authentication from "./Authentication";
 import Ranking from "./Ranking";
+import {PAGE_URLS, SUBPAGES} from "./constans";
+import Engine from "./Engine";
 // import Screen from "./Screen";
 
-class App extends React.Component {
-    static mainMenu() {
-        if (window.location.href.includes('tryb_dla_dwoch_graczy') || window.location.href.includes('gra_z_komputerem')
-            || window.location.href.includes('samouczek')) {
+function App() {
+    const engine = new Engine();
+    function mainMenu() {
+        if (isInGameSite()) {
             if (window.confirm("Czy na pewno chcesz przejść do głównego menu?")) {
-                window.location.href = '/strona_glowna';
+                window.location.href = PAGE_URLS.MAIN_PAGE;
             }
         }
-        window.location.href = '/strona_glowna';
+        window.location.href = PAGE_URLS.MAIN_PAGE;
     }
 
-    render() {
-        return <Router>
+    function isInGameSite() {
+        return actualUrlInclude(PAGE_URLS.TWO_PLAYERS_MODE) || actualUrlInclude(PAGE_URLS.COMPUTER_GAME)
+            || actualUrlInclude(PAGE_URLS.SELF_TEACHING);
+    }
+
+    function actualUrlInclude(pattern) {
+        return window.location.href.includes(pattern);
+    }
+
+    return (
+        <Router>
             <div className="row" id="subpages">
                 <div className="list-group" id="list-tab" role="tablist">
                     <div>
                         <button className="list-group-item list-group-item-action" data-toggle="list" id="subpagesRow"
                                 role="tab" aria-controls="profile" style={{backgroundColor: "coral"}}
-                                onClick={App.mainMenu}>Strona główna
+                                onClick={mainMenu}>{engine.upperCaseFirstCharacter(SUBPAGES.MAIN_PAGE)}
                         </button>
                     </div>
                 </div>
             </div>
+
             <Route exact path="/" component={Authentication}/>
-            <Route exact path="/strona_glowna" component={MainPage}/>
-            <Route path="/tryb_dla_dwoch_graczy" component={PlayerGame}/>
-            <Route path="/gra_z_komputerem" component={ComputerGame}/>
-            <Route path="/samouczek" component={SelfTeaching}/>
-            <Route path="/zasady_gry" component={Rules}/>
-            <Route path="/porady_strategie" component={Advices}/>
-            <Route path="/ranking" component={Ranking}/>
-            <Route path="/screen/:imagePath" component={Screen} />
+            <Route exact path={`/${PAGE_URLS.MAIN_PAGE}`} component={MainPage}/>
+            <Route path={`/${PAGE_URLS.TWO_PLAYERS_MODE}`} component={PlayerGame}/>
+            <Route path={`/${PAGE_URLS.COMPUTER_GAME}`} component={ComputerGame}/>
+            <Route path={`/${PAGE_URLS.SELF_TEACHING}`} component={SelfTeaching}/>
+            <Route path={`/${PAGE_URLS.RULES}`} component={Rules}/>
+            <Route path={`/${PAGE_URLS.ADVICES}`} component={Advices}/>
+            <Route path={`/${PAGE_URLS.RANKING}`} component={Ranking}/>
+
+            {/*<Route path="/screen/:imagePath" component={Screen} />*/}
         </Router>
-    }
+    );
 }
 
 export default App;

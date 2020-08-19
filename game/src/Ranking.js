@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Modal from "react-modal";
 import Screen from "./Screen";
-// Modal.setAppElement('#root');
+import {API_URLS, LEVELS} from "./constans";
+import Engine from "./Engine";
 
 class Ranking extends React.Component {
     constructor(props) {
@@ -13,14 +13,16 @@ class Ranking extends React.Component {
         this.state = {
             games: []
         };
+
+        this.engine = new Engine();
     }
 
     componentDidMount() {
-        this.getGames('łatwy');
+        this.getGames(LEVELS.EASY);
     }
 
     getGames(level) {
-        axios.get(`http://localhost:8000/api/game/${level}`).then(response => {
+        axios.get(`${API_URLS.GAMES}/${level}`).then(response => {
             this.setState({
                 games: response.data
             });
@@ -30,11 +32,12 @@ class Ranking extends React.Component {
     render() {
         return (
             <div className='ranking'><br/>
-                <ButtonGroup aria-label="Basic example" >
-                    <Button variant="info" onClick={() => this.getGames('łatwy')}>Łatwy</Button>
-                    <Button variant="info" onClick={() => this.getGames('średni')}>Średni</Button>
-                    <Button variant="info" onClick={() => this.getGames('trudny')}>Trudny</Button>
-                    <Button variant="info" onClick={() => this.getGames('ekspert')}>Ekspert</Button>
+                <ButtonGroup>
+                    {Object.values(LEVELS).map(level => {
+                        return <Button variant="info" onClick={() => this.getGames(level)}>
+                            {this.engine.upperCaseFirstCharacter(level)}
+                        </Button>
+                    })}
                 </ButtonGroup><br/><br/>
                 <h2 id='headerRanking'>Ranking najlepszych graczy:</h2><br/>
                 <Table striped bordered hover size>
@@ -60,7 +63,7 @@ class Ranking extends React.Component {
                                 <td>
                                     {item.image_path !== ''
                                         ? <Screen imagePath={item.image_path}/>
-                                        : <p>Brak screenu</p>}
+                                        : <p>Brak screena</p>}
                                 </td>
                                 <td>{item.created_at.substr(0, 10)}</td>
                             </tr>
