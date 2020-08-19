@@ -26,12 +26,12 @@ export const PAGE_URLS = {
     SELF_TEACHING: 'samouczek',
     RULES: 'zasady_gry',
     ADVICES: 'porady_strategie',
-    RANKING: 'RANKING',
+    RANKING: 'ranking',
     MAIN_PAGE: 'strona_glowna',
 }
 
 export const API_URLS = {
-    UPLOADS: 'http://localhost:8000/api/game',
+    UPLOADS: 'http://localhost:8000/uploads',
     GAMES: 'http://localhost:8000/api/game'
 };
 
@@ -49,7 +49,7 @@ export const POINTS_VARATIONS = {
 export const SUBPAGES = {
     TWO_PLAYERS_MODE: 'Tryb dla dwóch graczy',
     COMPUTER_GAME: 'Gra z komputerem',
-    SELF_TEACHING: 'samouczek',
+    SELF_TEACHING: 'Samouczek',
     RULES: 'Zasady Gry',
     ADVICES: 'Strategie i porady',
     RANKING: 'Ranking',

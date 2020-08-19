@@ -34,9 +34,11 @@ class Ranking extends React.Component {
             <div className='ranking'><br/>
                 <ButtonGroup>
                     {Object.values(LEVELS).map(level => {
-                        return <Button variant="info" onClick={() => this.getGames(level)}>
-                            {this.engine.upperCaseFirstCharacter(level)}
-                        </Button>
+                        return (
+                            <Button variant="info" onClick={() => this.getGames(level)}>
+                                {this.engine.upperCaseFirstCharacter(level)}
+                            </Button>
+                        );
                     })}
                 </ButtonGroup><br/><br/>
                 <h2 id='headerRanking'>Ranking najlepszych graczy:</h2><br/>

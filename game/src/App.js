@@ -19,6 +19,7 @@ import Engine from "./Engine";
 
 function App() {
     const engine = new Engine();
+
     function mainMenu() {
         if (isInGameSite()) {
             if (window.confirm("Czy na pewno chcesz przejść do głównego menu?")) {

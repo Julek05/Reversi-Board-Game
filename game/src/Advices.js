@@ -2,7 +2,7 @@ import React from 'react'
 
 function Advices() {
     return (
-        <div><br/>
+        <><br/>
             <div className="card border-dark mb-3 advicesAndRules">
                 <div className="card-header" style={{fontSize: 26}}><b>Strategie i porady</b></div>
                 <div className="card-body text-dark">
@@ -23,7 +23,7 @@ function Advices() {
                     </p>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

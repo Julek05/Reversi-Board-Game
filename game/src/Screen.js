@@ -11,7 +11,7 @@ function Screen({ imagePath }) {
     // const { imagePath } = useParams();
 
     return (
-        <div>
+        <>
             <Button variant="success" onClick={() => setModalIsOpen(true)}>Pokaż zdjęcie</Button>
             <Modal
                 isOpen={modalIsOpen}
@@ -33,7 +33,7 @@ function Screen({ imagePath }) {
                     <Button variant="success" onClick={() => setModalIsOpen(false)}>Zamknij</Button>
                 </div>
             </Modal>
-        </div>
+        </>
     );
 }
 
