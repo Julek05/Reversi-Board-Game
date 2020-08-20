@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {PAGE_URLS} from "./constans";
 
 function Authentication() {
-    const { name, setName } = useState('');
+    const [name, setName] = useState('');
 
     function handleChange(event) {
         setName(event.target.value);

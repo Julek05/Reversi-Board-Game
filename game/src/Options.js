@@ -5,8 +5,7 @@ import Engine from "./Engine";
 
 function Options({ scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVisibility, turnImage, backMovementButtonVisibility,
                      backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectStrategies }) {
-    const { image, setImage } = useState('');
-    const engine = new Engine();
+    const [image, setImage] = useState('');
     // screenSenderVisibility: 'hidden'
 
     function handleSubmit(event) {
@@ -81,9 +80,9 @@ function Options({ scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVi
                     <label className="input-group-text" htmlFor="selectStrategies">Poziom trudności</label>
                 </div>
                 <select className="custom-select" id="selectStrategies" defaultValue={"1"} disabled={selectStrategies}>
-                    <option id="maximisationStrategy" value="1">{engine.upperCaseFirstCharacter(LEVELS.EASY)}</option>
-                    <option id="mobilityStrategy" value="2">{engine.upperCaseFirstCharacter(LEVELS.MIDDLE)}</option>
-                    <option id="valuatingFieldsStrategy" value="3">{engine.upperCaseFirstCharacter(LEVELS.HARD)}</option>
+                    <option id="maximisationStrategy" value="1">{Engine.upperCaseFirstCharacter(LEVELS.EASY)}</option>
+                    <option id="mobilityStrategy" value="2">{Engine.upperCaseFirstCharacter(LEVELS.MIDDLE)}</option>
+                    <option id="valuatingFieldsStrategy" value="3">{Engine.upperCaseFirstCharacter(LEVELS.HARD)}</option>
                 </select>
             </div>
         </div>

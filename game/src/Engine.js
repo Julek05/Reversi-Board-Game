@@ -119,7 +119,7 @@ class Engine {
         return false;
     }
 
-    countPoints(board) {
+    static countPoints(board) {
         let player1Points = 0;
         let player2Points = 0;
 
@@ -163,7 +163,7 @@ class Engine {
         }
     }
 
-    setImgPath(valueField) {
+    static setImgPath(valueField) {
         const imgPaths = [
             '',
             `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.BLUE}`,
@@ -201,7 +201,7 @@ class Engine {
         return !this.playerCanMove(nextMoveBoard, nextMoveActivePlayer);
     }
 
-    getLevel(chosenStrategy) {
+    static getLevel(chosenStrategy) {
         const levels = [LEVELS.EASY, LEVELS.MIDDLE, LEVELS.HARD];
 
         return levels[chosenStrategy];
@@ -210,7 +210,7 @@ class Engine {
     sendDataToApi(computerPoints, playerPoints) {
         const data = {
             'player_name': localStorage.getItem("player_name"),
-            'level': this.getLevel(this.getChosenStrategy()),
+            'level': Engine.getLevel(Engine.getChosenStrategy()),
             'player_points': playerPoints,
             'computer_points': computerPoints
         }
@@ -228,7 +228,7 @@ class Engine {
     endGame(board, computerMode) {
         document.getElementById("turnWrapper").style.visibility = "hidden";
 
-        const [pointsPlayer1, pointsPlayer2] = this.countPoints(board);
+        const [pointsPlayer1, pointsPlayer2] = Engine.countPoints(board);
         if (computerMode) {
             this.sendDataToApi(pointsPlayer1, pointsPlayer2);
         } else {
@@ -237,11 +237,11 @@ class Engine {
         return false;
     }
 
-    getChosenStrategy() {
+    static getChosenStrategy() {
         return document.getElementById("selectStrategies").options.selectedIndex.valueOf();
     }
 
-    upperCaseFirstCharacter(phrase) {
+    static upperCaseFirstCharacter(phrase) {
         return `${phrase.slice(0, 1).toUpperCase()}${phrase.slice(1, phrase.length)}`
     }
 }

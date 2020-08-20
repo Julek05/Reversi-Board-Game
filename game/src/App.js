@@ -15,10 +15,8 @@ import Authentication from "./Authentication";
 import Ranking from "./Ranking";
 import {PAGE_URLS, SUBPAGES} from "./constans";
 import Engine from "./Engine";
-// import Screen from "./Screen";
 
 function App() {
-    const engine = new Engine();
 
     function mainMenu() {
         if (isInGameSite()) {
@@ -45,7 +43,7 @@ function App() {
                     <div>
                         <button className="list-group-item list-group-item-action" data-toggle="list" id="subpagesRow"
                                 role="tab" aria-controls="profile" style={{backgroundColor: "coral"}}
-                                onClick={mainMenu}>{engine.upperCaseFirstCharacter(SUBPAGES.MAIN_PAGE)}
+                                onClick={mainMenu}>{Engine.upperCaseFirstCharacter(SUBPAGES.MAIN_PAGE)}
                         </button>
                     </div>
                 </div>
@@ -59,8 +57,6 @@ function App() {
             <Route path={`/${PAGE_URLS.RULES}`} component={Rules}/>
             <Route path={`/${PAGE_URLS.ADVICES}`} component={Advices}/>
             <Route path={`/${PAGE_URLS.RANKING}`} component={Ranking}/>
-
-            {/*<Route path="/screen/:imagePath" component={Screen} />*/}
         </Router>
     );
 }

@@ -28,7 +28,7 @@ function Screen({ imagePath }) {
                 }
                 }
             >
-                <img height='540' width='580' src={`${getImgPath(imagePath)}`} alt=''/>
+                <img height='540' width='580' src={getImgPath(imagePath)} alt=''/>
                 <div>
                     <Button variant="success" onClick={() => setModalIsOpen(false)}>Zamknij</Button>
                 </div>

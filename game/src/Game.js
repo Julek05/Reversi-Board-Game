@@ -3,6 +3,7 @@ import Options from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
 import {DISKS_IMAGES, IMAGES_FOLDER_PATH} from "./constans";
+import Engine from "./Engine";
 
 function Field(props) {
     return (
@@ -33,14 +34,14 @@ class Game extends React.Component {
             uiBlock: false,
             moveComputerAfterHumanGiveUpTurn: false
         };
-        const actualGameState = new GameState([board], 2, true, false);
-        this.gameController = new GameController(actualGameState);
+        this.gameState = new GameState([board], 2, true, false);
+        this.gameController = new GameController(this.gameState);
     }
 
     renderField(y, x, valueField) {
         return (
             <Field
-                value={<img src={`${this.gameController.engine.setImgPath(valueField)}`} className='disk' alt=""/>}
+                value={<img src={Engine.setImgPath(valueField)} className='disk' alt=""/>}
                 onClick={() => this.handleClick(y, x)}
                 key={`${x},${y}`}
             />
@@ -50,7 +51,7 @@ class Game extends React.Component {
     componentDidUpdate() {
         if (this.state.moveComputerAfterHumanGiveUpTurn) {
             setTimeout(() => {
-                const chosenStrategy = this.gameController.engine.getChosenStrategy();
+                const chosenStrategy = Engine.getChosenStrategy();
                 const newState = this.gameController.makeAutomaticMove(chosenStrategy);
                 this.gameController.gameState = newState;
                 this.makeSetState(newState, this);
@@ -62,7 +63,7 @@ class Game extends React.Component {
         if (!this.state.uiBlock) {
             let chosenStrategy;
             if (this.props.computerMode) {
-                chosenStrategy = this.gameController.engine.getChosenStrategy();
+                chosenStrategy = Engine.getChosenStrategy();
             }
             this.gameController.makeMove(y, x, this.props.computerMode, chosenStrategy, this.makeSetState, this);
         }
@@ -72,7 +73,7 @@ class Game extends React.Component {
         obj.setState({
             boards: newState['boards'],
             activePlayer: newState['activePlayer'],
-            turnImage: <img src={`${obj.gameController.engine.setImgPath(newState['activePlayer'])}`}
+            turnImage: <img src={Engine.setImgPath(newState['activePlayer'])}
                             className='turnImage' alt=""/>,
             canMove: newState['canMove'],
             uiBlock: newState['uiBlock'],
@@ -94,17 +95,18 @@ class Game extends React.Component {
 
     render() {
         const board = [];
+        const actualBoard = this.gameState.getCurrentBoardState();
         for (let x = 0; x < 8; x++) {
             const rowBoard = [];
             for (let y = 0; y < 8; y++) {
-                rowBoard.push(this.renderField(y, x, this.gameController.gameState.getCurrentBoardState()[y][x]));
+                rowBoard.push(this.renderField(y, x, actualBoard[y][x]));
             }
             board.push(<div className="board-row" key={x}>{rowBoard}</div>);
         }
-        const [pointsPlayer1, pointsPlayer2] = this.gameController.engine.countPoints(this.gameController.gameState.getCurrentBoardState());
+        const [pointsPlayer1, pointsPlayer2] = Engine.countPoints(actualBoard);
         const giveUpTurn = this.state.canMove ? 'hidden' : 'visible';
-        const giveUpTurnButtonText = this.gameController.engine.setTextOfGiveUpTurnButton(this.gameController.gameState.getCurrentBoardState(),
-              giveUpTurn, this.state.activePlayer);
+        const giveUpTurnButtonText = this.gameController.engine.setTextOfGiveUpTurnButton(actualBoard, giveUpTurn,
+            this.state.activePlayer);
         return (
             <div className="gameContainer">
                 <div id='game' className="boardContainer">
