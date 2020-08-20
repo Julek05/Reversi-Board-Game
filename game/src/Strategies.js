@@ -28,7 +28,7 @@ class Strategies {
     }
 
     makeLastStep(allPossibilities, board) {
-        const [allDisksToTurn, y, x] = this.chooseBestOption(allPossibilities);
+        const [tmp, allDisksToTurn, y, x] = this.chooseBestOption(allPossibilities);
         this.engine.allDisksToTurn = allDisksToTurn;
         return this.engine.turnDisks(board, y, x, 1);
     }
@@ -56,8 +56,9 @@ class Strategies {
 
         let sameBestOptions = 0;
         const firstPossibility = sortedAllPossibilities[0][0];
-        for (const possibility of sortedAllPossibilities) {
-            if (firstPossibility !== possibility[0]) {
+
+        for (let i = 1; i < sortedAllPossibilities.length; i++) {
+            if (firstPossibility !== sortedAllPossibilities[i][0]) {
                 break;
             }
             sameBestOptions++;
@@ -67,9 +68,7 @@ class Strategies {
             Math.floor(Math.random() * (sameBestOptions + 1))
             : sameBestOptions;
 
-        const bestOption = sortedAllPossibilities[index];
-        bestOption.shift();
-        return bestOption;
+        return sortedAllPossibilities[index];
     }
 
     mobilityStrategy(board) {
