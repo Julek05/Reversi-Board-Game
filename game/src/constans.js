@@ -7,8 +7,8 @@ export const LEVELS = {
 export const IMAGES_FOLDER_PATH = 'images';
 
 export const DISKS_IMAGES = {
-    BLACK: 'blue_disk.png',
-    BLUE: 'black_disk.png',
+    BLACK: 'black_disk.png',
+    BLUE: 'blue_disk.png',
     POSSIBILITY_BLUE: 'blue_possibility.png',
     POSSIBILITY_BLACK: 'black_possibility.png',
     TURN_BLUE: 'blue_disk_turn.png',

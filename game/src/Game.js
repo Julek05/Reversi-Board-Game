@@ -2,7 +2,6 @@ import React from 'react'
 import Options from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
-import {DISKS_IMAGES, IMAGES_FOLDER_PATH} from "./constans";
 import Engine from "./Engine";
 
 function Field(props) {
@@ -28,14 +27,14 @@ class Game extends React.Component {
         ];
         this.state = {
             boards: [board],
-            turnImage: <img src={`${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.BLACK}`} className='turnImage' alt=""/>,
+            turnImage: <img src={Engine.setImgPath(0)} className='turnImage' alt=""/>,
             activePlayer: 2,
             canMove: true,
             uiBlock: false,
             moveComputerAfterHumanGiveUpTurn: false
         };
-        this.gameState = new GameState([board], 2, true, false);
-        this.gameController = new GameController(this.gameState);
+        const initialGameState = new GameState([board], 2, true, false);
+        this.gameController = new GameController(initialGameState);
     }
 
     renderField(y, x, valueField) {
@@ -95,7 +94,7 @@ class Game extends React.Component {
 
     render() {
         const board = [];
-        const actualBoard = this.gameState.getCurrentBoardState();
+        const actualBoard = this.gameController.gameState.getCurrentBoardState();
         for (let x = 0; x < 8; x++) {
             const rowBoard = [];
             for (let y = 0; y < 8; y++) {
