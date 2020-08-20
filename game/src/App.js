@@ -19,15 +19,14 @@ import Engine from "./Engine";
 function App() {
 
     function mainMenu() {
-        if (isInGameSite()) {
+        if (isInGameSubpage()) {
             if (window.confirm("Czy na pewno chcesz przejść do głównego menu?")) {
                 window.location.href = PAGE_URLS.MAIN_PAGE;
             }
         }
-        window.location.href = PAGE_URLS.MAIN_PAGE;
     }
 
-    function isInGameSite() {
+    function isInGameSubpage() {
         return actualUrlInclude(PAGE_URLS.TWO_PLAYERS_MODE) || actualUrlInclude(PAGE_URLS.COMPUTER_GAME)
             || actualUrlInclude(PAGE_URLS.SELF_TEACHING);
     }
@@ -50,7 +49,7 @@ function App() {
             </div>
 
             <Route exact path="/" component={Authentication}/>
-            <Route exact path={`/${PAGE_URLS.MAIN_PAGE}`} component={MainPage}/>
+            <Route path={`/${PAGE_URLS.MAIN_PAGE}`} component={MainPage}/>
             <Route path={`/${PAGE_URLS.TWO_PLAYERS_MODE}`} component={PlayerGame}/>
             <Route path={`/${PAGE_URLS.COMPUTER_GAME}`} component={ComputerGame}/>
             <Route path={`/${PAGE_URLS.SELF_TEACHING}`} component={SelfTeaching}/>
