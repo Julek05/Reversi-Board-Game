@@ -1,5 +1,5 @@
-import GameController from "./GameController";
-import GameState from "./GameState";
+const GameController = require('./GameController');
+const GameState = require('./GameState');
 
 const testBoard = [
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -671,141 +671,11 @@ const expectedBoardAfterMove21 = [
 ];
 
 test("makeAutomaticMove() - strategia mobilności - ta sama ilość możliwych ruchów przeciwnika," +
-     " ale w jednej sytuacji jedną z opcji ruchu przeciwnika będzie C-square", () => {
+    " ale w jednej sytuacji jedną z opcji ruchu przeciwnika będzie C-square", () => {
     const actualGameState = new GameState([testBoard21], 1, true, true);
     const gameController = new GameController(actualGameState);
 
     const expectedGameState = new GameState([testBoard21, expectedBoardAfterMove21], 2, true, false);
 
     expect(gameController.makeAutomaticMove(1)).toEqual(expectedGameState);
-});
-
-
-const testBoard22 = [
-    [3, 2, 1, 0, 0, 0, 0, 0],
-    [0, 3, 0, 0, 0, 0, 0, 0],
-    [0, 0, 2, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 2, 0, 3, 0, 0],
-    [0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 3, 0, 0, 0, 0]
-];
-
-const expectedBoardAfterMove22 = [
-    [1, 1, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 2, 4, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-];
-
-//allStrategiesFixed()
-test("makeAutomaticMove() - łączenie strategii  - komputer wykonuje ruch według strategii wartościowania pól", () => {
-    const actualGameState = new GameState([testBoard22], 1, true, true);
-    const gameController = new GameController(actualGameState);
-
-    const expectedGameState = new GameState([testBoard22, expectedBoardAfterMove22], 2, true, false);
-
-    expect(gameController.makeAutomaticMove(3)).toEqual(expectedGameState);
-});
-
-
-const testBoard23 = [
-    [3, 0, 0, 0, 0, 0, 0, 0],
-    [0, 2, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 1],
-    [0, 0, 0, 2, 0, 0, 0, 2],
-    [0, 0, 0, 0, 2, 0, 0, 3],
-    [0, 0, 0, 0, 0, 3, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-];
-
-const expectedBoardAfterMove23 = [
-    [1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 4],
-    [0, 0, 1, 0, 0, 0, 0, 1],
-    [0, 0, 0, 2, 0, 0, 0, 2],
-    [0, 0, 0, 0, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-];
-
-test("makeAutomaticMove() - łączenie strategii - pomimo, że najlepszy ruch dla strategii mobilności i maksymalizacji jest taki sam " +
-     "to komputer wykonuje ruch według strategii wartościowania pól ponieważ zajmuje róg - jest to jeden z wyjątków", () => {
-    const actualGameState = new GameState([testBoard23], 1, true, true);
-    const gameController = new GameController(actualGameState);
-
-    const expectedGameState = new GameState([testBoard23, expectedBoardAfterMove23], 2, true, false);
-
-    expect(gameController.makeAutomaticMove(3)).toEqual(expectedGameState);
-});
-
-
-const testBoard24 = [
-    [2, 0, 0, 1, 2, 3, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 3, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-];
-
-const expectedBoardAfterMove24 = [
-    [2, 0, 4, 1, 2, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 4, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-];
-
-test("makeAutomaticMove() - łączenie strategii - komputer wykonuje ruch według strategii maksymalizacji i mobilności", () => {
-    const actualGameState = new GameState([testBoard24], 1, true, true);
-    const gameController = new GameController(actualGameState);
-
-    const expectedGameState = new GameState([testBoard24, expectedBoardAfterMove24], 2, true, false);
-
-    expect(gameController.makeAutomaticMove(3)).toEqual(expectedGameState);
-});
-
-
-const testBoard25 = [
-    [1, 1, 2, 2, 2, 2, 3, 1],
-    [1, 3, 1, 2, 2, 2, 2, 2],
-    [1, 2, 2, 1, 1, 1, 2, 1],
-    [1, 1, 2, 2, 1, 1, 2, 1],
-    [1, 1, 2, 1, 1, 1, 2, 1],
-    [1, 1, 1, 1, 1, 1, 2, 1],
-    [1, 1, 1, 2, 2, 2, 2, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1]
-];
-
-const expectedBoardAfterMove25 = [
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 4, 1, 2, 2, 1, 1, 2],
-    [1, 2, 2, 1, 1, 1, 1, 1],
-    [1, 1, 2, 2, 1, 1, 1, 1],
-    [1, 1, 2, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 2, 2, 2, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1]
-];
-
-test("makeAutomaticMove() - łączenie strategii - wszystkie strategie wskazują na ten sam ruch", () => {
-    const actualGameState = new GameState([testBoard25], 1, true, true);
-    const gameController = new GameController(actualGameState);
-
-    const expectedGameState = new GameState([testBoard25, expectedBoardAfterMove25], 2, true, false);
-
-    expect(gameController.makeAutomaticMove(3)).toEqual(expectedGameState);
 });

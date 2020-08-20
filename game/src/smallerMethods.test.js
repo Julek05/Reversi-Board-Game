@@ -1,7 +1,5 @@
-import Engine from "./Engine";
+const Engine = require('./Engine');
 const engine = new Engine();
-import Strategies from "./Strategies";
-const strategies = new Strategies();
 
 const testBoard1 = [
     [0, 0, 2, 2, 2, 2, 2, 0],
