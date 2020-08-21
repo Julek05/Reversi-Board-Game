@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react'
 import Options from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
-import Engine from "./Engine";
 import Field from "./Field";
+import Utils from "./Utils";
 
-function Game([backMovementButtonVisibility, strategiesVisibility, computerMode]) {
+function Game(props) {
+    const {backMovementButtonVisibility, strategiesVisibility, computerMode} = props;
     const initialBoard = [
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
@@ -17,7 +18,7 @@ function Game([backMovementButtonVisibility, strategiesVisibility, computerMode]
         [0, 0, 0, 0, 0, 0, 0, 0]
     ];
     const [boards, setBoards] = useState([initialBoard]);
-    const [turnImage, setTurnImage] = useState(<img src={Engine.setImgPath(2)} className='turnImage' alt=""/>);
+    const [turnImage, setTurnImage] = useState(<img src={Utils.setImgPath(2)} className='turnImage' alt=""/>);
     const [activePlayer, setActivePlayer] = useState(2);
     const [canMove, setCanMove] = useState(true);
     const [uiBlock, setUiBlock] = useState(false);
@@ -31,7 +32,7 @@ function Game([backMovementButtonVisibility, strategiesVisibility, computerMode]
     function renderField(y, x, valueField) {
         return (
             <Field
-                value={<img src={Engine.setImgPath(valueField)} className='disk' alt=""/>}
+                value={<img src={Utils.setImgPath(valueField)} className='disk' alt=""/>}
                 onClick={handleClick(y, x)}
                 key={`${x},${y}`}
             />
@@ -41,17 +42,17 @@ function Game([backMovementButtonVisibility, strategiesVisibility, computerMode]
     useEffect(() => {
         if (moveComputerAfterHumanGiveUpTurn) {
             setTimeout(() => {
-                const chosenStrategy = Engine.getChosenStrategy();
+                const chosenStrategy = Utils.getChosenStrategy();
                 const newState = gameController.makeAutomaticMove(chosenStrategy);
-                useCallState(newState);
+                makeSetState(newState);
             }, 500);
         }
     })
 
-    const useCallState = newState => {
+    function makeSetState(newState) {
         setBoards(newState['boards']);
         setActivePlayer(newState['activePlayer']);
-        setTurnImage(<img src={Engine.setImgPath(newState['activePlayer'])} className='turnImage' alt=""/>);
+        setTurnImage(<img src={Utils.setImgPath(newState['activePlayer'])} className='turnImage' alt=""/>);
         setCanMove(newState['canMove']);
         setUiBlock(newState['uiBlock']);
         setMoveComputerAfterHumanGiveUpTurn(newState['moveComputerAfterHumanGiveUpTurn']);
@@ -61,9 +62,9 @@ function Game([backMovementButtonVisibility, strategiesVisibility, computerMode]
         if (!uiBlock) {
             let chosenStrategy;
             if (computerMode) {
-                chosenStrategy = Engine.getChosenStrategy();
+                chosenStrategy = Utils.getChosenStrategy();
             }
-            gameController.makeMove(y, x, computerMode, chosenStrategy, useCallState);
+            gameController.makeMove(y, x, computerMode, chosenStrategy, makeSetState);
         }
     }
 
@@ -88,7 +89,7 @@ function Game([backMovementButtonVisibility, strategiesVisibility, computerMode]
         }
         board.push(<div className="board-row" key={x}>{rowBoard}</div>);
     }
-    const [pointsPlayer1, pointsPlayer2] = Engine.countPoints(actualBoard);
+    const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(actualBoard);
     const giveUpTurn = canMove ? 'hidden' : 'visible';
     const giveUpTurnButtonText = engine.setTextOfGiveUpTurnButton(actualBoard, giveUpTurn, activePlayer);
 

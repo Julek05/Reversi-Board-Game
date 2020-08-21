@@ -1,6 +1,6 @@
 import React from "react";
 
-function Field([value, onClick]) {
+function Field({value, onClick}) {
     return (
         <button className="field" onClick={onClick}>
             {value}
