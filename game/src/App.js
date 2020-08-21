@@ -15,7 +15,6 @@ import ComputerGame from './ComputerGame'
 import Authentication from "./Authentication";
 import Ranking from "./Ranking";
 import {PAGE_URLS, SUBPAGES} from "./constans";
-import Utils from "./Utils";
 
 function App() {
 

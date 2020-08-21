@@ -1,131 +1,114 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Options from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
 import Engine from "./Engine";
+import Field from "./Field";
 
-function Field([value, onClick]) {
-    return (
-        <button className="field" onClick={onClick}>
-            {value}
-        </button>
-    )
-}
+function Game([backMovementButtonVisibility, strategiesVisibility, computerMode]) {
+    const initialBoard = [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 4, 0, 0, 0, 0],
+        [0, 0, 4, 1, 2, 0, 0, 0],
+        [0, 0, 0, 2, 1, 4, 0, 0],
+        [0, 0, 0, 0, 4, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    const [boards, setBoards] = useState([initialBoard]);
+    const [turnImage, setTurnImage] = useState(<img src={Engine.setImgPath(2)} className='turnImage' alt=""/>);
+    const [activePlayer, setActivePlayer] = useState(2);
+    const [canMove, setCanMove] = useState(true);
+    const [uiBlock, setUiBlock] = useState(false);
+    const [moveComputerAfterHumanGiveUpTurn, setMoveComputerAfterHumanGiveUpTurn] = useState(false);
 
-class Game extends React.Component {
-    constructor(props) {
-        super(props);
-        const initialBoard = [
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 4, 0, 0, 0, 0],
-            [0, 0, 4, 1, 2, 0, 0, 0],
-            [0, 0, 0, 2, 1, 4, 0, 0],
-            [0, 0, 0, 0, 4, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0]
-        ];
-        this.state = {
-            boards: [board],
-            turnImage: <img src={Engine.setImgPath(2)} className='turnImage' alt=""/>,
-            activePlayer: 2,
-            canMove: true,
-            uiBlock: false,
-            moveComputerAfterHumanGiveUpTurn: false
-        };
-        const initialGameState = new GameState([initialBoard], 2, true, false);
-        this.gameController = new GameController(initialGameState);
-        this.gameState = this.gameController.gameState;
-        this.engine = this.gameController.engine;
-    }
+    const initialGameState = new GameState([initialBoard], 2, true, false);
+    const gameController = new GameController(initialGameState);
+    let gameState = gameController.gameState;
+    const engine = gameController.engine;
 
-    renderField(y, x, valueField) {
+    function renderField(y, x, valueField) {
         return (
             <Field
                 value={<img src={Engine.setImgPath(valueField)} className='disk' alt=""/>}
-                onClick={() => this.handleClick(y, x)}
+                onClick={handleClick(y, x)}
                 key={`${x},${y}`}
             />
         );
     }
 
-    componentDidUpdate() {
-        if (this.state.moveComputerAfterHumanGiveUpTurn) {
+    useEffect(() => {
+        if (moveComputerAfterHumanGiveUpTurn) {
             setTimeout(() => {
                 const chosenStrategy = Engine.getChosenStrategy();
-                const newState = this.gameController.makeAutomaticMove(chosenStrategy);
-                this.gameState = newState;
-                this.makeSetState(newState, this);
+                const newState = gameController.makeAutomaticMove(chosenStrategy);
+                useCallState(newState);
             }, 500);
         }
+    })
+
+    const useCallState = newState => {
+        setBoards(newState['boards']);
+        setActivePlayer(newState['activePlayer']);
+        setTurnImage(<img src={Engine.setImgPath(newState['activePlayer'])} className='turnImage' alt=""/>);
+        setCanMove(newState['canMove']);
+        setUiBlock(newState['uiBlock']);
+        setMoveComputerAfterHumanGiveUpTurn(newState['moveComputerAfterHumanGiveUpTurn']);
     }
 
-    handleClick(y, x) {
-        if (!this.state.uiBlock) {
+    function handleClick(y, x) {
+        if (!uiBlock) {
             let chosenStrategy;
-            if (this.props.computerMode) {
+            if (computerMode) {
                 chosenStrategy = Engine.getChosenStrategy();
             }
-            this.gameController.makeMove(y, x, this.props.computerMode, chosenStrategy, this.makeSetState, this);
+            gameController.makeMove(y, x, computerMode, chosenStrategy, useCallState);
         }
     }
 
-    makeSetState(newState, obj) {
-        obj.setState({
-            boards: newState['boards'],
-            activePlayer: newState['activePlayer'],
-            turnImage: <img src={Engine.setImgPath(newState['activePlayer'])}
-                            className='turnImage' alt=""/>,
-            canMove: newState['canMove'],
-            uiBlock: newState['uiBlock'],
-            moveComputerAfterHumanGiveUpTurn: newState['moveComputerAfterHumanGiveUpTurn']
-        });
+    function handleClickRevertLastMove() {
+        // const newState = gameController.revertLastMove();
+        // makeSetState(newState);
     }
 
-    handleClickRevertLastMove() {
-        const newState = this.gameController.revertLastMove();
-        this.makeSetState(newState, this);
+    function handleClickGiveUpTurn() {
+        // const newState = gameController.giveUpTurn(computerMode);
+        // if (newState !== null) {
+        //     makeSetState(newState);
+        // }
     }
 
-    handleClickGiveUpTurn() {
-        const newState = this.gameController.giveUpTurn(this.props.computerMode);
-        if (newState !== null) {
-            this.makeSetState(newState, this);
+    const board = [];
+    const actualBoard = gameState.getCurrentBoardState();
+    for (let x = 0; x < 8; x++) {
+        const rowBoard = [];
+        for (let y = 0; y < 8; y++) {
+            rowBoard.push(renderField(y, x, actualBoard[y][x]));
         }
+        board.push(<div className="board-row" key={x}>{rowBoard}</div>);
     }
+    const [pointsPlayer1, pointsPlayer2] = Engine.countPoints(actualBoard);
+    const giveUpTurn = canMove ? 'hidden' : 'visible';
+    const giveUpTurnButtonText = engine.setTextOfGiveUpTurnButton(actualBoard, giveUpTurn, activePlayer);
 
-    render() {
-        const board = [];
-        const actualBoard = this.gameState.getCurrentBoardState();
-        for (let x = 0; x < 8; x++) {
-            const rowBoard = [];
-            for (let y = 0; y < 8; y++) {
-                rowBoard.push(this.renderField(y, x, actualBoard[y][x]));
-            }
-            board.push(<div className="board-row" key={x}>{rowBoard}</div>);
-        }
-        const [pointsPlayer1, pointsPlayer2] = Engine.countPoints(actualBoard);
-        const giveUpTurn = this.state.canMove ? 'hidden' : 'visible';
-        const giveUpTurnButtonText = this.engine.setTextOfGiveUpTurnButton(actualBoard, giveUpTurn,
-            this.state.activePlayer);
-        return (
-            <div className="gameContainer">
-                <div id='game' className="boardContainer">
-                    {board}
-                </div>
-                <div className="optionsContainer">
-                    <Options scoredDisksFirstPlayer={pointsPlayer1} scoredDisksSecondPlayer={pointsPlayer2}
-                             strategiesVisibility={this.props.strategiesVisibility} turnImage={this.state.turnImage}
-                             backMovementButtonVisibility={this.props.backMovementButtonVisibility}
-                             backMovement={() => this.handleClickRevertLastMove()}
-                             giveUpTurn={giveUpTurn} giveUpTurnClick={() => this.handleClickGiveUpTurn()}
-                             giveUpTurnButtonText={giveUpTurnButtonText}
-                             selectStrategies={this.gameController.firstMove}
-                    />
-                </div>
+    return (
+        <div className="gameContainer">
+            <div id='game' className="boardContainer">
+                {board}
             </div>
-        );
-    }
+            <div className="optionsContainer">
+                <Options scoredDisksFirstPlayer={pointsPlayer1} scoredDisksSecondPlayer={pointsPlayer2}
+                         strategiesVisibility={strategiesVisibility} turnImage={turnImage}
+                         backMovementButtonVisibility={backMovementButtonVisibility}
+                         backMovement={handleClickRevertLastMove}
+                         giveUpTurn={giveUpTurn} giveUpTurnClick={handleClickGiveUpTurn}
+                         giveUpTurnButtonText={giveUpTurnButtonText}
+                         selectStrategies={gameController.firstMove}
+                />
+            </div>
+        </div>
+    );
 }
 
-export default Game
+export default Game;

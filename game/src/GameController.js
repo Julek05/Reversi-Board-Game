@@ -99,16 +99,16 @@ class GameController {
         }
     }
 
-    makeMove(y, x, computerMode, chosenStrategy, callback, obj) {
+    makeMove(y, x, computerMode, chosenStrategy, callback) {
         const newState = this.makeManualMove(y, x, computerMode);
         this.gameState = newState;
-        callback(newState, obj);
+        callback(newState);
 
         if (computerMode && newState['canMove'] && !newState['computerBlock']) {
             setTimeout(() => {
                 const newState = this.makeAutomaticMove(chosenStrategy);
                 this.gameState = newState;
-                callback(newState, obj);
+                callback(newState);
             }, 500);
         }
     }
