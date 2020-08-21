@@ -1,5 +1,5 @@
-const Utils = require('./Engine');
-const engine = new Utils();
+const Engine = require('./Engine');
+const engine = new Engine();
 
 const testBoard1 = [
     [0, 0, 2, 2, 2, 2, 2, 0],
