@@ -3,7 +3,8 @@ import React from 'react'
 import './style.css'
 import {
     BrowserRouter as Router,
-    Route
+    Route,
+    Link
 } from 'react-router-dom';
 import PlayerGame from './PlayerGame'
 import MainPage from './MainPage'
@@ -40,10 +41,10 @@ function App() {
             <div className="row" id="subpages">
                 <div className="list-group" id="list-tab" role="tablist">
                     <div>
-                        <button className="list-group-item list-group-item-action" data-toggle="list" id="subpagesRow"
-                                role="tab" aria-controls="profile" style={{backgroundColor: "coral"}}
-                                onClick={mainMenu}>{Engine.upperCaseFirstCharacter(SUBPAGES.MAIN_PAGE)}
-                        </button>
+                        <Link className="list-group-item list-group-item-action" data-toggle="list" id="subpagesRow"
+                            style={{backgroundColor: "coral"}} to={`/${PAGE_URLS.MAIN_PAGE}`} role="tab" aria-controls="profile">
+                            {Engine.upperCaseFirstCharacter(SUBPAGES.MAIN_PAGE)}
+                        </Link>
                     </div>
                 </div>
             </div>
