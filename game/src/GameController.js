@@ -40,7 +40,7 @@ class GameController {
 
         const boardAfterMove = Utils.deepCopy(this.useChosenStrategy(boardWithoutPossibilities, chosenStrategy));
         const activePlayerAfterMove = Utils.changeActivePlayer(activePlayer);
-        const boardAfterMoveWithPossibilities = Utils.addMovePossibilities(boardAfterMove, activePlayerAfterMove);
+        const boardAfterMoveWithPossibilities = this.engine.addMovePossibilities(boardAfterMove, activePlayerAfterMove);
 
         newBoards.push(boardAfterMoveWithPossibilities);
         const canMove = !Utils.boardsAreEqual(boardAfterMove, boardAfterMoveWithPossibilities);

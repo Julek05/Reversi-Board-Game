@@ -1,3 +1,4 @@
+import Utils from "./Utils";
 
 class GameState {
     constructor(boards, activePlayer, canMove, uiBlock, computerBlock = true,
@@ -11,7 +12,7 @@ class GameState {
     }
 
     getCurrentBoardState() {
-        return JSON.parse(JSON.stringify(this.boards[this.boards.length - 1]));
+        return Utils.deepCopy(this.boards[this.boards.length - 1]);
     }
 }
 

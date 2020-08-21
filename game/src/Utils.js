@@ -115,7 +115,6 @@ class Utils {
         return JSON.parse(JSON.stringify(objectToCopy));
     }
 
-
     static isC_square(y, x) {
         const C_squareFields = [[0, 1], [1, 0], [0, 6], [1, 7], [6, 0], [7, 1], [6, 7], [7, 6]];
         for (const [y_, x_] of C_squareFields) {
@@ -141,8 +140,8 @@ class Utils {
     }
 
     static insideTheBoard(y, x) {
-        return (y >= 0 && y <= 7 && x >= 0 && x <= 7);
-        // return [0, 1, 2, 3, 4, 5, 6, 7].includes(y, x);
+        const boardRange = [0, 1, 2, 3, 4, 5, 6, 7];
+        return boardRange.includes(y) && boardRange.includes(x);
     }
 
     static deleteMovePossibilities(board) {

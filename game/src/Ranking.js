@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Screen from "./Screen";
 import {API_URLS, LEVELS} from "./constans";
-import Engine from "./Engine";
+import Utils from "./Utils";
 
 function Ranking()  {
     const [games, setGames] = useState([]);

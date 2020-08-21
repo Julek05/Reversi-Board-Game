@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-// import {useParams} from "react-router-dom";
 import Modal from 'react-modal';
 import Button from "react-bootstrap/Button";
 import {API_URLS} from "./constans";
@@ -8,7 +7,6 @@ Modal.setAppElement('#root');
 
 function Screen({ imagePath }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    // const { imagePath } = useParams();
 
     return (
         <>

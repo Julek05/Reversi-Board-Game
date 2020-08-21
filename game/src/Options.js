@@ -3,8 +3,8 @@ import axios from "axios";
 import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "./constans";
 import Engine from "./Engine";
 
-function Options({ scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVisibility, turnImage, backMovementButtonVisibility,
-                     backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectStrategies }) {
+function Options([ scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVisibility, turnImage, backMovementButtonVisibility,
+                     backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectStrategies ]) {
     const [image, setImage] = useState('');
     // screenSenderVisibility: 'hidden'
 

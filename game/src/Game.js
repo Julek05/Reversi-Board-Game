@@ -4,10 +4,10 @@ import GameController from "./GameController";
 import GameState from "./GameState";
 import Engine from "./Engine";
 
-function Field(props) {
+function Field([value, onClick]) {
     return (
-        <button className="field" onClick={props.onClick}>
-            {props.value}
+        <button className="field" onClick={onClick}>
+            {value}
         </button>
     )
 }
@@ -15,7 +15,7 @@ function Field(props) {
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        const board = [
+        const initialBoard = [
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 4, 0, 0, 0, 0],
@@ -33,8 +33,10 @@ class Game extends React.Component {
             uiBlock: false,
             moveComputerAfterHumanGiveUpTurn: false
         };
-        const initialGameState = new GameState([board], 2, true, false);
+        const initialGameState = new GameState([initialBoard], 2, true, false);
         this.gameController = new GameController(initialGameState);
+        this.gameState = this.gameController.gameState;
+        this.engine = this.gameController.engine;
     }
 
     renderField(y, x, valueField) {
@@ -52,7 +54,7 @@ class Game extends React.Component {
             setTimeout(() => {
                 const chosenStrategy = Engine.getChosenStrategy();
                 const newState = this.gameController.makeAutomaticMove(chosenStrategy);
-                this.gameController.gameState = newState;
+                this.gameState = newState;
                 this.makeSetState(newState, this);
             }, 500);
         }
@@ -94,7 +96,7 @@ class Game extends React.Component {
 
     render() {
         const board = [];
-        const actualBoard = this.gameController.gameState.getCurrentBoardState();
+        const actualBoard = this.gameState.getCurrentBoardState();
         for (let x = 0; x < 8; x++) {
             const rowBoard = [];
             for (let y = 0; y < 8; y++) {
@@ -104,7 +106,7 @@ class Game extends React.Component {
         }
         const [pointsPlayer1, pointsPlayer2] = Engine.countPoints(actualBoard);
         const giveUpTurn = this.state.canMove ? 'hidden' : 'visible';
-        const giveUpTurnButtonText = this.gameController.engine.setTextOfGiveUpTurnButton(actualBoard, giveUpTurn,
+        const giveUpTurnButtonText = this.engine.setTextOfGiveUpTurnButton(actualBoard, giveUpTurn,
             this.state.activePlayer);
         return (
             <div className="gameContainer">
