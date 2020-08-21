@@ -27,7 +27,7 @@ class Game extends React.Component {
         ];
         this.state = {
             boards: [board],
-            turnImage: <img src={Engine.setImgPath(0)} className='turnImage' alt=""/>,
+            turnImage: <img src={Engine.setImgPath(2)} className='turnImage' alt=""/>,
             activePlayer: 2,
             canMove: true,
             uiBlock: false,

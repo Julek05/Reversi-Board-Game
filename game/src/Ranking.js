@@ -24,7 +24,7 @@ function Ranking()  {
                 {Object.values(LEVELS).map(level => {
                     return (
                         <Button variant="info" key={level} onClick={() => getGames(level)}>
-                            {Engine.upperCaseFirstCharacter(level)}
+                            {Utils.upperCaseFirstCharacter(level)}
                         </Button>
                     );
                 })}

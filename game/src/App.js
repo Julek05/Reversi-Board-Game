@@ -15,7 +15,7 @@ import ComputerGame from './ComputerGame'
 import Authentication from "./Authentication";
 import Ranking from "./Ranking";
 import {PAGE_URLS, SUBPAGES} from "./constans";
-import Engine from "./Engine";
+import Utils from "./Utils";
 
 function App() {
 
@@ -43,7 +43,7 @@ function App() {
                     <div>
                         <Link className="list-group-item list-group-item-action" data-toggle="list" id="subpagesRow"
                             style={{backgroundColor: "coral"}} to={`/${PAGE_URLS.MAIN_PAGE}`} role="tab" aria-controls="profile">
-                            {Engine.upperCaseFirstCharacter(SUBPAGES.MAIN_PAGE)}
+                            {SUBPAGES.MAIN_PAGE}
                         </Link>
                     </div>
                 </div>
