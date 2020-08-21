@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 import axios from "axios";
 import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "./constans";
-import Engine from "./Engine";
+import Utils from "./Utils";
 
-function Options([ scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVisibility, turnImage, backMovementButtonVisibility,
-                     backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectStrategies ]) {
+function Options(props) {
     const [image, setImage] = useState('');
     // screenSenderVisibility: 'hidden'
+
+    const { scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVisibility, turnImage, backMovementButtonVisibility,
+        backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectStrategies } = props;
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -80,9 +82,9 @@ function Options([ scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVi
                     <label className="input-group-text" htmlFor="selectStrategies">Poziom trudności</label>
                 </div>
                 <select className="custom-select" id="selectStrategies" defaultValue={"1"} disabled={selectStrategies}>
-                    <option id="maximisationStrategy" value="1">{Engine.upperCaseFirstCharacter(LEVELS.EASY)}</option>
-                    <option id="mobilityStrategy" value="2">{Engine.upperCaseFirstCharacter(LEVELS.MIDDLE)}</option>
-                    <option id="valuatingFieldsStrategy" value="3">{Engine.upperCaseFirstCharacter(LEVELS.HARD)}</option>
+                    <option id="maximisationStrategy" value="1">{Utils.upperCaseFirstCharacter(LEVELS.EASY)}</option>
+                    <option id="mobilityStrategy" value="2">{Utils.upperCaseFirstCharacter(LEVELS.MIDDLE)}</option>
+                    <option id="valuatingFieldsStrategy" value="3">{Utils.upperCaseFirstCharacter(LEVELS.HARD)}</option>
                 </select>
             </div>
         </div>

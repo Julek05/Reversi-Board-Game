@@ -3,9 +3,9 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Screen from "./Screen";
 import {API_URLS, LEVELS} from "./constans";
 import Utils from "./Utils";
+import Tr from "./Tr";
 
 function Ranking()  {
     const [games, setGames] = useState([]);
@@ -44,19 +44,7 @@ function Ranking()  {
                 </thead>
                 <tbody>
                     {games && games.map((game, index) =>
-                        <tr key={game.id}>
-                            <td>{index + 1}</td>
-                            <td>{game.player_name}</td>
-                            <td>{game.level}</td>
-                            <td>{game.player_points}</td>
-                            <td>{game.computer_points}</td>
-                            <td>
-                                {game.image_path !== ''
-                                    ? <Screen imagePath={game.image_path}/>
-                                    : <p>Brak screena</p>}
-                            </td>
-                            <td>{game.created_at.substr(0, 10)}</td>
-                        </tr>
+                       <Tr game={game} index={index} />
                     )}
                 </tbody>
             </Table>
