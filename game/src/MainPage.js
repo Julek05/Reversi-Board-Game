@@ -1,5 +1,5 @@
 import React from 'react'
-import {IMAGES_FOLDER_PATH, MAIN_PAGE_IMAGES, PAGE_URLS, SUBPAGES} from "./constans";
+import {IMAGES_FOLDER_PATH, MAIN_PAGE_IMAGES, PAGE_URLS, SUBPAGES} from "./constants";
 import { Link } from 'react-router-dom';
 
 function MainPage() {

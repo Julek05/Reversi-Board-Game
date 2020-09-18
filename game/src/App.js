@@ -14,26 +14,28 @@ import SelfTeaching from './SelfTeaching'
 import ComputerGame from './ComputerGame'
 import Authentication from "./Authentication";
 import Ranking from "./Ranking";
-import {PAGE_URLS, SUBPAGES} from "./constans";
+import {PAGE_URLS, SUBPAGES} from "./constants";
 
 function App() {
 
-    function mainMenu() {
-        if (isInGameSubpage()) {
-            if (window.confirm("Czy na pewno chcesz przejść do głównego menu?")) {
-                window.location.href = PAGE_URLS.MAIN_PAGE;
-            }
-        }
-    }
-
-    function isInGameSubpage() {
-        return actualUrlInclude(PAGE_URLS.TWO_PLAYERS_MODE) || actualUrlInclude(PAGE_URLS.COMPUTER_GAME)
-            || actualUrlInclude(PAGE_URLS.SELF_TEACHING);
-    }
-
-    function actualUrlInclude(pattern) {
-        return window.location.href.includes(pattern);
-    }
+    // function mainMenu() {
+    //     if (isInGameSubpage()) {
+    //         if (window.confirm("Czy na pewno chcesz przejść do głównego menu?")) {
+    //             window.location.href = PAGE_URLS.MAIN_PAGE;
+    //         }
+    //     } else {
+    //         window.location.href = PAGE_URLS.MAIN_PAGE;
+    //     }
+    // }
+    //
+    // function isInGameSubpage() {
+    //     return actualUrlInclude(PAGE_URLS.TWO_PLAYERS_MODE) || actualUrlInclude(PAGE_URLS.COMPUTER_GAME)
+    //         || actualUrlInclude(PAGE_URLS.SELF_TEACHING);
+    // }
+    //
+    // function actualUrlInclude(pattern) {
+    //     return window.location.href.includes(pattern);
+    // }
 
     return (
         <Router>

@@ -1,6 +1,7 @@
 import Strategies from "./Strategies";
 import GameState from "./GameState";
 import Utils from "./Utils";
+import {PLAYERS, TIMES_TO_WAIT_IN_MILISECONDS} from "./constants";
 
 class GameController {
     constructor(gameState) {
@@ -69,8 +70,8 @@ class GameController {
             const activePlayerAfterRevertMove = Utils.changeActivePlayer(this.gameState.activePlayer);
             const boardAfterRevertMove = this.engine.addMovePossibilities(board, activePlayerAfterRevertMove);
             const canMove = Utils.playerCanMove(boardAfterRevertMove, activePlayerAfterRevertMove);
-            const uiBlock = activePlayerAfterRevertMove === 1;
-            const computerBlock = activePlayerAfterRevertMove === 2;
+            const uiBlock = activePlayerAfterRevertMove === PLAYERS.FIRST_PLAYER;
+            const computerBlock = activePlayerAfterRevertMove === PLAYERS.SECOND_PLAYER;
             this.gameState = new GameState(newBoards, activePlayerAfterRevertMove, canMove, uiBlock, computerBlock);
         }
         return this.gameState;
@@ -83,11 +84,11 @@ class GameController {
         const boardWithPossibilities = this.engine.addMovePossibilities(board, activePlayerAfterGiveUpTurn);
         const canMove = !Utils.boardsAreEqual(board, boardWithPossibilities);
 
-        const turnOffPossibilities = activePlayerAfterGiveUpTurn === 1 && computerMode;
+        const turnOffPossibilities = activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode;
         newBoards.push(turnOffPossibilities ? board : boardWithPossibilities);
 
-        const uiBlock = activePlayerAfterGiveUpTurn === 1 && computerMode;
-        const computerBlock = !(activePlayerAfterGiveUpTurn === 1 && computerMode);
+        const uiBlock = activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode;
+        const computerBlock = !(activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode);
         const moveComputerAfterHumanGiveUpTurn = !computerBlock;
 
         if (canMove) {
@@ -109,7 +110,7 @@ class GameController {
                 const newState = this.makeAutomaticMove(chosenStrategy);
                 this.gameState = newState;
                 callback(newState, obj);
-            }, 500);
+            }, TIMES_TO_WAIT_IN_MILISECONDS.COMPUTER_MOVE);
         }
     }
 }

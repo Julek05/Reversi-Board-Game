@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
 import Button from "react-bootstrap/Button";
-import {API_URLS} from "./constans";
+import {API_URLS} from "./constants";
 
 Modal.setAppElement('#root');
 
@@ -23,8 +23,7 @@ function Screen({ imagePath }) {
                         marginRight           : '-50%',
                         transform             : 'translate(-50%, -50%)'
                     }
-                }
-                }
+                }}
             >
                 <img height='540' width='580' src={getImgPath(imagePath)} alt=''/>
                 <div>

@@ -1,3 +1,5 @@
+import {PLAYERS} from "./constants";
+
 const GameController = require('./GameController');
 const GameState = require('./GameState');
 
@@ -24,10 +26,10 @@ const expectedBoardAfterMove = [
 ];
 
 test("makeManualMove() - pierwszy ruch w grze", () => {
-    const actualGameState = new GameState([testBoard], 2, true, false, true);
+    const actualGameState = new GameState([testBoard], PLAYERS.SECOND_PLAYER, true, false, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard, expectedBoardAfterMove], 1, true, false, true);
+    const expectedGameState = new GameState([testBoard, expectedBoardAfterMove], PLAYERS.FIRST_PLAYER, true, false, true);
 
     expect(gameController.makeManualMove(5, 4, false)).toEqual(expectedGameState);
 });
@@ -56,10 +58,12 @@ const expectedBoardAfterMove2 = [
 ];
 
 test("makeManualMove() - odwracanie całego skosu", () => {
-    const actualGameState = new GameState([testBoard2], 2, true, false, true);
+    const actualGameState = new GameState([testBoard2], PLAYERS.SECOND_PLAYER,
+        true, false, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard2, expectedBoardAfterMove2], 1, true, false, true);
+    const expectedGameState = new GameState([testBoard2, expectedBoardAfterMove2],
+        PLAYERS.FIRST_PLAYER, true, false, true);
 
     expect(gameController.makeManualMove(7, 7, false)).toEqual(expectedGameState);
 });
@@ -88,10 +92,10 @@ const expectedBoardAfterMove3 = [
 ];
 
 test("makeManualMove() - odwrócenie pionków w dwóch kierunkach naraz", () => {
-    const actualGameState = new GameState([testBoard3], 1, true, false, true);
+    const actualGameState = new GameState([testBoard3], PLAYERS.FIRST_PLAYER, true, false, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard3, expectedBoardAfterMove3], 2, true, false, true);
+    const expectedGameState = new GameState([testBoard3, expectedBoardAfterMove3], PLAYERS.SECOND_PLAYER, true, false, true);
 
     expect(gameController.makeManualMove(3, 2, false)).toEqual(expectedGameState);
 });
@@ -120,10 +124,10 @@ const expectedBoardAfterMove4 = [
 ];
 
 test("makeManualMove() - odwrócenie pionków w trzech kierunkach naraz", () => {
-    const actualGameState = new GameState([testBoard4], 1, true, false, true);
+    const actualGameState = new GameState([testBoard4], PLAYERS.FIRST_PLAYER, true, false, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard4, expectedBoardAfterMove4], 2, true, false, true);
+    const expectedGameState = new GameState([testBoard4, expectedBoardAfterMove4], PLAYERS.SECOND_PLAYER, true, false, true);
 
     expect(gameController.makeManualMove(6, 0, false)).toEqual(expectedGameState);
 });
@@ -152,10 +156,10 @@ const expectedBoardAfterMove5 = [
 ];
 
 test("makeManualMove() - odwrócenie pionków naraz w ośmiu kierunkach (wszystkich możliwych)", () => {
-    const actualGameState = new GameState([testBoard5], 2, true, false, true);
+    const actualGameState = new GameState([testBoard5], PLAYERS.SECOND_PLAYER, true, false, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard5, expectedBoardAfterMove5], 1, false, true, false);
+    const expectedGameState = new GameState([testBoard5, expectedBoardAfterMove5], PLAYERS.FIRST_PLAYER, false, true, false);
 
     expect(gameController.makeManualMove(4, 3, true)).toEqual(expectedGameState);
 });
@@ -184,10 +188,10 @@ const expectedBoardAfterMove6 = [
 ];
 
 test("makeManualMove() - ostatni ruch w grze - pełna plansza", () => {
-    const actualGameState = new GameState([testBoard6], 2, true, false, true);
+    const actualGameState = new GameState([testBoard6], PLAYERS.SECOND_PLAYER, true, false, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard6, expectedBoardAfterMove6], 1, false, true, false);
+    const expectedGameState = new GameState([testBoard6, expectedBoardAfterMove6], PLAYERS.FIRST_PLAYER, false, true, false);
 
     expect(gameController.makeManualMove(7, 0, true)).toEqual(expectedGameState);
 });
@@ -219,7 +223,7 @@ test("makeManualMove() - odwrócenie pionków w jednym kierunku - większość p
     const actualGameState = new GameState([testBoard7], 1, true, false, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard7, expectedBoardAfterMove7], 2, true, false, true);
+    const expectedGameState = new GameState([testBoard7, expectedBoardAfterMove7], PLAYERS.SECOND_PLAYER, true, false, true);
 
     expect(gameController.makeManualMove(2, 0, false)).toEqual(expectedGameState);
 });
@@ -250,7 +254,7 @@ test("makeManualMove() - niepoprawny ruch - ruch się nie wykonuje", () => {
     const actualGameState = new GameState([testBoard8], 2, true, false);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([expectedBoardAfterMove8], 2, true, false);
+    const expectedGameState = new GameState([expectedBoardAfterMove8], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeManualMove(2, 4)).toEqual(expectedGameState);
 });
@@ -282,10 +286,10 @@ const expectedBoardAfterMove9 = [
 ];
 
 test("makeAutomaticMove() - strategia maksymalizacji - prosty przypadek", () => {
-    const actualGameState = new GameState([testBoard9], 1, true, true);
+    const actualGameState = new GameState([testBoard9], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard9, expectedBoardAfterMove9], 2, true, false);
+    const expectedGameState = new GameState([testBoard9, expectedBoardAfterMove9], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(0)).toEqual(expectedGameState);
 });
@@ -314,10 +318,10 @@ const expectedBoardAfterMove10 = [
 ];
 
 test("makeAutomaticMove() - strategia maksymalizacji - trudniejszy przypadek", () => {
-    const actualGameState = new GameState([testBoard10], 1, true, true);
+    const actualGameState = new GameState([testBoard10], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard10, expectedBoardAfterMove10], 2, true, false);
+    const expectedGameState = new GameState([testBoard10, expectedBoardAfterMove10], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(0)).toEqual(expectedGameState);
 });
@@ -347,10 +351,10 @@ const expectedBoardAfterMove11 = [
 ];
 
 test("makeAutomaticMove() - strategia maksymalizacji - odwrócenie pionków w 1, 2, 3 kierunkach w zależności od opcji ruchu", () => {
-    const actualGameState = new GameState([testBoard11], 1, true, true);
+    const actualGameState = new GameState([testBoard11], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard11, expectedBoardAfterMove11], 2, true, false);
+    const expectedGameState = new GameState([testBoard11, expectedBoardAfterMove11], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(0)).toEqual(expectedGameState);
 });
@@ -380,10 +384,10 @@ const expectedBoardAfterMove12 = [
 ];
 
 test("makeAutomaticMove() - strategia maksymalizacji - 8 różnych opcji ruchu", () => {
-    const actualGameState = new GameState([testBoard12], 1, true, true);
+    const actualGameState = new GameState([testBoard12], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard12, expectedBoardAfterMove12], 2, true, false);
+    const expectedGameState = new GameState([testBoard12, expectedBoardAfterMove12], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(0)).toEqual(expectedGameState);
 });
@@ -413,10 +417,10 @@ const expectedBoardAfterMove13 = [
 ];
 
 test("makeAutomaticMove() - strategia maksymalizacji - dwie opcje ruchu na krawędziach", () => {
-    const actualGameState = new GameState([testBoard13], 1, true, true);
+    const actualGameState = new GameState([testBoard13], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard13, expectedBoardAfterMove13], 2, true, false);
+    const expectedGameState = new GameState([testBoard13, expectedBoardAfterMove13], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(0)).toEqual(expectedGameState);
 });
@@ -446,10 +450,10 @@ const expectedBoardAfterMove14 = [
 ];
 
 test("makeAutomaticMove() - strategia wartościowania pól - prosty przypadek", () => {
-    const actualGameState = new GameState([testBoard14], 1, true, true);
+    const actualGameState = new GameState([testBoard14], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard14, expectedBoardAfterMove14], 2, true, false);
+    const expectedGameState = new GameState([testBoard14, expectedBoardAfterMove14], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(2)).toEqual(expectedGameState);
 });
@@ -478,10 +482,10 @@ const expectedBoardAfterMove15 = [
 ];
 
 test("makeAutomaticMove() - strategia wartościowania pól - trudniejszy przypadek", () => {
-    const actualGameState = new GameState([testBoard15], 1, true, true);
+    const actualGameState = new GameState([testBoard15], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard15, expectedBoardAfterMove15], 2, true, false);
+    const expectedGameState = new GameState([testBoard15, expectedBoardAfterMove15], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(2)).toEqual(expectedGameState);
 });
@@ -510,10 +514,10 @@ const expectedBoardAfterMove16 = [
 ];
 
 test("makeAutomaticMove() - strategia wartościowania pól - odwrócenie pionków w 1, 2, 3 kierunkach w zależności od opcji ruchu", () => {
-    const actualGameState = new GameState([testBoard16], 1, true, true);
+    const actualGameState = new GameState([testBoard16], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard16, expectedBoardAfterMove16], 2, true, false);
+    const expectedGameState = new GameState([testBoard16, expectedBoardAfterMove16], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(2)).toEqual(expectedGameState);
 });
@@ -542,10 +546,10 @@ const expectedBoardAfterMove17 = [
 ];
 
 test("makeAutomaticMove() - strategia wartościowania pól - dwie opcje ruchu na krawędziach", () => {
-    const actualGameState = new GameState([testBoard17], 1, true, true);
+    const actualGameState = new GameState([testBoard17], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard17, expectedBoardAfterMove17], 2, true, false);
+    const expectedGameState = new GameState([testBoard17, expectedBoardAfterMove17], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(2)).toEqual(expectedGameState);
 });
@@ -575,10 +579,10 @@ const expectedBoardAfterMove18 = [
 ];
 
 test("makeAutomaticMove() - strategia mobilności - krawędz kontra skos", () => {
-    const actualGameState = new GameState([testBoard18], 1, true, true);
+    const actualGameState = new GameState([testBoard18], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard18, expectedBoardAfterMove18], 2, true, false);
+    const expectedGameState = new GameState([testBoard18, expectedBoardAfterMove18], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(1)).toEqual(expectedGameState);
 });
@@ -607,10 +611,10 @@ const expectedBoardAfterMove19 = [
 ];
 
 test("makeAutomaticMove() - strategia mobilności - odwrócenie pionków w 1, 2, 3 kierunkach w zależności od opcji ruchu", () => {
-    const actualGameState = new GameState([testBoard19], 1, true, true);
+    const actualGameState = new GameState([testBoard19], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard19, expectedBoardAfterMove19], 2, true, false);
+    const expectedGameState = new GameState([testBoard19, expectedBoardAfterMove19], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(1)).toEqual(expectedGameState);
 });
@@ -639,10 +643,10 @@ const expectedBoardAfterMove20 = [
 ];
 
 test("makeAutomaticMove() - strategia mobilności - 1 możliwość ruchu przeciwnika kontra 0", () => {
-    const actualGameState = new GameState([testBoard20], 1, true, true);
+    const actualGameState = new GameState([testBoard20], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard20, expectedBoardAfterMove20], 2, false, false);
+    const expectedGameState = new GameState([testBoard20, expectedBoardAfterMove20], PLAYERS.SECOND_PLAYER, false, false);
 
     expect(gameController.makeAutomaticMove(1)).toEqual(expectedGameState);
 });
@@ -672,10 +676,10 @@ const expectedBoardAfterMove21 = [
 
 test("makeAutomaticMove() - strategia mobilności - ta sama ilość możliwych ruchów przeciwnika," +
     " ale w jednej sytuacji jedną z opcji ruchu przeciwnika będzie C-square", () => {
-    const actualGameState = new GameState([testBoard21], 1, true, true);
+    const actualGameState = new GameState([testBoard21], PLAYERS.FIRST_PLAYER, true, true);
     const gameController = new GameController(actualGameState);
 
-    const expectedGameState = new GameState([testBoard21, expectedBoardAfterMove21], 2, true, false);
+    const expectedGameState = new GameState([testBoard21, expectedBoardAfterMove21], PLAYERS.SECOND_PLAYER, true, false);
 
     expect(gameController.makeAutomaticMove(1)).toEqual(expectedGameState);
 });

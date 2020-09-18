@@ -1,4 +1,4 @@
-import { TURN_BUTTON_INFO } from './constans';
+import {ADDITIONAL_FIELDS, BOARD_DIMENSIONS, TURN_BUTTON_INFO} from './constants';
 import Utils from "./Utils";
 
 class Engine {
@@ -10,7 +10,7 @@ class Engine {
     }
 
     isMoveCorrect(board, y, x, activePlayer) {
-        if (board[y][x] === 0) {
+        if (board[y][x] === ADDITIONAL_FIELDS.EMPTY) {
             this.allDisksToTurn = [];
             this.options = [];
             if (this.findAllOptions(board, y, x, activePlayer)) {
@@ -31,8 +31,8 @@ class Engine {
 
     addMovePossibilities(board, activePlayer) {
         const changedBoard = Utils.deepCopy(board);
-        for (let y = 0; y < 8; y++) {
-            for (let x = 0; x < 8; x++) {
+        for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
+            for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.isMoveCorrect(board, y, x, activePlayer)) {
                     changedBoard[y][x] = activePlayer + 2;
                 }
@@ -75,7 +75,7 @@ class Engine {
         let nextMoveX = positionX + moveX;
 
         while (Utils.insideTheBoard(nextMoveY, nextMoveX)) {
-            if (board[nextMoveY][nextMoveX] === 0) {
+            if (board[nextMoveY][nextMoveX] === ADDITIONAL_FIELDS.EMPTY) {
                 return false;
             } else if (board[nextMoveY][nextMoveX] !== activePlayer) {
                 tempToTurn.push([nextMoveY, nextMoveX]);

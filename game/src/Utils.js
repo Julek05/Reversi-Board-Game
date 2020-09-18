@@ -1,10 +1,19 @@
-import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS, POINTS_VARATIONS} from "./constans";
+import {
+    ADDITIONAL_FIELDS,
+    API_URLS,
+    BOARD_DIMENSIONS, BOARD_RANGE,
+    C_SQUARE_FIELDS,
+    DISKS_IMAGES,
+    IMAGES_FOLDER_PATH, IMG_FIELDS_PATHS,
+    LEVELS, PLAYERS,
+    POINTS_VARATIONS, TIMES_TO_WAIT_IN_MILISECONDS, VISIBILITY_OF_ELEMENT, X_SQUARE_FIELDS
+} from "./constants";
 import axios from "axios";
 
 class Utils {
     //TODO zablokowac, zeby z samouczka nie mozna bylo wysylac screena i gra sie nie zapisywala
     static endGame(board, computerMode) {
-        document.getElementById("turnWrapper").style.visibility = "hidden";
+        document.getElementById("turnWrapper").style.visibility = VISIBILITY_OF_ELEMENT.HIDDEN;
 
         const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(board);
         if (computerMode) {
@@ -12,7 +21,7 @@ class Utils {
         } else {
             Utils.endGameAlert(pointsPlayer1, pointsPlayer2);
         }
-        return false;
+        return true;
     }
 
     static getChosenStrategy() {
@@ -39,8 +48,8 @@ class Utils {
 
         axios.post(API_URLS.GAMES, data).then(response => {
             localStorage.setItem('id', response.data);
-            document.getElementById("giveUpTurnButton").style.visibility = "hidden"
-            document.getElementById("screenSender").style.visibility = "visible";
+            document.getElementById("giveUpTurnButton").style.visibility = VISIBILITY_OF_ELEMENT.HIDDEN;
+            document.getElementById("screenSender").style.visibility = VISIBILITY_OF_ELEMENT.VISIBLE;
             Utils.endGameAlert(computerPoints, playerPoints);
         }).then(error => {
             console.log(error);
@@ -52,9 +61,9 @@ class Utils {
         let player2Points = 0;
 
         for (const field of board.flat()) {
-            if (field === 1) {
+            if (field === PLAYERS.FIRST_PLAYER) {
                 player1Points++;
-            } else if (field === 2) {
+            } else if (field === PLAYERS.SECOND_PLAYER) {
                 player2Points++;
             }
         }
@@ -65,7 +74,7 @@ class Utils {
         setTimeout(() => {
             alert(`Obydwaj gracze nie mogą wykonać żadnego ruchu - koniec gry!\n\n 
                 ${Utils.getAlertMessage(pointsPlayer1, pointsPlayer2)}`);
-        }, 250);
+        }, TIMES_TO_WAIT_IN_MILISECONDS.END_GAME_ALERT);
     }
 
     static getAlertMessage(pointsPlayer1, pointsPlayer2) {
@@ -80,9 +89,13 @@ class Utils {
         return `Remis, obydwaj gracze zdobyli po ${pointsPlayer1} ${Utils.correctVariant(pointsPlayer1)}`;
     }
 
+    static isFirstOption(playerPoints) {
+        return (playerPoints % 10 === 2 && playerPoints !== 12) || (playerPoints % 10 === 3 && playerPoints !== 13)
+            || (playerPoints % 10 === 4 && playerPoints !== 14);
+    }
+
     static correctVariant(playerPoints) {
-        if ((playerPoints % 10 === 2 && playerPoints !== 12) || (playerPoints % 10 === 3 && playerPoints !== 13)
-            || (playerPoints % 10 === 4 && playerPoints !== 14)) {
+        if (Utils.isFirstOption(playerPoints)) {
             return POINTS_VARATIONS.FIRST_OPTION;
         } else if (playerPoints === 1) {
             return POINTS_VARATIONS.SECOND_OPTION;
@@ -92,15 +105,7 @@ class Utils {
     }
 
     static setImgPath(valueField) {
-        const imgPaths = [
-            '',
-            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.BLUE}`,
-            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.BLACK}`,
-            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.POSSIBILITY_BLUE}`,
-            `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.POSSIBILITY_BLACK}`
-        ];
-
-        return imgPaths[valueField];
+        return IMG_FIELDS_PATHS[valueField];
     }
 
     static boardsAreEqual(boardBeforeAction, boardAfterAction) {
@@ -116,8 +121,7 @@ class Utils {
     }
 
     static isC_square(y, x) {
-        const C_squareFields = [[0, 1], [1, 0], [0, 6], [1, 7], [6, 0], [7, 1], [6, 7], [7, 6]];
-        for (const [y_, x_] of C_squareFields) {
+        for (const [y_, x_] of C_SQUARE_FIELDS) {
             if (y === y_ && x === x_) {
                 return true;
             }
@@ -126,8 +130,7 @@ class Utils {
     }
 
     static isX_square(y, x) {
-        const X_squareFields = [[1, 1], [1, 6], [6, 1], [6, 6]];
-        for (const [y_, x_] of X_squareFields) {
+        for (const [y_, x_] of X_SQUARE_FIELDS) {
             if (y === y_ && x === x_) {
                 return true;
             }
@@ -136,20 +139,23 @@ class Utils {
     }
 
     static nextToEnemyDisk(field, activePlayer) {
-        return ![0, activePlayer].includes(field);
+        return ![ADDITIONAL_FIELDS.EMPTY, activePlayer].includes(field);
     }
 
     static insideTheBoard(y, x) {
-        const boardRange = [0, 1, 2, 3, 4, 5, 6, 7];
-        return boardRange.includes(y) && boardRange.includes(x);
+        return BOARD_RANGE.includes(y) && BOARD_RANGE.includes(x);
+    }
+
+    static isPlayerField(field) {
+        return [PLAYERS.FIRST_PLAYER, PLAYERS.SECOND_PLAYER].includes(field);
     }
 
     static deleteMovePossibilities(board) {
         const boardCopy = Utils.deepCopy(board);
-        for (let y = 0; y < 8; y++) {
-            for (let x = 0; x < 8; x++) {
-                if (boardCopy[y][x] !== 1 && boardCopy[y][x] !== 2) {
-                    board[y][x] = 0;
+        for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
+            for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
+                if (Utils.isPlayerField(boardCopy[y][x])) {
+                    board[y][x] = EMPTY_FIELD;
                 }
             }
         }
@@ -157,7 +163,8 @@ class Utils {
     }
 
     static changeActivePlayer(activePlayer) {
-        return activePlayer === 1 ? 2 : 1;
+        return activePlayer === PLAYERS.FIRST_PLAYER
+            ? PLAYERS.SECOND_PLAYER : PLAYERS.FIRST_PLAYER;
     }
 
     static sortPossibilities(allPossibilities) {

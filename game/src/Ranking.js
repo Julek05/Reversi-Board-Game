@@ -3,52 +3,63 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {API_URLS, LEVELS} from "./constans";
+import {API_URLS, LEVELS} from "./constants";
 import Utils from "./Utils";
 import Tr from "./Tr";
+import Loader from "./Loader";
 
 function Ranking()  {
     const [games, setGames] = useState([]);
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
     useEffect(() => getGames(LEVELS.EASY), []);
 
     function getGames(level) {
+        setIsLoadingData(true);
         axios.get(`${API_URLS.GAMES}/${level}`).then(response => {
             setGames(response.data);
+            setIsLoadingData(false);
+        }).then(error => {
+            console.log(error);
+            setIsLoadingData(false);
         });
     }
 
     return (
-        <div className='ranking'><br/>
-            <ButtonGroup>
-                {Object.values(LEVELS).map(level => {
-                    return (
-                        <Button variant="info" key={level} onClick={() => getGames(level)}>
-                            {Utils.upperCaseFirstCharacter(level)}
-                        </Button>
-                    );
-                })}
-            </ButtonGroup><br/><br/>
-            <h2 id='headerRanking'>Ranking najlepszych graczy:</h2><br/>
-            <Table striped bordered hover size>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nick</th>
-                    <th>Poziom trudności</th>
-                    <th>Punkty gracza</th>
-                    <th>Punkty komputera</th>
-                    <th>Screen - końcowa<br/>plansza</th>
-                    <th>Data</th>
-                </tr>
-                </thead>
-                <tbody>
+        isLoadingData
+        ?
+            <Loader/>
+        :
+            <div className='ranking'><br/>
+                <ButtonGroup>
+                    {Object.values(LEVELS).map(level => {
+                        return (
+                            <Button variant="info" key={level} onClick={() => getGames(level)}>
+                                {Utils.upperCaseFirstCharacter(level)}
+                            </Button>
+                        );
+                    })}
+                </ButtonGroup><br/><br/>
+                <h2 id='headerRanking'>Ranking najlepszych graczy:</h2><br/>
+                <Table striped bordered hover size>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nick</th>
+                        <th>Poziom trudności</th>
+                        <th>Punkty gracza</th>
+                        <th>Punkty komputera</th>
+                        <th>Screen - końcowa<br/>plansza</th>
+                        <th>Data</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     {games && games.map((game, index) =>
-                       <Tr game={game} index={index} />
+                        <Tr game={game} index={index} />
                     )}
-                </tbody>
-            </Table>
-        </div>
+                    </tbody>
+                </Table>
+            </div>
     );
 }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Game;
+use App\Models\Game;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +41,7 @@ class GamesController extends Controller
         $lastGameId = Game::getLastId();
 
         if ($game['player_name'] == null || trim($game['player_name']) == '') {
-            $game['player_name'] = 'Gość' . (1 + $lastGameId);
+            $game['player_name'] = Game::Guest . (1 + $lastGameId);
         }
         Game::create($game);
 
@@ -81,7 +81,7 @@ class GamesController extends Controller
     {
         $game = Game::find($request->get('id'));
         if ($image = $request->all()['image']) {
-            $imagePath = Storage::disk('public_uploads')->put('photos', $image);
+            $imagePath = Storage::disk(Game::uploadPath)->put(Game::uploadPhotosFolder, $image);
             $game['image_path'] = $imagePath;
         }
         $game->save();

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {PAGE_URLS} from "./constans";
+import {PAGE_URLS} from "./constants";
 
 function Authentication() {
     const [name, setName] = useState('');

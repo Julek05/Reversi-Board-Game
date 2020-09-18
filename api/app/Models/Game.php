@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +14,10 @@ class Game extends Model
         'image_path',
         'created_at'
     ];
+
+    const Guest = 'Gość';
+    const uploadPath = 'public_uploads';
+    const uploadPhotosFolder = 'photos';
 
     public static function getBestGames($level)
     {

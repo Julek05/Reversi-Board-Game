@@ -1,10 +1,12 @@
 import React from 'react'
 import Game from './Game'
+import {VISIBILITY_OF_ELEMENT} from "./constants";
 
 function ComputerGame() {
     return (
         <>
-            <Game backMovementButtonVisibility={{visibility: "hidden"}} strategiesVisibility={{visibility: "visible"}}
+            <Game backMovementButtonVisibility={{visibility: VISIBILITY_OF_ELEMENT.HIDDEN}}
+                  strategiesVisibility={{visibility: VISIBILITY_OF_ELEMENT.VISIBLE}}
                   computerMode={true}/>
         </>
     );
