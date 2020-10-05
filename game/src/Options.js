@@ -5,8 +5,8 @@ import Utils from "./Utils";
 import Loader from "./Loader";
 
 function Options(props) {
-    const { scoredDisksFirstPlayer, scoredDisksSecondPlayer, strategiesVisibility, turnImage, backMovementButtonVisibility,
-        backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectStrategies, makeSetStateToParent, endOfGame} = props;
+    const { scoredDisksFirstPlayer, scoredDisksSecondPlayer, levelsVisibility, turnImage, backMovementButtonVisibility,
+        backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectLevels, makeSetStateToParent, endOfGame } = props;
 
     const [image, setImage] = useState('');
     const [isSendingData, setIsSendingData] = useState(false);
@@ -80,14 +80,16 @@ function Options(props) {
                     </div>
                 </div>
 
-                <div style={strategiesVisibility} className="input-group mb-3" id="strategies">
+                <div style={levelsVisibility} className="input-group mb-3" id="levels">
                     <div className="input-group-prepend">
-                        <label className="input-group-text" htmlFor="selectStrategies">Poziom trudności</label>
+                        <label className="input-group-text" htmlFor="selectLevels">Poziom trudności</label>
                     </div>
-                    <select className="custom-select" id="selectStrategies" defaultValue={"1"} disabled={selectStrategies}>
-                        <option id="maximisationStrategy" value="1">{Utils.upperCaseFirstCharacter(LEVELS.EASY)}</option>
-                        <option id="mobilityStrategy" value="2">{Utils.upperCaseFirstCharacter(LEVELS.MIDDLE)}</option>
-                        <option id="valuatingFieldsStrategy" value="3">{Utils.upperCaseFirstCharacter(LEVELS.HARD)}</option>
+                    <select className="custom-select" id="selectLevels" defaultValue={"1"} disabled={selectLevels}>
+                        {Object.values(LEVELS).map(level => {
+                            return (
+                                <option key={level} value={level}>{Utils.upperCaseFirstCharacter(level)}</option>
+                            );
+                        })}
                     </select>
                 </div>
             </div>

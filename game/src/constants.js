@@ -105,11 +105,7 @@ export const X_SQUARE_FIELDS = [[1, 1], [1, 6], [6, 1], [6, 6]];
 
 export const BOARD_RANGE = [0, 1, 2, 3, 4, 5, 6, 7];
 
-export const ADDITIONAL_FIELDS = {
-    EMPTY: 0,
-    FIRST_PLAYER_POSSIBILITY: PLAYERS.FIRST_PLAYER + 2,
-    SECOND_PLAYER_POSSIBILITY: PLAYERS.SECOND_PLAYER + 2
-}
+export const EMPTY_FIELD = 0;
 
 export const VISIBILITY_OF_ELEMENT = {
     VISIBLE: 'visible',

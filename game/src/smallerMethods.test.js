@@ -68,12 +68,12 @@ test("isMoveCorrect() - zajęcie rogu gracz nr 2 - ruch nieprawidłowy", () => {
 
 test("turnDisks() - odwrócenie pionka po skosie, większość planszy zapełniona", () => {
     engine.isMoveCorrect(testBoard1, 6, 0, PLAYERS.FIRST_PLAYER);
-    expect(engine.turnDisks(testBoard1, 6, 0, PLAYERS.FIRST_PLAYER)).toEqual(resultBoardtest1)
+    expect(engine.turnDisks(testBoard1, [6, 0], PLAYERS.FIRST_PLAYER)).toEqual(resultBoardtest1)
 });
 
 test("turnDisks() - odwrócenie pionków w trzech kierunkach naraz, większość planszy zapełniona", () => {
     engine.isMoveCorrect(testBoard1, 3, 1, PLAYERS.SECOND_PLAYER);
-    expect(engine.turnDisks(testBoard1, 3, 1, PLAYERS.SECOND_PLAYER)).toEqual(resultBoardtest2)
+    expect(engine.turnDisks(testBoard1, [3, 1], PLAYERS.SECOND_PLAYER)).toEqual(resultBoardtest2)
 });
 
 const testBoard3 = [
@@ -102,7 +102,7 @@ const resultBoardtest3 = [
 
 test("turnDisks() - środek gry", () => {
     engine.isMoveCorrect(testBoard3, 2, 4, PLAYERS.SECOND_PLAYER);
-    expect(engine.turnDisks(testBoard3, 2, 4, PLAYERS.SECOND_PLAYER)).toEqual(resultBoardtest3)
+    expect(engine.turnDisks(testBoard3, [2, 4], PLAYERS.SECOND_PLAYER)).toEqual(resultBoardtest3)
 });
 
 
@@ -132,5 +132,5 @@ const resultBoardtest4 = [
 
 test("turnDisks() - odwrócenie pionków wdłuż całej planszy w linii prostej", () => {
     engine.isMoveCorrect(testBoard4, 0, 1, PLAYERS.FIRST_PLAYER);
-    expect(engine.turnDisks(testBoard4, 0, 1, PLAYERS.FIRST_PLAYER)).toEqual(resultBoardtest4)
+    expect(engine.turnDisks(testBoard4, [0, 1], PLAYERS.FIRST_PLAYER)).toEqual(resultBoardtest4)
 });

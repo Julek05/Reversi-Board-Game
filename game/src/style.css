@@ -3,8 +3,9 @@
     text-align: center;
 }
 
-.levels {
-    outline: none !important;
+#levels {
+    /*outline: none !important;*/
+    max-width: 22rem;
 }
 
 .ranking {
@@ -170,10 +171,6 @@
 #game {
     display: flex;
     flex-direction: row;
-}
-
-#strategies {
-    max-width: 22rem;
 }
 
 .points {

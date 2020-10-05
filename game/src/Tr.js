@@ -2,19 +2,21 @@ import React from "react";
 import Screen from "./Screen";
 
 function Tr({game, index}) {
+    const {id, player_name, level, player_points,
+        computer_points, image_path, created_at} = game;
     return (
-        <tr key={game.id}>
+        <tr key={id}>
             <td>{index + 1}</td>
-            <td>{game.player_name}</td>
-            <td>{game.level}</td>
-            <td>{game.player_points}</td>
-            <td>{game.computer_points}</td>
+            <td>{player_name}</td>
+            <td>{level}</td>
+            <td>{player_points}</td>
+            <td>{computer_points}</td>
             <td>
-                {game.image_path !== ''
-                    ? <Screen imagePath={game.image_path}/>
+                {image_path !== ''
+                    ? <Screen imagePath={image_path}/>
                     : <p>Brak screena</p>}
             </td>
-            <td>{game.created_at.substr(0, 10)}</td>
+            <td>{created_at.substr(0, 10)}</td>
         </tr>
     )
 }

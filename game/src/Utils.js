@@ -1,12 +1,7 @@
 import {
-    ADDITIONAL_FIELDS,
-    API_URLS,
-    BOARD_DIMENSIONS, BOARD_RANGE,
-    C_SQUARE_FIELDS,
-    DISKS_IMAGES,
-    IMAGES_FOLDER_PATH, IMG_FIELDS_PATHS,
-    LEVELS, PLAYERS,
-    POINTS_VARATIONS, TIMES_TO_WAIT_IN_MILISECONDS, VISIBILITY_OF_ELEMENT, X_SQUARE_FIELDS
+    API_URLS, BOARD_RANGE, EMPTY_FIELD,
+    IMG_FIELDS_PATHS, PLAYERS, POINTS_VARATIONS,
+    TIMES_TO_WAIT_IN_MILISECONDS, VISIBILITY_OF_ELEMENT
 } from "./constants";
 import axios from "axios";
 
@@ -24,24 +19,18 @@ class Utils {
         return true;
     }
 
-    static getChosenStrategy() {
-        return document.getElementById("selectStrategies").options.selectedIndex.valueOf();
+    static getChosenLevel() {
+        return document.getElementById("selectLevels").options.selectedIndex.valueOf();
     }
 
     static upperCaseFirstCharacter(phrase) {
         return `${phrase.slice(0, 1).toUpperCase()}${phrase.slice(1, phrase.length)}`
     }
 
-    static getLevel(chosenStrategy) {
-        const levels = [LEVELS.EASY, LEVELS.MIDDLE, LEVELS.HARD];
-
-        return levels[chosenStrategy];
-    }
-
     static sendDataToApi(computerPoints, playerPoints) {
         const data = {
             'player_name': localStorage.getItem("player_name"),
-            'level': Utils.getLevel(Utils.getChosenStrategy()),
+            'level': Utils.getChosenLevel(),
             'player_points': playerPoints,
             'computer_points': computerPoints
         }
@@ -120,26 +109,12 @@ class Utils {
         return JSON.parse(JSON.stringify(objectToCopy));
     }
 
-    static isC_square(y, x) {
-        for (const [y_, x_] of C_SQUARE_FIELDS) {
-            if (y === y_ && x === x_) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    static isX_square(y, x) {
-        for (const [y_, x_] of X_SQUARE_FIELDS) {
-            if (y === y_ && x === x_) {
-                return true;
-            }
-        }
-        return false;
+    static isSpecialField(y, x, specialFields) {
+        return specialFields.some(([y_, x_]) => y === y_ && x === x_);
     }
 
     static nextToEnemyDisk(field, activePlayer) {
-        return ![ADDITIONAL_FIELDS.EMPTY, activePlayer].includes(field);
+        return ![EMPTY_FIELD, activePlayer].includes(field);
     }
 
     static insideTheBoard(y, x) {
@@ -151,15 +126,13 @@ class Utils {
     }
 
     static deleteMovePossibilities(board) {
-        const boardCopy = Utils.deepCopy(board);
-        for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
-            for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
-                if (Utils.isPlayerField(boardCopy[y][x])) {
-                    board[y][x] = EMPTY_FIELD;
-                }
-            }
-        }
-        return board;
+        // board = board.map(row => row.map(field => {
+        //     return Utils.isPlayerField(field) ? EMPTY_FIELD : field
+        // }))
+        //
+        // return board;
+
+        return board.map(row => row.map(field => Utils.isPlayerField(field) ? EMPTY_FIELD : field));
     }
 
     static changeActivePlayer(activePlayer) {
@@ -168,9 +141,7 @@ class Utils {
     }
 
     static sortPossibilities(allPossibilities) {
-        return allPossibilities.sort((a, b) => {
-            return a[0] - b[0]
-        }).reverse();
+        return allPossibilities.sort((a, b) => a[0] - b[0]).reverse();
     }
 
     static chooseBestOption(allPossibilities) {
@@ -186,11 +157,22 @@ class Utils {
             sameBestOptions++;
         }
 
-        const index = sameBestOptions > 0 ?
-            Math.floor(Math.random() * (sameBestOptions + 1))
+        const index = sameBestOptions > 0
+            ? Math.floor(Math.random() * (sameBestOptions + 1))
             : sameBestOptions;
 
         return sortedAllPossibilities[index];
+    }
+
+    static getIndexesAroundDisk(y, x) {
+        const top = [y - 1, x], down = [y + 1, x], right = [y, x + 1], left = [y, x - 1];
+        const topLeft = [y - 1, x - 1], topRight = [y - 1, x + 1], downLeft = [y + 1, x - 1], downRight = [y + 1, x + 1];
+
+        return [top, down, right, left, topLeft, topRight, downLeft, downRight];
+    }
+
+    static getActualBoard(boards) {
+        return boards[boards.length - 1];
     }
 }
 

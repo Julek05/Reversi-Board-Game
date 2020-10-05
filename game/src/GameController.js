@@ -1,7 +1,7 @@
 import Strategies from "./Strategies";
 import GameState from "./GameState";
 import Utils from "./Utils";
-import {PLAYERS, TIMES_TO_WAIT_IN_MILISECONDS} from "./constants";
+import {LEVELS, PLAYERS, TIMES_TO_WAIT_IN_MILISECONDS} from "./constants";
 
 class GameController {
     constructor(gameState) {
@@ -13,14 +13,14 @@ class GameController {
 
     makeManualMove(y, x, computerMode) {
         const board = this.gameState.getCurrentBoardState();
-        const boardWithoutPossibilities = Utils.deepCopy(Utils.deleteMovePossibilities(board));
+        const boardWithoutPossibilities = Utils.deleteMovePossibilities(board);
         const activePlayer = this.gameState.activePlayer;
 
         if (this.engine.isMoveCorrect(boardWithoutPossibilities, y, x, activePlayer)) {
             this.firstMove = true;
 
             const newBoards = Utils.deepCopy(this.gameState.boards);
-            const boardAfterMove = Utils.deepCopy(this.engine.turnDisks(boardWithoutPossibilities, y, x, activePlayer));
+            const boardAfterMove = this.engine.turnDisks(boardWithoutPossibilities, [y, x], activePlayer);
             const activePlayerAfterMove = Utils.changeActivePlayer(activePlayer);
             const boardAfterMoveWithPossibilities = this.engine.addMovePossibilities(boardAfterMove, activePlayerAfterMove);
             const canMove = !Utils.boardsAreEqual(boardAfterMove, boardAfterMoveWithPossibilities);
@@ -33,13 +33,13 @@ class GameController {
         return this.gameState;
     }
 
-    makeAutomaticMove(chosenStrategy) {
+    makeAutomaticMove(chosenLevel) {
         const board = this.gameState.getCurrentBoardState();
-        const boardWithoutPossibilities = Utils.deepCopy(Utils.deleteMovePossibilities(board));
+        const boardWithoutPossibilities = Utils.deleteMovePossibilities(board);
         const activePlayer = this.gameState.activePlayer;
         const newBoards = Utils.deepCopy(this.gameState.boards);
 
-        const boardAfterMove = Utils.deepCopy(this.useChosenStrategy(boardWithoutPossibilities, chosenStrategy));
+        const boardAfterMove = this.useMatchingStrategyToLevel(boardWithoutPossibilities, chosenLevel);
         const activePlayerAfterMove = Utils.changeActivePlayer(activePlayer);
         const boardAfterMoveWithPossibilities = this.engine.addMovePossibilities(boardAfterMove, activePlayerAfterMove);
 
@@ -50,15 +50,13 @@ class GameController {
         return this.gameState;
     }
 
-    useChosenStrategy(board, chosenStrategy) {
-        const boardCopy = Utils.deepCopy(board);
-
-        if (chosenStrategy === 0) {
-            return this.strategies.maximisationStrategy(boardCopy);
-        } else if (chosenStrategy === 1) {
-            return this.strategies.mobilityStrategy(boardCopy);
-        } else if (chosenStrategy === 2) {
-            return this.strategies.valuatingFieldsStrategy(boardCopy);
+    useMatchingStrategyToLevel(board, chosenLevel) {
+        if (chosenLevel === LEVELS.EASY) {
+            return this.strategies.maximisationStrategy(board);
+        } else if (chosenLevel === LEVELS.MIDDLE) {
+            return this.strategies.mobilityStrategy(board);
+        } else {
+            return this.strategies.valuatingFieldsStrategy(board);
         }
     }
 
@@ -84,14 +82,14 @@ class GameController {
         const boardWithPossibilities = this.engine.addMovePossibilities(board, activePlayerAfterGiveUpTurn);
         const canMove = !Utils.boardsAreEqual(board, boardWithPossibilities);
 
-        const turnOffPossibilities = activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode;
-        newBoards.push(turnOffPossibilities ? board : boardWithPossibilities);
-
-        const uiBlock = activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode;
-        const computerBlock = !(activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode);
-        const moveComputerAfterHumanGiveUpTurn = !computerBlock;
-
         if (canMove) {
+            const turnOffPossibilities = activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode;
+            newBoards.push(turnOffPossibilities ? board : boardWithPossibilities);
+
+            const uiBlock = activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode;
+            const computerBlock = !(activePlayerAfterGiveUpTurn === PLAYERS.FIRST_PLAYER && computerMode);
+            const moveComputerAfterHumanGiveUpTurn = !computerBlock;
+
             this.gameState = new GameState(newBoards, activePlayerAfterGiveUpTurn, canMove, uiBlock,
                 computerBlock, moveComputerAfterHumanGiveUpTurn);
             return this.gameState;

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
@@ -19,7 +22,7 @@ class Game extends Model
     const uploadPath = 'public_uploads';
     const uploadPhotosFolder = 'photos';
 
-    public static function getBestGames($level)
+    public static function getBestGames(string $level) : Collection
     {
         return Game::where('level', $level)
             ->orderByRaw('player_points - computer_points DESC')
@@ -27,7 +30,7 @@ class Game extends Model
             ->get();
     }
 
-    public static function getLastId()
+    public static function getLastId() : int
     {
         if (Game::count() == 0) {
             return 0;

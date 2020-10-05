@@ -6,7 +6,7 @@ function ComputerGame() {
     return (
         <>
             <Game backMovementButtonVisibility={{visibility: VISIBILITY_OF_ELEMENT.HIDDEN}}
-                  strategiesVisibility={{visibility: VISIBILITY_OF_ELEMENT.VISIBLE}}
+                  levelsVisibility={{visibility: VISIBILITY_OF_ELEMENT.VISIBLE}}
                   computerMode={true}/>
         </>
     );

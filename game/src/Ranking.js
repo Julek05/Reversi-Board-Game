@@ -8,7 +8,7 @@ import Utils from "./Utils";
 import Tr from "./Tr";
 import Loader from "./Loader";
 
-function Ranking()  {
+function Ranking() {
     const [games, setGames] = useState([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
 
@@ -55,7 +55,7 @@ function Ranking()  {
                     </thead>
                     <tbody>
                     {games && games.map((game, index) =>
-                        <Tr game={game} index={index} />
+                        <Tr game={game} index={index} key={index} />
                     )}
                     </tbody>
                 </Table>

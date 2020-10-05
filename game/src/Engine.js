@@ -1,4 +1,4 @@
-import {ADDITIONAL_FIELDS, BOARD_DIMENSIONS, TURN_BUTTON_INFO} from './constants';
+import {BOARD_DIMENSIONS, EMPTY_FIELD, TURN_BUTTON_INFO} from './constants';
 import Utils from "./Utils";
 
 class Engine {
@@ -10,22 +10,22 @@ class Engine {
     }
 
     isMoveCorrect(board, y, x, activePlayer) {
-        if (board[y][x] === ADDITIONAL_FIELDS.EMPTY) {
+        if (board[y][x] === EMPTY_FIELD) {
             this.allDisksToTurn = [];
             this.options = [];
             if (this.findAllOptions(board, y, x, activePlayer)) {
-                return (this.checkAllDirections(board, activePlayer));
+                return this.checkAllDirections(board, activePlayer);
             }
         }
         return false;
     }
 
-    turnDisks(board, y, x, activePlayer) {
+    turnDisks(board, parametersFieldThatPlayerSetDisk, activePlayer) {
         const boardCopy = Utils.deepCopy(board);
-        for (const [y, x] of this.allDisksToTurn) {
-            boardCopy[y][x] = activePlayer;
-        }
-        boardCopy[y][x] = activePlayer;
+        const allDisksToSet = [...this.allDisksToTurn, ...parametersFieldThatPlayerSetDisk];
+
+        allDisksToSet.forEach((y, x) => boardCopy[y][x] = activePlayer);
+
         return boardCopy;
     }
 
@@ -42,10 +42,7 @@ class Engine {
     }
 
     findAllOptions(board, y, x, activePlayer) {
-        const top = [y - 1, x], down = [y + 1, x], right = [y, x + 1], left = [y, x - 1];
-        const topLeft = [y - 1, x - 1], topRight = [y - 1, x + 1], downLeft = [y + 1, x - 1], downRight = [y + 1, x + 1];
-
-        const indexesAroundDisk = [top, down, right, left, topLeft, topRight, downLeft, downRight];
+        const indexesAroundDisk = Utils.getIndexesAroundDisk(y, x);
         this.currentCheckingY = y;
         this.currentCheckingX = x;
 
@@ -58,13 +55,7 @@ class Engine {
     }
 
     checkAllDirections(board, activePlayer) {
-        let minimumToAccept = false;
-        for (const [y, x] of this.options) {
-            if (this.checkOneDirection(board, y, x, activePlayer)) {
-                minimumToAccept = true;
-            }
-        }
-        return minimumToAccept;
+        return this.options.some(([y, x]) => this.checkOneDirection(board, y, x, activePlayer));
     }
 
     checkOneDirection(board, positionY, positionX, activePlayer) {
@@ -75,16 +66,14 @@ class Engine {
         let nextMoveX = positionX + moveX;
 
         while (Utils.insideTheBoard(nextMoveY, nextMoveX)) {
-            if (board[nextMoveY][nextMoveX] === ADDITIONAL_FIELDS.EMPTY) {
+            if (board[nextMoveY][nextMoveX] === EMPTY_FIELD) {
                 return false;
             } else if (board[nextMoveY][nextMoveX] !== activePlayer) {
                 tempToTurn.push([nextMoveY, nextMoveX]);
                 nextMoveY += moveY;
                 nextMoveX += moveX;
             } else {
-                for (const tmp of tempToTurn) {
-                    this.allDisksToTurn.push(tmp);
-                }
+                this.allDisksToTurn = [...this.allDisksToTurn, ...tempToTurn];
                 return true;
             }
         }

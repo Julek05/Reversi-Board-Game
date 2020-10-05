@@ -1,6 +1,13 @@
 import Engine from "./Engine";
 import Utils from "./Utils";
-import {BOARD_DIMENSIONS, PLAYERS, POINTS_FOR_C_SQUARE, POINTS_FOR_X_SQUARE, VALUATING_BOARD} from "./constants";
+import {
+    BOARD_DIMENSIONS, C_SQUARE_FIELDS,
+    PLAYERS,
+    POINTS_FOR_C_SQUARE,
+    POINTS_FOR_X_SQUARE,
+    VALUATING_BOARD,
+    X_SQUARE_FIELDS
+} from "./constants";
 
 class Strategies {
     constructor() {
@@ -20,11 +27,9 @@ class Strategies {
     }
 
     makeLastStep(allPossibilities, board) {
-        //wywolac tu sobie na tym utils metode unshift, zeby usunac pierwszy element
-        //zamiast dawac do destrukturyzacji sztucznego 'tmp'
         const [tmp, allDisksToTurn, y, x] = Utils.chooseBestOption(allPossibilities);
         this.engine.allDisksToTurn = allDisksToTurn;
-        return this.engine.turnDisks(board, y, x, PLAYERS.FIRST_PLAYER);
+        return this.engine.turnDisks(board, [y, x], PLAYERS.FIRST_PLAYER);
     }
 
     valuatingFieldsStrategy(board) {
@@ -45,7 +50,7 @@ class Strategies {
             for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.engine.isMoveCorrect(board, y, x, PLAYERS.FIRST_PLAYER)) {
                     const allDisksToTurnCopy = Utils.deepCopy(this.engine.allDisksToTurn);
-                    const turnedDisks = this.engine.turnDisks(board, y, x, PLAYERS.FIRST_PLAYER);
+                    const turnedDisks = this.engine.turnDisks(board, [y, x], PLAYERS.FIRST_PLAYER);
                     const opponentPossibilities = this.checkOpponentPossibilities(turnedDisks);
                     allPossibilities.push([opponentPossibilities, allDisksToTurnCopy, y, x]);
                 }
@@ -61,9 +66,9 @@ class Strategies {
             for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.engine.isMoveCorrect(turnedDisks, y, x, PLAYERS.SECOND_PLAYER)) {
                     amountOfPossibilities++;
-                    if (Utils.isX_square(y, x)) {
+                    if (Utils.isSpecialField(y, x, X_SQUARE_FIELDS)) {
                         amountOfWorstFields += POINTS_FOR_X_SQUARE;
-                    } else if (Utils.isC_square(y, x)) {
+                    } else if (Utils.isSpecialField(y, x, C_SQUARE_FIELDS)) {
                         amountOfWorstFields += POINTS_FOR_C_SQUARE;
                     }
                 }

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +38,7 @@ class GamesController extends Controller
      * @param Request $request
      * @return int
      */
-    public function store(Request $request)
+    public function store(Request $request) : int
     {
         $game = $request->all();
         $lastGameId = Game::getLastId();
@@ -52,9 +55,9 @@ class GamesController extends Controller
      * Display the specified resource.
      *
      * @param $level
-     * @return Response
+     * @return Collection
      */
-    public function show($level)
+    public function show(string $level) : Collection
     {
         return Game::getBestGames($level);
     }
@@ -74,10 +77,10 @@ class GamesController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id) : void
     {
         $game = Game::find($request->get('id'));
         if ($image = $request->all()['image']) {
