@@ -4,11 +4,10 @@ import {VISIBILITY_OF_ELEMENT} from "./constants";
 
 function PlayerGame() {
     return (
-        <>
-            <Game backMovementButtonVisibility={{visibility: VISIBILITY_OF_ELEMENT.HIDDEN}}
-                  levelsVisibility={{visibility: VISIBILITY_OF_ELEMENT.HIDDEN}}
-                  computerMode={false}/>
-        </>
+        <Game backMovementButtonVisibility={{visibility: VISIBILITY_OF_ELEMENT.HIDDEN}}
+              levelsVisibility={{visibility: VISIBILITY_OF_ELEMENT.HIDDEN}}
+              computerMode={false}
+        />
     );
 }
 

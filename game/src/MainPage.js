@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function MainPage() {
     return (
-        <div>
+        <>
             <div className="row" id="subpages">
                 <div className="list-group" id="list-tab" role="tablist">
                     <Link className="list-group-item list-group-item-action" id="subpagesRow" data-toggle="list"
@@ -27,7 +27,7 @@ function MainPage() {
             <div className="row">
                 <img src={`${IMAGES_FOLDER_PATH}/${MAIN_PAGE_IMAGES.MAIN_PAGE}`} className="mainPageImage" alt=""/>
             </div>
-        </div>
+        </>
     )
 }
 
