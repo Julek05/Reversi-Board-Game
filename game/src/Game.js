@@ -25,7 +25,7 @@ class Game extends React.Component {
         };
         const initialGameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
         this.gameController = new GameController(initialGameState);
-        this.endOfGame = VISIBILITY_OF_ELEMENT.HIDDEN;
+        this.endOfGame = false;
     }
 
     renderField(y, x, valueField) {
@@ -81,7 +81,7 @@ class Game extends React.Component {
         if (newState !== null) {
             this.makeSetState(newState, this);
         } else {
-            this.endOfGame = VISIBILITY_OF_ELEMENT.VISIBLE;
+            this.endOfGame = true;
         }
     }
 

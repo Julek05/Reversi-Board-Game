@@ -27,7 +27,7 @@ class Strategies {
     }
 
     makeLastStep(allPossibilities, board) {
-        const [tmp, allDisksToTurn, y, x] = Utils.chooseBestOption(allPossibilities);
+        const [allDisksToTurn, y, x] = Utils.chooseBestOption(allPossibilities);
         this.engine.allDisksToTurn = allDisksToTurn;
         return this.engine.turnDisks(board, [y, x], PLAYERS.FIRST_PLAYER);
     }

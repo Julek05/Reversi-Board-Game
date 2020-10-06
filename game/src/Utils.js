@@ -151,11 +151,14 @@ class Utils {
             sameBestOptions++;
         }
 
-        const index = sameBestOptions > 0
+        const indexBestOption = sameBestOptions > 0
             ? Math.floor(Math.random() * (sameBestOptions + 1))
             : sameBestOptions;
 
-        return sortedAllPossibilities[index];
+        const bestOption = sortedAllPossibilities[indexBestOption];
+        bestOption.shift();
+
+        return bestOption;
     }
 
     static getIndexesAroundDisk(y, x) {
