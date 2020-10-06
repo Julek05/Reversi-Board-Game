@@ -22,9 +22,9 @@ class Engine {
 
     turnDisks(board, parametersFieldThatPlayerSetDisk, activePlayer) {
         const boardCopy = Utils.deepCopy(board);
-        const allDisksToSet = [...this.allDisksToTurn, ...parametersFieldThatPlayerSetDisk];
+        const allDisksToSet = [...this.allDisksToTurn, ...[parametersFieldThatPlayerSetDisk]];
 
-        allDisksToSet.forEach((y, x) => boardCopy[y][x] = activePlayer);
+        allDisksToSet.forEach(([y, x]) => boardCopy[y][x] = activePlayer);
 
         return boardCopy;
     }

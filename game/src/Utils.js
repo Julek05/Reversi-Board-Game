@@ -16,11 +16,11 @@ class Utils {
         } else {
             Utils.endGameAlert(pointsPlayer1, pointsPlayer2);
         }
-        return true;
+        return null;
     }
 
     static getChosenLevel() {
-        return document.getElementById("selectLevels").options.selectedIndex.valueOf();
+        return document.getElementById("selectLevels").value;
     }
 
     static upperCaseFirstCharacter(phrase) {
@@ -126,13 +126,7 @@ class Utils {
     }
 
     static deleteMovePossibilities(board) {
-        // board = board.map(row => row.map(field => {
-        //     return Utils.isPlayerField(field) ? EMPTY_FIELD : field
-        // }))
-        //
-        // return board;
-
-        return board.map(row => row.map(field => Utils.isPlayerField(field) ? EMPTY_FIELD : field));
+        return board.map(row => row.map(field => Utils.isPlayerField(field) ? field : EMPTY_FIELD));
     }
 
     static changeActivePlayer(activePlayer) {
@@ -148,10 +142,10 @@ class Utils {
         const sortedAllPossibilities = Utils.sortPossibilities(allPossibilities);
 
         let sameBestOptions = 0;
-        const firstPossibility = sortedAllPossibilities[0][0];
+        const firstPossibilityPoints = sortedAllPossibilities[0][0];
 
         for (let i = 1; i < sortedAllPossibilities.length; i++) {
-            if (firstPossibility !== sortedAllPossibilities[i][0]) {
+            if (firstPossibilityPoints !== sortedAllPossibilities[i][0]) {
                 break;
             }
             sameBestOptions++;

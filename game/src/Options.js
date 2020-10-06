@@ -84,7 +84,7 @@ function Options(props) {
                     <div className="input-group-prepend">
                         <label className="input-group-text" htmlFor="selectLevels">Poziom trudności</label>
                     </div>
-                    <select className="custom-select" id="selectLevels" defaultValue={"1"} disabled={selectLevels}>
+                    <select className="custom-select" id="selectLevels" defaultValue={LEVELS.EASY} disabled={selectLevels}>
                         {Object.values(LEVELS).map(level => {
                             return (
                                 <option key={level} value={level}>{Utils.upperCaseFirstCharacter(level)}</option>
