@@ -101,7 +101,7 @@ class Game extends React.Component {
 
         return (
             <div className="gameContainer">
-                <div id='game' className="boardContainer">
+                <div id="boardContainer">
                     {this.state.actualBoard.map((row, rowIndex) => {
                         return (
                             <div className="board-row" key={rowIndex}>

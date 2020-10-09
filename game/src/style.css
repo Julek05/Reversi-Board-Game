@@ -58,11 +58,12 @@
     display: flex;
 }
 
-.boardContainer {
+#boardContainer {
     position: relative;
     left: 150px;
-    margin: 0.5rem;
-    width: 50%;
+    margin: 0.5rem 19rem 0.5rem 0.5rem;
+    display: flex;
+    flex-direction: row;
 }
 
 .optionsContainer {
@@ -166,11 +167,6 @@
     flex-direction: row;
     max-width: 24rem;
     max-height: 20rem;
-}
-
-#game {
-    display: flex;
-    flex-direction: row;
 }
 
 .points {
