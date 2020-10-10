@@ -7,8 +7,9 @@ import {API_URLS, LEVELS} from "./constants";
 import Utils from "./Utils";
 import Tr from "./Tr";
 import Loader from "./Loader";
+import { withRouter } from "react-router-dom";
 
-function Ranking() {
+function Ranking({history}) {
     const [games, setGames] = useState([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
 
@@ -19,6 +20,7 @@ function Ranking() {
         axios.get(`${API_URLS.GAMES}/${Utils.deletePolishSigns(level)}`).then(response => {
             setGames(response.data);
             setIsLoadingData(false);
+            history.push(`/ranking/${Utils.deletePolishSigns(level)}`);
         }).then(error => {
             console.log(error);
             setIsLoadingData(false);
@@ -63,4 +65,4 @@ function Ranking() {
     );
 }
 
-export default Ranking
+export default withRouter(Ranking);
