@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class Game extends Model
 {
@@ -47,5 +49,13 @@ class Game extends Model
                 ->first()
                 ->id;
         }
+    }
+
+    public static function saveImage(UploadedFile $image, int $gameId) : void
+    {
+        $game = self::find($gameId);
+        $imagePath = Storage::disk(self::UPLOAD_PATH)->put(self::UPLOAD_PHOTOS_FOLDER, $image);
+        $game['image_path'] = $imagePath;
+        $game->save();
     }
 }

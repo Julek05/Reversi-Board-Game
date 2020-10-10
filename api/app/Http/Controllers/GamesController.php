@@ -7,40 +7,13 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Storage;
 
 class GamesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return int
-     */
-    public function store(Request $request) : int
+    final public function store(Request $request) : int
     {
         $game = $request->all();
+        $game['level'] = Game::LEVELS_DICTIONARY[$game['level']];
         $lastGameId = Game::getLastId();
 
         if ($game['player_name'] === null || trim($game['player_name']) === '') {
@@ -51,53 +24,13 @@ class GamesController extends Controller
         return $lastGameId;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param $level
-     * @return Collection
-     */
-    public function show(string $level) : Collection
+    final public function show(string $level) : Collection
     {
         return Game::getBestGames(Game::LEVELS_DICTIONARY[$level]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
+    final public function saveImage(Request $request, int $gameId) : void
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return void
-     */
-    public function update(Request $request, int $id) : void
-    {
-        $game = Game::find($request->get('id'));
-        if ($image = $request->all()['image']) {
-            $imagePath = Storage::disk(Game::UPLOAD_PATH)->put(Game::UPLOAD_PHOTOS_FOLDER, $image);
-            $game['image_path'] = $imagePath;
-        }
-        $game->save();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        Game::saveImage($request->file('image'), $gameId);
     }
 }

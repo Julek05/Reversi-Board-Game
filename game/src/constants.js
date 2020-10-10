@@ -38,9 +38,12 @@ export const PAGE_URLS = {
     MAIN_PAGE: 'strona_glowna',
 }
 
+export const BASE_API_URL = 'http://localhost:8000';
+
 export const API_URLS = {
-    UPLOADS: 'http://localhost:8000/uploads',
-    GAMES: 'http://localhost:8000/api/game'
+    UPLOADS: `${BASE_API_URL}/uploads`,
+    GAMES: `${BASE_API_URL}/api/game`,
+    IMAGE: `${BASE_API_URL}/api/game/image`
 };
 
 export const TURN_BUTTON_INFO = {

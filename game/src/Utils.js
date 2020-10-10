@@ -30,7 +30,7 @@ class Utils {
     static sendDataToApi(computerPoints, playerPoints) {
         const data = {
             'player_name': localStorage.getItem("player_name"),
-            'level': Utils.getChosenLevel(),
+            'level': Utils.deletePolishSigns(Utils.getChosenLevel()),
             'player_points': playerPoints,
             'computer_points': computerPoints
         }

@@ -18,12 +18,9 @@ function Options(props) {
         setIsSendingData(true);
         const screen = new FormData();
         screen.append('image', image);
-        screen.append('id', localStorage.getItem('id'));
-        localStorage.removeItem('id');
-        screen.append('_method', 'PATCH');
 
-        // axios.post(`${API_URLS.GAMES}/${id}`, screen).then(response => {
-        axios.post(`${API_URLS.GAMES}/1`, screen).then(response => {
+        axios.post(`${API_URLS.IMAGE}/${localStorage.getItem('id')}`, screen).then(response => {
+            localStorage.removeItem('id');
             setScreenSenderVisibility(VISIBILITY_OF_ELEMENT.HIDDEN);
             setIsSendingData(false);
         }).then(error => {
