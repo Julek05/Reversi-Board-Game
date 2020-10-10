@@ -14,17 +14,24 @@ class Game extends Model
         'level',
         'player_points',
         'computer_points',
-        'image_path',
-        'created_at'
+        'image_path'
     ];
 
-    const Guest = 'Gość';
-    const uploadPath = 'public_uploads';
-    const uploadPhotosFolder = 'photos';
+    const PLAYER = 'Gracz';
+    const UPLOAD_PATH = 'public_uploads';
+    const UPLOAD_PHOTOS_FOLDER = 'photos';
+
+    const LEVELS_DICTIONARY = [
+        'latwy' => 'easy',
+        'sredni' => 'middle',
+        'trudny' => 'hard'
+    ];
 
     public static function getBestGames(string $level) : Collection
     {
-        return Game::where('level', $level)
+        return self::select('player_name', 'level', 'player_points',
+            'computer_points', 'image_path', 'created_at')
+            ->where('level', $level)
             ->orderByRaw('player_points - computer_points DESC')
             ->take(10)
             ->get();
@@ -32,10 +39,10 @@ class Game extends Model
 
     public static function getLastId() : int
     {
-        if (Game::count() == 0) {
+        if (self::count() == 0) {
             return 0;
         } else {
-            return Game::select('id')
+            return self::select('id')
                 ->orderByDesc('id')
                 ->first()
                 ->id;

@@ -116,3 +116,9 @@ export const TIMES_TO_WAIT_IN_MILISECONDS = {
     COMPUTER_MOVE: 500,
     END_GAME_ALERT: 250
 }
+
+export const LEVELS_DICTIONARY = {
+    'easy': 'łatwy',
+    'middle': 'średni',
+    'hard': 'trudny'
+};

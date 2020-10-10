@@ -171,6 +171,10 @@ class Utils {
     static getActualBoard(boards) {
         return boards[boards.length - 1];
     }
+
+    static deletePolishSigns(level) {
+        return level.replace(/ł/g, 'l').replace(/ś/g, 's');
+    }
 }
 
 export default Utils;

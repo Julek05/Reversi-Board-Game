@@ -1,5 +1,6 @@
 import React from "react";
 import Screen from "./Screen";
+import {LEVELS_DICTIONARY} from "./constants";
 
 function Tr({game, index}) {
     const {id, player_name, level, player_points,
@@ -8,7 +9,7 @@ function Tr({game, index}) {
         <tr key={id}>
             <td>{index + 1}</td>
             <td>{player_name}</td>
-            <td>{level}</td>
+            <td>{LEVELS_DICTIONARY[level]}</td>
             <td>{player_points}</td>
             <td>{computer_points}</td>
             <td>

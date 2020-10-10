@@ -19,7 +19,7 @@ class GamesController extends Controller
      */
     public function index()
     {
-//        return Game::getBestGames();
+        //
     }
 
     /**
@@ -43,8 +43,8 @@ class GamesController extends Controller
         $game = $request->all();
         $lastGameId = Game::getLastId();
 
-        if ($game['player_name'] == null || trim($game['player_name']) == '') {
-            $game['player_name'] = Game::Guest . (1 + $lastGameId);
+        if ($game['player_name'] === null || trim($game['player_name']) === '') {
+            $game['player_name'] = Game::PLAYER . (1 + $lastGameId);
         }
         Game::create($game);
 
@@ -59,7 +59,7 @@ class GamesController extends Controller
      */
     public function show(string $level) : Collection
     {
-        return Game::getBestGames($level);
+        return Game::getBestGames(Game::LEVELS_DICTIONARY[$level]);
     }
 
     /**
@@ -84,7 +84,7 @@ class GamesController extends Controller
     {
         $game = Game::find($request->get('id'));
         if ($image = $request->all()['image']) {
-            $imagePath = Storage::disk(Game::uploadPath)->put(Game::uploadPhotosFolder, $image);
+            $imagePath = Storage::disk(Game::UPLOAD_PATH)->put(Game::UPLOAD_PHOTOS_FOLDER, $image);
             $game['image_path'] = $imagePath;
         }
         $game->save();

@@ -16,7 +16,7 @@ function Ranking() {
 
     function getGames(level) {
         setIsLoadingData(true);
-        axios.get(`${API_URLS.GAMES}/${level}`).then(response => {
+        axios.get(`${API_URLS.GAMES}/${Utils.deletePolishSigns(level)}`).then(response => {
             setGames(response.data);
             setIsLoadingData(false);
         }).then(error => {
