@@ -93,7 +93,7 @@ class Utils {
         }
     }
 
-    static setImgPath(valueField) {
+    static getImgPath(valueField) {
         return IMG_FIELDS_PATHS[valueField];
     }
 

@@ -17,7 +17,7 @@ class Game extends React.Component {
         this.state = {
             actualBoard: INITIAL_BOARD,
             boards: [INITIAL_BOARD],
-            turnImage: <img src={Utils.setImgPath(PLAYERS.SECOND_PLAYER)} className='turnImage' alt=""/>,
+            turnImage: <img src={Utils.getImgPath(PLAYERS.SECOND_PLAYER)} className='turnImage' alt=""/>,
             activePlayer: PLAYERS.SECOND_PLAYER,
             canMove: true,
             uiBlock: false,
@@ -31,7 +31,7 @@ class Game extends React.Component {
     renderField(y, x, valueField) {
         return (
             <Field
-                value={<img src={Utils.setImgPath(valueField)} className='disk' alt=""/>}
+                value={<img src={Utils.getImgPath(valueField)} className='disk' alt=""/>}
                 onClick={() => this.handleClick(y, x)}
                 key={`${x},${y}`}
             />
@@ -64,7 +64,7 @@ class Game extends React.Component {
             actualBoard: Utils.getActualBoard(newState['boards']),
             boards: newState['boards'],
             activePlayer: newState['activePlayer'],
-            turnImage: <img src={Utils.setImgPath(newState['activePlayer'])} className='turnImage' alt=""/>,
+            turnImage: <img src={Utils.getImgPath(newState['activePlayer'])} className='turnImage' alt=""/>,
             canMove: newState['canMove'],
             uiBlock: newState['uiBlock'],
             moveComputerAfterHumanGiveUpTurn: newState['moveComputerAfterHumanGiveUpTurn']

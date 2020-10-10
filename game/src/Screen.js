@@ -25,17 +25,13 @@ function Screen({ imagePath }) {
                     }
                 }}
             >
-                <img height='540' width='580' src={getImgPath(imagePath)} alt=''/>
+                <img height='540' width='580' src={`${API_URLS.UPLOADS}/${imagePath}`} alt=''/>
                 <div>
                     <Button variant="success" onClick={() => setModalIsOpen(false)}>Zamknij</Button>
                 </div>
             </Modal>
         </>
     );
-}
-
-function getImgPath(imagePath) {
-    return `${API_URLS.UPLOADS}/${imagePath}`;
 }
 
 export default Screen
