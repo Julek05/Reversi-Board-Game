@@ -5,11 +5,13 @@ import GameState from "./GameState";
 import Utils from "./Utils";
 import Field from "./Field";
 import {
+    API_URLS,
     INITIAL_BOARD,
     PLAYERS,
     TIMES_TO_WAIT_IN_MILISECONDS,
-    VISIBILITY_OF_ELEMENT
 } from "./constants";
+import axios from "axios";
+import Loader from "./Loader";
 
 class Game extends React.Component {
     constructor(props) {
@@ -21,11 +23,12 @@ class Game extends React.Component {
             activePlayer: PLAYERS.SECOND_PLAYER,
             canMove: true,
             uiBlock: false,
-            moveComputerAfterHumanGiveUpTurn: false
+            moveComputerAfterHumanGiveUpTurn: false,
+            endOfGame: false,
+            isSendingData: false
         };
         const initialGameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
         this.gameController = new GameController(initialGameState);
-        this.endOfGame = false;
     }
 
     renderField(y, x, valueField) {
@@ -67,7 +70,9 @@ class Game extends React.Component {
             turnImage: <img src={Utils.getImgPath(newState['activePlayer'])} className='turnImage' alt=""/>,
             canMove: newState['canMove'],
             uiBlock: newState['uiBlock'],
-            moveComputerAfterHumanGiveUpTurn: newState['moveComputerAfterHumanGiveUpTurn']
+            moveComputerAfterHumanGiveUpTurn: newState['moveComputerAfterHumanGiveUpTurn'],
+            endOfGame: false,
+            isSendingData: false
         });
     }
 
@@ -77,12 +82,36 @@ class Game extends React.Component {
     }
 
     handleClickGiveUpTurn() {
-        const newState = this.gameController.giveUpTurn(this.props.computerMode);
-        if (newState !== null) {
-            this.makeSetState(newState, this);
+        const result = this.gameController.giveUpTurn(this.props.computerMode);
+        if (Array.isArray(result)) {
+            this.setState({endOfGame: true});
+            this.endGame(result, this.props.computerMode, this.props.selfTeaching);
         } else {
-            this.endOfGame = true;
+            this.makeSetState(result, this);
         }
+    }
+
+    endGame(board, computerMode, selfTeaching) {
+        const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(board);
+        if (computerMode && !selfTeaching) {
+            this.sendGame(pointsPlayer1, pointsPlayer2);
+        }
+    }
+
+    sendGame(computerPoints, playerPoints) {
+        const game = {
+            'player_name': localStorage.getItem("player_name"),
+            'level': Utils.deletePolishSigns(Utils.getChosenLevel()),
+            'player_points': playerPoints,
+            'computer_points': computerPoints
+        }
+        this.setState({isSendingData: true})
+        axios.post(API_URLS.GAMES, game).then(response => {
+            this.setState({isSendingData: false});
+            localStorage.setItem('id', response.data);
+        }).then(error => {
+            console.log(error);
+        });
     }
 
     makeSetStateToParent() {
@@ -95,38 +124,41 @@ class Game extends React.Component {
 
     render() {
         const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(this.state.actualBoard);
-        const giveUpTurn = this.state.canMove ? VISIBILITY_OF_ELEMENT.HIDDEN : VISIBILITY_OF_ELEMENT.VISIBLE;
-        const giveUpTurnButtonText = this.gameController.engine.setTextOfGiveUpTurnButton(this.state.actualBoard, giveUpTurn,
-            this.state.activePlayer);
+        const giveUpTurnButtonText = this.state.canMove ? '' : this.gameController.engine.setTextOfGiveUpTurnButton(
+            this.state.actualBoard, this.state.activePlayer);
 
         return (
-            <div className="gameContainer">
-                <div id="boardContainer">
-                    {this.state.actualBoard.map((row, rowIndex) => {
-                        return (
-                            <div className="board-row" key={rowIndex}>
-                                {row.map((field, fieldIndex) => this.renderField(rowIndex, fieldIndex, field))}
-                            </div>
-                        )
-                    })}
+            this.state.isSendingData
+            ?
+                <Loader />
+            :
+                <div className="gameContainer">
+                    <div id="boardContainer">
+                        {this.state.actualBoard.map((row, rowIndex) => {
+                            return (
+                                <div className="board-row" key={rowIndex}>
+                                    {row.map((field, fieldIndex) => this.renderField(rowIndex, fieldIndex, field))}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className="optionsContainer">
+                        <Options scoredDisksFirstPlayer={pointsPlayer1}
+                                 scoredDisksSecondPlayer={pointsPlayer2}
+                                 turnImage={this.state.turnImage}
+                                 backMovement={() => this.handleClickRevertLastMove()}
+                                 canMove={this.state.canMove}
+                                 computerMode={this.props.computerMode}
+                                 selfTeaching={this.props.selfTeaching}
+                                 giveUpTurnClick={() => this.handleClickGiveUpTurn()}
+                                 giveUpTurnButtonText={giveUpTurnButtonText}
+                                 selectLevels={this.gameController.firstMove}
+                                 makeSetStateToParent={() => this.makeSetStateToParent()}
+                                 thisParent={this}
+                                 endOfGame={this.state.endOfGame}
+                        />
+                    </div>
                 </div>
-                <div className="optionsContainer">
-                    <Options scoredDisksFirstPlayer={pointsPlayer1}
-                             scoredDisksSecondPlayer={pointsPlayer2}
-                             levelsVisibility={this.props.levelsVisibility}
-                             turnImage={this.state.turnImage}
-                             backMovementButtonVisibility={this.props.backMovementButtonVisibility}
-                             backMovement={() => this.handleClickRevertLastMove()}
-                             giveUpTurn={giveUpTurn}
-                             giveUpTurnClick={() => this.handleClickGiveUpTurn()}
-                             giveUpTurnButtonText={giveUpTurnButtonText}
-                             selectLevels={this.gameController.firstMove}
-                             makeSetStateToParent={() => this.makeSetStateToParent()}
-                             thisParent={this}
-                             endOfGame={this.endOfGame}
-                    />
-                </div>
-            </div>
         );
     }
 }

@@ -94,7 +94,7 @@ class GameController {
                 computerBlock, moveComputerAfterHumanGiveUpTurn);
             return this.gameState;
         } else {
-            return Utils.endGame(board, computerMode);
+            return board;
         }
     }
 

@@ -5,13 +5,20 @@ import Utils from "./Utils";
 import Loader from "./Loader";
 
 function Options(props) {
-    const { scoredDisksFirstPlayer, scoredDisksSecondPlayer, levelsVisibility, turnImage, backMovementButtonVisibility,
-        backMovement, giveUpTurn, giveUpTurnClick, giveUpTurnButtonText, selectLevels, makeSetStateToParent, endOfGame } = props;
+    const { scoredDisksFirstPlayer, scoredDisksSecondPlayer, turnImage, computerMode, selfTeaching,
+        backMovement, canMove, giveUpTurnClick, giveUpTurnButtonText, selectLevels, makeSetStateToParent, endOfGame } = props;
 
     const [image, setImage] = useState('');
     const [isSendingData, setIsSendingData] = useState(false);
+
     const [screenSenderVisibility, setScreenSenderVisibility] =
-        useState(endOfGame ? VISIBILITY_OF_ELEMENT.VISIBLE : VISIBILITY_OF_ELEMENT.HIDDEN);
+        useState(Utils.getVisibilityOfElement(endOfGame && computerMode && !selfTeaching));
+
+    const backMovementButtonVisibility = Utils.getVisibilityOfElement(!endOfGame && selfTeaching);
+
+    const levelsVisibility = Utils.getVisibilityOfElement(computerMode);
+
+    const giveUpTurnVisibility = Utils.getVisibilityOfElement(!canMove && !endOfGame);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -51,11 +58,11 @@ function Options(props) {
                     </div>
                     <br/>
                     <button type="button" className="btn btn-dark gameButton" id="backMovement"
-                            style={backMovementButtonVisibility} onClick={backMovement}>Cofnij ruch
+                            style={{visibility: backMovementButtonVisibility}} onClick={backMovement}>Cofnij ruch
                     </button>
                     <br/>
                     <button type="button" className="btn gameButton" id="giveUpTurnButton"
-                            style={{visibility: giveUpTurn}}
+                            style={{visibility: giveUpTurnVisibility}}
                             onClick={giveUpTurnClick}>{giveUpTurnButtonText}
                     </button>
                 </div>
@@ -77,7 +84,7 @@ function Options(props) {
                     </div>
                 </div>
 
-                <div style={levelsVisibility} className="input-group mb-3" id="levels">
+                <div style={{visibility: levelsVisibility}} className="input-group mb-3" id="levels">
                     <div className="input-group-prepend">
                         <label className="input-group-text" htmlFor="selectLevels">Poziom trudności</label>
                     </div>

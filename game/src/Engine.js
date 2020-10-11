@@ -80,8 +80,8 @@ class Engine {
         return false;
     }
 
-    setTextOfGiveUpTurnButton(board, giveUpTurn, activePlayer) {
-        return giveUpTurn && this.isLastMove(board, activePlayer)
+    setTextOfGiveUpTurnButton(board, activePlayer) {
+        return this.isLastMove(board, activePlayer)
             ? TURN_BUTTON_INFO.END_OF_GAME
             : TURN_BUTTON_INFO.GIVE_UP_TURN;
     }

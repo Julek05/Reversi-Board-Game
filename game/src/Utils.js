@@ -6,43 +6,12 @@ import {
 import axios from "axios";
 
 class Utils {
-    //TODO zablokowac, zeby z samouczka nie mozna bylo wysylac screena i gra sie nie zapisywala
-    static endGame(board, computerMode) {
-        document.getElementById("turnWrapper").style.visibility = VISIBILITY_OF_ELEMENT.HIDDEN;
-
-        const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(board);
-        if (computerMode) {
-            Utils.sendDataToApi(pointsPlayer1, pointsPlayer2);
-        } else {
-            Utils.endGameAlert(pointsPlayer1, pointsPlayer2);
-        }
-        return null;
-    }
-
     static getChosenLevel() {
         return document.getElementById("selectLevels").value;
     }
 
     static upperCaseFirstCharacter(phrase) {
         return `${phrase.slice(0, 1).toUpperCase()}${phrase.slice(1, phrase.length)}`
-    }
-
-    static sendDataToApi(computerPoints, playerPoints) {
-        const data = {
-            'player_name': localStorage.getItem("player_name"),
-            'level': Utils.deletePolishSigns(Utils.getChosenLevel()),
-            'player_points': playerPoints,
-            'computer_points': computerPoints
-        }
-
-        axios.post(API_URLS.GAMES, data).then(response => {
-            localStorage.setItem('id', response.data);
-            document.getElementById("giveUpTurnButton").style.visibility = VISIBILITY_OF_ELEMENT.HIDDEN;
-            document.getElementById("screenSender").style.visibility = VISIBILITY_OF_ELEMENT.VISIBLE;
-            Utils.endGameAlert(computerPoints, playerPoints);
-        }).then(error => {
-            console.log(error);
-        });
     }
 
     static countPoints(board) {
@@ -174,6 +143,10 @@ class Utils {
 
     static deletePolishSigns(level) {
         return level.replace(/ł/g, 'l').replace(/ś/g, 's');
+    }
+
+    static getVisibilityOfElement(result) {
+        return result ? VISIBILITY_OF_ELEMENT.VISIBLE : VISIBILITY_OF_ELEMENT.HIDDEN;
     }
 }
 
