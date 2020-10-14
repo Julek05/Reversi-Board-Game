@@ -28,40 +28,6 @@ class Utils {
         return [player1Points, player2Points];
     }
 
-    static endGameAlert(pointsPlayer1, pointsPlayer2) {
-        setTimeout(() => {
-            alert(`Obydwaj gracze nie mogą wykonać żadnego ruchu - koniec gry!\n\n 
-                ${Utils.getAlertMessage(pointsPlayer1, pointsPlayer2)}`);
-        }, TIMES_TO_WAIT_IN_MILISECONDS.END_GAME_ALERT);
-    }
-
-    static getAlertMessage(pointsPlayer1, pointsPlayer2) {
-        if (pointsPlayer1 > pointsPlayer2) {
-            return `Wygrał gracz z niebieskimi pionkami, zdobył ${pointsPlayer1} ${Utils.correctVariant(pointsPlayer1)}
-                    \n\nGracz z czarnymi pionkami, zdobył ${pointsPlayer2} ${Utils.correctVariant(pointsPlayer2)}`;
-        } else if (pointsPlayer1 < pointsPlayer2) {
-            return `Wygrał gracz z czarnymi pionkami, zdobył ${pointsPlayer2} ${Utils.correctVariant(pointsPlayer2)}
-                    \n\nGracz z niebieskimi pionkami, zdobył ${pointsPlayer1} ${Utils.correctVariant(pointsPlayer1)}`;
-        }
-
-        return `Remis, obydwaj gracze zdobyli po ${pointsPlayer1} ${Utils.correctVariant(pointsPlayer1)}`;
-    }
-
-    static isFirstOption(playerPoints) {
-        return (playerPoints % 10 === 2 && playerPoints !== 12) || (playerPoints % 10 === 3 && playerPoints !== 13)
-            || (playerPoints % 10 === 4 && playerPoints !== 14);
-    }
-
-    static correctVariant(playerPoints) {
-        if (Utils.isFirstOption(playerPoints)) {
-            return POINTS_VARATIONS.FIRST_OPTION;
-        } else if (playerPoints === 1) {
-            return POINTS_VARATIONS.SECOND_OPTION;
-        } else {
-            return POINTS_VARATIONS.THIRD_OPTION;
-        }
-    }
-
     static getImgPath(valueField) {
         return IMG_FIELDS_PATHS[valueField];
     }
