@@ -20,8 +20,22 @@ function Options(props) {
 
     const giveUpTurnVisibility = Utils.getVisibilityOfElement(!canMove && !endOfGame);
 
+    const endOfGameInfoVisibility = Utils.getVisibilityOfElement(endOfGame);
+
+    function isImage(image) {
+        return image === 'object' && image.type.includes('image');
+    }
+
+    function isInvalidFile(image) {
+        return image === '' || image === undefined || !isImage(image);
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
+        if (isInvalidFile(image)) {
+            alert('Błąd, nie dodano zdjęcia!');
+            return;
+        }
         setIsSendingData(true);
         const screen = new FormData();
         screen.append('image', image);
@@ -51,7 +65,7 @@ function Options(props) {
                     <div id='screenSender' style={{visibility: screenSenderVisibility}}>
                         <h5>Czy chcesz wysłać screena?</h5>
                         <form onSubmit={handleSubmit}>
-                            <input type="file" onChange={fileSelectedHandler}/>
+                            <input type="file" accept="image/*" onChange={fileSelectedHandler}/>
                             <button type="submit" className="btn btn-success gameButton screenButton">
                                 Wyślij Screen</button>&nbsp;&nbsp;
                         </form>
