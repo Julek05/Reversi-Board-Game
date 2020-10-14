@@ -115,10 +115,7 @@ export const VISIBILITY_OF_ELEMENT = {
     HIDDEN: 'hidden'
 }
 
-export const TIMES_TO_WAIT_IN_MILISECONDS = {
-    COMPUTER_MOVE: 500,
-    END_GAME_ALERT: 250
-}
+export const TIME_TO_WAIT_COMPUTER_MOVE = 500; //miliseconds
 
 export const LEVELS_DICTIONARY = {
     'easy': 'łatwy',

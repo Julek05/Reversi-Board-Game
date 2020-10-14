@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from "axios";
-import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS, VISIBILITY_OF_ELEMENT} from "./constants";
+import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "./constants";
 import Utils from "./Utils";
 import Loader from "./Loader";
 
@@ -42,7 +42,7 @@ function Options(props) {
 
         axios.post(`${API_URLS.IMAGE}/${localStorage.getItem('id')}`, screen).then(response => {
             localStorage.removeItem('id');
-            setScreenSenderVisibility(VISIBILITY_OF_ELEMENT.HIDDEN);
+            setScreenSenderVisibility(Utils.getVisibilityOfElement(false));
             setIsSendingData(false);
         }).then(error => {
             console.log(error);
@@ -61,8 +61,9 @@ function Options(props) {
         :
             <div className="options">
                 <div className="gameDiv">
+                    <h2 style={endOfGameInfoVisibility}>Koniec gry!</h2>
                     <button type="button" className="btn btn-primary gameButton" onClick={makeSetStateToParent}>Nowa Gra</button>
-                    <div id='screenSender' style={{visibility: screenSenderVisibility}}>
+                    <div id='screenSender' style={screenSenderVisibility}>
                         <h5>Czy chcesz wysłać screena?</h5>
                         <form onSubmit={handleSubmit}>
                             <input type="file" accept="image/*" onChange={fileSelectedHandler}/>
@@ -72,11 +73,11 @@ function Options(props) {
                     </div>
                     <br/>
                     <button type="button" className="btn btn-dark gameButton" id="backMovement"
-                            style={{visibility: backMovementButtonVisibility}} onClick={backMovement}>Cofnij ruch
+                            style={backMovementButtonVisibility} onClick={backMovement}>Cofnij ruch
                     </button>
                     <br/>
                     <button type="button" className="btn gameButton" id="giveUpTurnButton"
-                            style={{visibility: giveUpTurnVisibility}}
+                            style={giveUpTurnVisibility}
                             onClick={giveUpTurnClick}>{giveUpTurnButtonText}
                     </button>
                 </div>
@@ -98,7 +99,7 @@ function Options(props) {
                     </div>
                 </div>
 
-                <div style={{visibility: levelsVisibility}} className="input-group mb-3" id="levels">
+                <div style={levelsVisibility} className="input-group mb-3" id="levels">
                     <div className="input-group-prepend">
                         <label className="input-group-text" htmlFor="selectLevels">Poziom trudności</label>
                     </div>

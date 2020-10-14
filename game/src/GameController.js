@@ -1,7 +1,7 @@
 import Strategies from "./Strategies";
 import GameState from "./GameState";
 import Utils from "./Utils";
-import {LEVELS, PLAYERS, TIMES_TO_WAIT_IN_MILISECONDS} from "./constants";
+import {LEVELS, PLAYERS, TIME_TO_WAIT_COMPUTER_MOVE} from "./constants";
 
 class GameController {
     constructor(gameState) {
@@ -108,7 +108,7 @@ class GameController {
                 const newState = this.makeAutomaticMove(chosenStrategy);
                 this.gameState = newState;
                 callback(newState, obj);
-            }, TIMES_TO_WAIT_IN_MILISECONDS.COMPUTER_MOVE);
+            }, TIME_TO_WAIT_COMPUTER_MOVE);
         }
     }
 }

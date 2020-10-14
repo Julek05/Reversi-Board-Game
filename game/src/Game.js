@@ -8,7 +8,7 @@ import {
     API_URLS,
     INITIAL_BOARD,
     PLAYERS,
-    TIMES_TO_WAIT_IN_MILISECONDS,
+    TIME_TO_WAIT_COMPUTER_MOVE
 } from "./constants";
 import axios from "axios";
 import Loader from "./Loader";
@@ -48,7 +48,7 @@ class Game extends React.Component {
                 const newState = this.gameController.makeAutomaticMove(chosenLevel);
                 this.gameState = newState;
                 this.makeSetState(newState, this);
-            }, TIMES_TO_WAIT_IN_MILISECONDS.COMPUTER_MOVE);
+            }, TIME_TO_WAIT_COMPUTER_MOVE);
         }
     }
 
@@ -154,7 +154,6 @@ class Game extends React.Component {
                                  giveUpTurnButtonText={giveUpTurnButtonText}
                                  selectLevels={this.gameController.firstMove}
                                  makeSetStateToParent={() => this.makeSetStateToParent()}
-                                 thisParent={this}
                                  endOfGame={this.state.endOfGame}
                         />
                     </div>

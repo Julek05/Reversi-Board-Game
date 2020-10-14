@@ -1,9 +1,8 @@
 import {
-    API_URLS, BOARD_RANGE, EMPTY_FIELD,
-    IMG_FIELDS_PATHS, PLAYERS, POINTS_VARATIONS,
-    TIMES_TO_WAIT_IN_MILISECONDS, VISIBILITY_OF_ELEMENT
+    BOARD_RANGE, EMPTY_FIELD,
+    IMG_FIELDS_PATHS, PLAYERS,
+    VISIBILITY_OF_ELEMENT
 } from "./constants";
-import axios from "axios";
 
 class Utils {
     static getChosenLevel() {
@@ -112,7 +111,7 @@ class Utils {
     }
 
     static getVisibilityOfElement(result) {
-        return result ? VISIBILITY_OF_ELEMENT.VISIBLE : VISIBILITY_OF_ELEMENT.HIDDEN;
+        return {visibility: result ? VISIBILITY_OF_ELEMENT.VISIBLE : VISIBILITY_OF_ELEMENT.HIDDEN};
     }
 }
 
