@@ -13,6 +13,7 @@ function Ranking({history}) {
     const [games, setGames] = useState([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
 
+    // eslint-disable-next-line
     useEffect(() => getGames(LEVELS.EASY), []);
 
     function getGames(level) {

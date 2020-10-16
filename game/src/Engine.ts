@@ -1,7 +1,13 @@
-import {BOARD_DIMENSIONS, EMPTY_FIELD, TURN_BUTTON_INFO} from './constants';
+import {
+    BOARD_DIMENSIONS, EMPTY_FIELD, TURN_BUTTON_INFO,
+} from './constants';
 import Utils from "./Utils";
 
 class Engine {
+    private currentCheckingY: number;
+    private currentCheckingX: number;
+    allDisksToTurn: number[][];
+    private options: any[];
     constructor() {
         this.options = [];
         this.allDisksToTurn = [];
@@ -9,7 +15,7 @@ class Engine {
         this.currentCheckingX = 0;
     }
 
-    isMoveCorrect(board, y, x, activePlayer) {
+    isMoveCorrect(board: number[][], y: number, x: number, activePlayer: number): boolean {
         if (board[y][x] === EMPTY_FIELD) {
             this.allDisksToTurn = [];
             this.options = [];
@@ -20,17 +26,18 @@ class Engine {
         return false;
     }
 
-    turnDisks(board, parametersFieldThatPlayerSetDisk, activePlayer) {
-        const boardCopy = Utils.deepCopy(board);
-        const allDisksToSet = [...this.allDisksToTurn, ...[parametersFieldThatPlayerSetDisk]];
+    turnDisks(board: number[][], parametersFieldThatPlayerSetDisk: number[],
+              activePlayer: number): number[][] {
+        const boardCopy: number[][] = Utils.deepCopyTwoDimensionalArray(board);
+        const allDisksToSet: number[][] = [...this.allDisksToTurn, ...[parametersFieldThatPlayerSetDisk]];
 
         allDisksToSet.forEach(([y, x]) => boardCopy[y][x] = activePlayer);
 
         return boardCopy;
     }
 
-    addMovePossibilities(board, activePlayer) {
-        const changedBoard = Utils.deepCopy(board);
+    addMovePossibilities(board: number[][], activePlayer: number): number[][] {
+        const changedBoard: number[][] = Utils.deepCopyTwoDimensionalArray(board);
         for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
             for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.isMoveCorrect(board, y, x, activePlayer)) {
@@ -41,7 +48,7 @@ class Engine {
         return changedBoard;
     }
 
-    findAllOptions(board, y, x, activePlayer) {
+    findAllOptions(board: number[][], y: number, x: number, activePlayer: number): boolean {
         const indexesAroundDisk = Utils.getIndexesAroundDisk(y, x);
         this.currentCheckingY = y;
         this.currentCheckingX = x;
@@ -54,16 +61,17 @@ class Engine {
         return this.options.length > 0;
     }
 
-    checkAllDirections(board, activePlayer) {
+    checkAllDirections(board: number[][], activePlayer: number): boolean {
         return this.options.some(([y, x]) => this.checkOneDirection(board, y, x, activePlayer));
     }
 
-    checkOneDirection(board, positionY, positionX, activePlayer) {
-        const tempToTurn = [[positionY, positionX]];
-        const moveY = positionY - this.currentCheckingY;
-        const moveX = positionX - this.currentCheckingX;
-        let nextMoveY = positionY + moveY;
-        let nextMoveX = positionX + moveX;
+    checkOneDirection(board: number[][], positionY: number, positionX: number,
+                      activePlayer: number): boolean {
+        const tempToTurn: number[][] = [[positionY, positionX]];
+        const moveY: number = positionY - this.currentCheckingY;
+        const moveX: number = positionX - this.currentCheckingX;
+        let nextMoveY: number = positionY + moveY;
+        let nextMoveX: number = positionX + moveX;
 
         while (Utils.insideTheBoard(nextMoveY, nextMoveX)) {
             if (board[nextMoveY][nextMoveX] === EMPTY_FIELD) {
@@ -80,15 +88,15 @@ class Engine {
         return false;
     }
 
-    setTextOfGiveUpTurnButton(board, activePlayer) {
+    setTextOfGiveUpTurnButton(board: number[][], activePlayer: number): string {
         return this.isLastMove(board, activePlayer)
             ? TURN_BUTTON_INFO.END_OF_GAME
             : TURN_BUTTON_INFO.GIVE_UP_TURN;
     }
 
-    isLastMove(board, activePlayer) {
-        const nextMoveActivePlayer = Utils.changeActivePlayer(activePlayer);
-        const nextMoveBoard = this.addMovePossibilities(board, nextMoveActivePlayer);
+    isLastMove(board: number[][], activePlayer: number): boolean {
+        const nextMoveActivePlayer: number = Utils.changeActivePlayer(activePlayer);
+        const nextMoveBoard: number[][] = this.addMovePossibilities(board, nextMoveActivePlayer);
 
         return !Utils.playerCanMove(nextMoveBoard, nextMoveActivePlayer);
     }

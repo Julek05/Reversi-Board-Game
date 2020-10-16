@@ -10,12 +10,13 @@ import {
 } from "./constants";
 
 class Strategies {
+    public engine: Engine;
     constructor() {
         this.engine = new Engine();
     }
 
-    maximisationStrategy(board) {
-        const allPossibilities = [];
+    maximisationStrategy(board: number[][]): number[][] {
+        const allPossibilities: any[] = [];
         for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
             for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.engine.isMoveCorrect(board, y, x, PLAYERS.FIRST_PLAYER)) {
@@ -26,14 +27,14 @@ class Strategies {
         return this.makeLastStep(allPossibilities, board);
     }
 
-    makeLastStep(allPossibilities, board) {
+    makeLastStep(allPossibilities: any[], board: number[][]): number[][] {
         const [allDisksToTurn, y, x] = Utils.chooseBestOption(allPossibilities);
         this.engine.allDisksToTurn = allDisksToTurn;
         return this.engine.turnDisks(board, [y, x], PLAYERS.FIRST_PLAYER);
     }
 
-    valuatingFieldsStrategy(board) {
-        const allPossibilities = [];
+    valuatingFieldsStrategy(board: number[][]): number[][] {
+        const allPossibilities: any[] = [];
         for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
             for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.engine.isMoveCorrect(board, y, x, PLAYERS.FIRST_PLAYER)) {
@@ -44,12 +45,12 @@ class Strategies {
         return this.makeLastStep(allPossibilities, board);
     }
 
-    mobilityStrategy(board) {
-        const allPossibilities = [];
+    mobilityStrategy(board: number[][]): number[][] {
+        const allPossibilities: any[] = [];
         for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
             for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.engine.isMoveCorrect(board, y, x, PLAYERS.FIRST_PLAYER)) {
-                    const allDisksToTurnCopy = Utils.deepCopy(this.engine.allDisksToTurn);
+                    const allDisksToTurnCopy: number[][] = Utils.deepCopyTwoDimensionalArray(this.engine.allDisksToTurn);
                     const turnedDisks = this.engine.turnDisks(board, [y, x], PLAYERS.FIRST_PLAYER);
                     const opponentPossibilities = this.checkOpponentPossibilities(turnedDisks);
                     allPossibilities.push([opponentPossibilities, allDisksToTurnCopy, y, x]);
@@ -59,9 +60,9 @@ class Strategies {
         return this.makeLastStep(allPossibilities, board);
     }
 
-    checkOpponentPossibilities(turnedDisks) {
-        let amountOfPossibilities = 0;
-        let amountOfWorstFields = 0;
+    checkOpponentPossibilities(turnedDisks: number[][]): number {
+        let amountOfPossibilities: number = 0;
+        let amountOfWorstFields: number = 0;
         for (let y = 0; y < BOARD_DIMENSIONS.HEIGHT; y++) {
             for (let x = 0; x < BOARD_DIMENSIONS.WIDTH; x++) {
                 if (this.engine.isMoveCorrect(turnedDisks, y, x, PLAYERS.SECOND_PLAYER)) {
