@@ -1,10 +1,26 @@
-import React, {useState} from 'react'
+import React, {FormEvent, FunctionComponent, useState} from 'react'
 import axios from "axios";
 import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "./constants";
 import Utils from "./Utils";
 import {Loader} from "./Loader";
+import ImageValidator from "./ImageValidator";
 
-function Options(props) {
+interface OptionsProps {
+    scoredDisksFirstPlayer: number,
+    scoredDisksSecondPlayer: number,
+    turnImage: HTMLImageElement,
+    backMovement: () => void,
+    canMove: boolean,
+    computerMode: boolean,
+    selfTeaching: boolean,
+    giveUpTurnClick: () => void,
+    giveUpTurnButtonText: string,
+    selectLevels: boolean,
+    makeSetStateToParent: () => void,
+    endOfGame: boolean
+}
+
+export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) => {
     const { scoredDisksFirstPlayer, scoredDisksSecondPlayer, turnImage, computerMode, selfTeaching,
         backMovement, canMove, giveUpTurnClick, giveUpTurnButtonText, selectLevels, makeSetStateToParent, endOfGame } = props;
 
@@ -22,17 +38,12 @@ function Options(props) {
 
     const endOfGameInfoVisibility = Utils.getVisibilityOfElement(endOfGame);
 
-    function isImage(image) {
-        return image === 'object' && image.type.includes('image');
-    }
-
-    function isInvalidFile(image) {
-        return image === '' || image === undefined || !isImage(image);
-    }
-
-    function handleSubmit(event) {
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (isInvalidFile(image)) {
+
+        const imageValidator: ImageValidator = new ImageValidator(image);
+
+        if (imageValidator.isInvalidFile()) {
             alert('Błąd, nie dodano zdjęcia!');
             return;
         }
@@ -50,7 +61,8 @@ function Options(props) {
         });
     }
 
-    function fileSelectedHandler(event) {
+    function fileSelectedHandler(event: FormEvent<HTMLInputElement>): void {
+        // @ts-ignore
         setImage(event.target.files[0]);
     }
 
@@ -114,5 +126,3 @@ function Options(props) {
             </div>
     );
 }
-
-export default Options

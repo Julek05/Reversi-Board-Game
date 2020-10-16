@@ -1,5 +1,5 @@
-import React from 'react'
-import Options from "./Options";
+import React, {Component, FunctionComponent} from 'react'
+import {Options} from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
 import Utils from "./Utils";
@@ -13,12 +13,34 @@ import {
 import axios from "axios";
 import {Loader} from "./Loader";
 
-class Game extends React.Component {
-    constructor(props) {
-        super(props);
+interface GameProps {
+    computerMode: boolean,
+    selfTeaching: boolean
+}
+
+interface State {
+    actualBoard: number[][],
+    boards: number[][][],
+    turnImage: HTMLImageElement,
+    activePlayer: number,
+    canMove: boolean,
+    uiBlock: boolean,
+    moveComputerAfterHumanGiveUpTurn: boolean,
+    endOfGame: boolean,
+    isSendingData: boolean
+}
+
+export default class Game extends Component {
+    private gameController: GameController;
+    public state: State;
+    public computerMode: boolean;
+    public selfTeaching: boolean;
+    constructor(props: GameProps) {
+        super(props.computerMode, props.selfTeaching);
         this.state = {
             actualBoard: INITIAL_BOARD,
             boards: [INITIAL_BOARD],
+            // @ts-ignore
             turnImage: <img src={Utils.getImgPath(PLAYERS.SECOND_PLAYER)} className='turnImage' alt=""/>,
             activePlayer: PLAYERS.SECOND_PLAYER,
             canMove: true,
@@ -27,11 +49,13 @@ class Game extends React.Component {
             endOfGame: false,
             isSendingData: false
         };
-        const initialGameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
+        const initialGameState: GameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
         this.gameController = new GameController(initialGameState);
+        this.computerMode = props.computerMode;
+        this.selfTeaching = props.selfTeaching;
     }
 
-    renderField(y, x, valueField) {
+    renderField(y: number, x: number, valueField: number) {
         return (
             <Field
                 value={valueField}
@@ -46,23 +70,23 @@ class Game extends React.Component {
             setTimeout(() => {
                 const chosenLevel = Utils.getChosenLevel();
                 const newState = this.gameController.makeAutomaticMove(chosenLevel);
-                this.gameState = newState;
+                this.gameController.gameState = newState;
                 this.makeSetState(newState, this);
             }, TIME_TO_WAIT_COMPUTER_MOVE);
         }
     }
 
-    handleClick(y, x) {
+    handleClick(y: number, x: number): void {
         if (!this.state.uiBlock) {
-            let chosenStrategy;
-            if (this.props.computerMode) {
+            let chosenStrategy: string = '';
+            if (this.computerMode) {
                 chosenStrategy = Utils.getChosenLevel();
             }
-            this.gameController.makeMove(y, x, this.props.computerMode, chosenStrategy, this.makeSetState, this);
+            this.gameController.makeMove(y, x, this.computerMode, chosenStrategy, this.makeSetState, this);
         }
     }
 
-    makeSetState(newState, obj) {
+    makeSetState(newState: GameState, obj: Game): void {
         obj.setState({
             actualBoard: Utils.getActualBoard(newState['boards']),
             boards: newState['boards'],
@@ -76,29 +100,29 @@ class Game extends React.Component {
         });
     }
 
-    handleClickRevertLastMove() {
+    handleClickRevertLastMove(): void {
         const newState = this.gameController.revertLastMove();
         this.makeSetState(newState, this);
     }
 
-    handleClickGiveUpTurn() {
-        const result = this.gameController.giveUpTurn(this.props.computerMode);
+    handleClickGiveUpTurn(): void {
+        const result = this.gameController.giveUpTurn(this.computerMode);
         if (Array.isArray(result)) {
             this.setState({endOfGame: true});
-            this.endGame(result, this.props.computerMode, this.props.selfTeaching);
+            this.endGame(result, this.computerMode, this.selfTeaching);
         } else {
             this.makeSetState(result, this);
         }
     }
 
-    endGame(board, computerMode, selfTeaching) {
+    endGame(board: number[][], computerMode: boolean, selfTeaching: boolean): void {
         const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(board);
         if (computerMode && !selfTeaching) {
             this.sendGame(pointsPlayer1, pointsPlayer2);
         }
     }
 
-    sendGame(computerPoints, playerPoints) {
+    sendGame(computerPoints: number, playerPoints: number): void {
         const game = {
             'player_name': localStorage.getItem("player_name"),
             'level': Utils.deletePolishSigns(Utils.getChosenLevel()),
@@ -114,7 +138,7 @@ class Game extends React.Component {
         });
     }
 
-    makeSetStateToParent() {
+    makeSetStateToParent(): void {
         if (window.confirm("Czy na pewno chcesz rozpocząć nową grę?")) {
             const initialGameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
             this.gameController = new GameController(initialGameState);
@@ -123,7 +147,7 @@ class Game extends React.Component {
     }
 
     render() {
-        const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(this.state.actualBoard);
+        const [pointsPlayer1, pointsPlayer2]: number[] = Utils.countPoints(this.state.actualBoard);
         const giveUpTurnButtonText = this.state.canMove ? '' : this.gameController.engine.setTextOfGiveUpTurnButton(
             this.state.actualBoard, this.state.activePlayer);
 
@@ -134,7 +158,7 @@ class Game extends React.Component {
             :
                 <div className="gameContainer">
                     <div id="boardContainer">
-                        {this.state.actualBoard.map((row, rowIndex) => {
+                        {this.state.actualBoard.map((row: number[], rowIndex: number) => {
                             return (
                                 <div className="board-row" key={rowIndex}>
                                     {row.map((field, fieldIndex) => this.renderField(rowIndex, fieldIndex, field))}
@@ -148,8 +172,8 @@ class Game extends React.Component {
                                  turnImage={this.state.turnImage}
                                  backMovement={() => this.handleClickRevertLastMove()}
                                  canMove={this.state.canMove}
-                                 computerMode={this.props.computerMode}
-                                 selfTeaching={this.props.selfTeaching}
+                                 computerMode={this.computerMode}
+                                 selfTeaching={this.selfTeaching}
                                  giveUpTurnClick={() => this.handleClickGiveUpTurn()}
                                  giveUpTurnButtonText={giveUpTurnButtonText}
                                  selectLevels={this.gameController.firstMove}
@@ -161,5 +185,3 @@ class Game extends React.Component {
         );
     }
 }
-
-export default Game

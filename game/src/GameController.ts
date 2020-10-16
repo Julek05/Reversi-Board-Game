@@ -7,9 +7,9 @@ import Game from "./Game";
 
 class GameController {
     private strategies: Strategies;
-    engine: Engine;
-    private gameState: GameState;
-    private firstMove: boolean;
+    public engine: Engine;
+    public gameState: GameState;
+    firstMove: boolean;
     constructor(gameState: GameState) {
         this.strategies = new Strategies();
         this.engine = this.strategies.engine;

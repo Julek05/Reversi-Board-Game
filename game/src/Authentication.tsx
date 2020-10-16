@@ -8,7 +8,7 @@ export const Authentication: FunctionComponent = () => {
         setName(event.currentTarget.value);
     }
 
-    function handleSubmit(event: FormEvent<HTMLInputElement>): void {
+    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         localStorage.setItem("player_name", name);
         redirectToMainPage();
@@ -19,7 +19,6 @@ export const Authentication: FunctionComponent = () => {
     }
 
     return (
-        // @ts-ignore
         <form id='nameForm' onSubmit={handleSubmit}><br/><br/>
             <label id='labelForm'>
                 Wpisz swoje imię:<br/><br/>
