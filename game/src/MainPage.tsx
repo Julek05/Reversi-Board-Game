@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {FunctionComponent} from 'react'
 import {IMAGES_FOLDER_PATH, MAIN_PAGE_IMAGES, PAGE_URLS, SUBPAGES} from "./constants";
 import { Link } from 'react-router-dom';
 
-function MainPage() {
+export const MainPage: FunctionComponent = () => {
     return (
         <>
             <div className="row" id="subpages">
@@ -30,5 +30,3 @@ function MainPage() {
         </>
     )
 }
-
-export default MainPage

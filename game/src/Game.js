@@ -3,7 +3,7 @@ import Options from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
 import Utils from "./Utils";
-import Field from "./Field";
+import {Field} from "./Field";
 import {
     API_URLS,
     INITIAL_BOARD,
@@ -11,7 +11,7 @@ import {
     TIME_TO_WAIT_COMPUTER_MOVE
 } from "./constants";
 import axios from "axios";
-import Loader from "./Loader";
+import {Loader} from "./Loader";
 
 class Game extends React.Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class Game extends React.Component {
     renderField(y, x, valueField) {
         return (
             <Field
-                value={<img src={Utils.getImgPath(valueField)} className='disk' alt=""/>}
+                value={valueField}
                 onClick={() => this.handleClick(y, x)}
                 key={`${x},${y}`}
             />

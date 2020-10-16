@@ -7,7 +7,7 @@ import Game from "./Game";
 
 class GameController {
     private strategies: Strategies;
-    private engine: Engine;
+    engine: Engine;
     private gameState: GameState;
     private firstMove: boolean;
     constructor(gameState: GameState) {

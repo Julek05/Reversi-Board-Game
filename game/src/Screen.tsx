@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import Modal from 'react-modal';
 import Button from "react-bootstrap/Button";
 import {API_URLS} from "./constants";
 
 Modal.setAppElement('#root');
 
-function Screen({ imagePath }) {
+interface ScreenProps {
+    imagePath: string
+}
+
+export const Screen: FunctionComponent<ScreenProps> =  ({ imagePath }) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     return (
@@ -33,5 +37,3 @@ function Screen({ imagePath }) {
         </>
     );
 }
-
-export default Screen

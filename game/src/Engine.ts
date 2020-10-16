@@ -6,7 +6,7 @@ import Utils from "./Utils";
 class Engine {
     private currentCheckingY: number;
     private currentCheckingX: number;
-    allDisksToTurn: number[][];
+    public allDisksToTurn: number[][];
     private options: any[];
     constructor() {
         this.options = [];

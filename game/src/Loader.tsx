@@ -1,7 +1,7 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import {BeatLoader} from "react-spinners";
 
-function Loader() {
+export const Loader: FunctionComponent = () => {
     return (
         <div id='loader'>
             <BeatLoader
@@ -12,5 +12,3 @@ function Loader() {
         </div>
     );
 }
-
-export default Loader;

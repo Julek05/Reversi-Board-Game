@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
@@ -6,17 +6,19 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import {API_URLS, LEVELS, PAGE_URLS} from "./constants";
 import Utils from "./Utils";
 import Tr from "./Tr";
-import Loader from "./Loader";
-import { withRouter } from "react-router-dom";
+import {Loader} from "./Loader";
+import {withRouter, RouteComponentProps} from "react-router-dom";
 
-function Ranking({history}) {
+interface RankingProps extends RouteComponentProps<any> {}
+
+const Ranking: FunctionComponent<RankingProps> = ({history}) => {
     const [games, setGames] = useState([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
 
     // eslint-disable-next-line
     useEffect(() => getGames(LEVELS.EASY), []);
 
-    function getGames(level) {
+    function getGames(level: string): void {
         setIsLoadingData(true);
         axios.get(`${API_URLS.GAMES}/${Utils.deletePolishSigns(level)}`).then(response => {
             setGames(response.data);
@@ -44,6 +46,7 @@ function Ranking({history}) {
                     })}
                 </ButtonGroup><br/><br/>
                 <h2 id='headerRanking'>Ranking najlepszych graczy:</h2><br/>
+                {/*@ts-ignore*/}
                 <Table striped bordered hover size>
                     <thead>
                     <tr>
@@ -57,9 +60,9 @@ function Ranking({history}) {
                     </tr>
                     </thead>
                     <tbody>
-                    {games && games.map((game, index) =>
-                        <Tr game={game} index={index} key={index} />
-                    )}
+                        {games && games.map((game, index) =>
+                            <Tr game={game} index={index} key={index} />
+                        )}
                     </tbody>
                 </Table>
             </div>

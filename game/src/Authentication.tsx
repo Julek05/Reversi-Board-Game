@@ -1,24 +1,25 @@
-import React, {useState} from 'react';
+import React, {FormEvent, FunctionComponent, useState} from 'react';
 import {PAGE_URLS} from "./constants";
 
-function Authentication() {
+export const Authentication: FunctionComponent = () => {
     const [name, setName] = useState('');
 
-    function handleChange(event) {
-        setName(event.target.value);
+    function handleChange(event: FormEvent<HTMLInputElement>): void {
+        setName(event.currentTarget.value);
     }
 
-    function handleSubmit(event) {
+    function handleSubmit(event: FormEvent<HTMLInputElement>): void {
         event.preventDefault();
         localStorage.setItem("player_name", name);
         redirectToMainPage();
     }
 
-    function redirectToMainPage() {
+    function redirectToMainPage(): void {
         window.location.replace(PAGE_URLS.MAIN_PAGE);
     }
 
     return (
+        // @ts-ignore
         <form id='nameForm' onSubmit={handleSubmit}><br/><br/>
             <label id='labelForm'>
                 Wpisz swoje imię:<br/><br/>
@@ -28,5 +29,3 @@ function Authentication() {
         </form>
     );
 }
-
-export default Authentication

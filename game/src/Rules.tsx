@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {FunctionComponent} from 'react'
 
-function Rules() {
+export const Rules: FunctionComponent = () => {
     return (
         <><br/>
             <div className="card border-dark mb-3 advicesAndRules">

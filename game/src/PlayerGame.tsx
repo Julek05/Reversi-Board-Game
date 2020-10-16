@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {FunctionComponent} from 'react'
 import Game from './Game'
 
-function PlayerGame() {
+export const PlayerGame: FunctionComponent = () => {
     return (
         <Game
             computerMode={false}
@@ -9,5 +9,3 @@ function PlayerGame() {
         />
     );
 }
-
-export default PlayerGame

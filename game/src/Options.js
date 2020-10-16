@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from "axios";
 import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "./constants";
 import Utils from "./Utils";
-import Loader from "./Loader";
+import {Loader} from "./Loader";
 
 function Options(props) {
     const { scoredDisksFirstPlayer, scoredDisksSecondPlayer, turnImage, computerMode, selfTeaching,

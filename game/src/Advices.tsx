@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {FunctionComponent} from 'react'
 
-function Advices() {
+export const Advices: FunctionComponent = () => {
     return (
         <><br/>
             <div className="card border-dark mb-3 advicesAndRules">
@@ -24,5 +24,3 @@ function Advices() {
         </>
     )
 }
-
-export default Advices
