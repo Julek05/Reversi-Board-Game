@@ -38,5 +38,3 @@ export const Tr: FunctionComponent<TrProps> = ({game, index}) => {
         </tr>
     )
 }
-
-export default Tr;

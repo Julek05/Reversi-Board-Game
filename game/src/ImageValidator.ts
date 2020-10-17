@@ -11,8 +11,7 @@ class ImageValidator {
     }
 
     private isImage() {
-        // @ts-ignore
-        return this.image === 'object' && this.image.type.includes('image');
+        return typeof this.image === 'object' && this.image.type.includes('image');
     }
 }
 

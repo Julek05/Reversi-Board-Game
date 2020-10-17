@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import {API_URLS, LEVELS, PAGE_URLS} from "./constants";
 import Utils from "./Utils";
-import Tr from "./Tr";
+import {Tr} from "./Tr";
 import {Loader} from "./Loader";
 import {withRouter, RouteComponentProps} from "react-router-dom";
 
@@ -46,8 +46,7 @@ const Ranking: FunctionComponent<RankingProps> = ({history}) => {
                     })}
                 </ButtonGroup><br/><br/>
                 <h2 id='headerRanking'>Ranking najlepszych graczy:</h2><br/>
-                {/*@ts-ignore*/}
-                <Table striped bordered hover size>
+                <Table striped bordered hover>
                     <thead>
                     <tr>
                         <th>#</th>

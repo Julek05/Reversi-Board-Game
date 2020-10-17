@@ -6,9 +6,5 @@ export const ComputerGame: FunctionComponent = () => {
         computerMode: true,
         selfTeaching: false
     }
-    return (
-        <Game
-            {...gameProps}
-        />
-    );
+    return <Game {...gameProps}/>;
 }

@@ -8,7 +8,7 @@ import ImageValidator from "./ImageValidator";
 interface OptionsProps {
     scoredDisksFirstPlayer: number,
     scoredDisksSecondPlayer: number,
-    turnImage: HTMLImageElement,
+    turnImage: JSX.Element,
     backMovement: () => void,
     canMove: boolean,
     computerMode: boolean,
@@ -40,7 +40,6 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-
         const imageValidator: ImageValidator = new ImageValidator(image);
 
         if (imageValidator.isInvalidFile()) {

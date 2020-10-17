@@ -1,4 +1,4 @@
-import React, {Component, FunctionComponent} from 'react'
+import React, {Component} from 'react'
 import {Options} from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
@@ -21,7 +21,7 @@ interface GameProps {
 interface State {
     actualBoard: number[][],
     boards: number[][][],
-    turnImage: HTMLImageElement,
+    turnImage: JSX.Element,
     activePlayer: number,
     canMove: boolean,
     uiBlock: boolean,
@@ -40,7 +40,6 @@ export default class Game extends Component {
         this.state = {
             actualBoard: INITIAL_BOARD,
             boards: [INITIAL_BOARD],
-            // @ts-ignore
             turnImage: <img src={Utils.getImgPath(PLAYERS.SECOND_PLAYER)} className='turnImage' alt=""/>,
             activePlayer: PLAYERS.SECOND_PLAYER,
             canMove: true,
