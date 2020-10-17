@@ -30,13 +30,13 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
     const [screenSenderVisibility, setScreenSenderVisibility] =
         useState(Utils.getVisibilityOfElement(endOfGame && computerMode && !selfTeaching));
 
-    const backMovementButtonVisibility = Utils.getVisibilityOfElement(!endOfGame && selfTeaching);
+    const backMovementButtonVisibility: object = Utils.getVisibilityOfElement(!endOfGame && selfTeaching);
 
-    const levelsVisibility = Utils.getVisibilityOfElement(computerMode);
+    const levelsVisibility: object = Utils.getVisibilityOfElement(computerMode);
 
-    const giveUpTurnVisibility = Utils.getVisibilityOfElement(!canMove && !endOfGame);
+    const giveUpTurnVisibility: object = Utils.getVisibilityOfElement(!canMove && !endOfGame);
 
-    const endOfGameInfoVisibility = Utils.getVisibilityOfElement(endOfGame);
+    const endOfGameInfoVisibility: object = Utils.getVisibilityOfElement(endOfGame);
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -47,7 +47,7 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
             return;
         }
         setIsSendingData(true);
-        const screen = new FormData();
+        const screen: FormData = new FormData();
         screen.append('image', image);
 
         axios.post(`${API_URLS.IMAGE}/${localStorage.getItem('id')}`, screen).then(response => {

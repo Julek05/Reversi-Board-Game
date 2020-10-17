@@ -30,13 +30,20 @@ interface State {
     isSendingData: boolean
 }
 
+interface sendGame {
+    'player_name': string|null,
+    'level': string,
+    'player_points': number,
+    'computer_points': number
+}
+
 export default class Game extends Component {
     private gameController: GameController;
     public state: State;
     public computerMode: boolean;
     public selfTeaching: boolean;
     constructor(props: GameProps) {
-        super(props.computerMode, props.selfTeaching);
+        super(props);
         this.state = {
             actualBoard: INITIAL_BOARD,
             boards: [INITIAL_BOARD],
@@ -54,21 +61,21 @@ export default class Game extends Component {
         this.selfTeaching = props.selfTeaching;
     }
 
-    renderField(y: number, x: number, valueField: number) {
+    renderField(y: number, x: number, valueField: number): JSX.Element {
         return (
             <Field
-                value={valueField}
+                value={<img src={Utils.getImgPath(valueField)} className='disk' alt=""/>}
                 onClick={() => this.handleClick(y, x)}
                 key={`${x},${y}`}
             />
         );
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(): void {
         if (this.state.moveComputerAfterHumanGiveUpTurn) {
             setTimeout(() => {
-                const chosenLevel = Utils.getChosenLevel();
-                const newState = this.gameController.makeAutomaticMove(chosenLevel);
+                const chosenLevel: string = Utils.getChosenLevel();
+                const newState: GameState = this.gameController.makeAutomaticMove(chosenLevel);
                 this.gameController.gameState = newState;
                 this.makeSetState(newState, this);
             }, TIME_TO_WAIT_COMPUTER_MOVE);
@@ -100,12 +107,12 @@ export default class Game extends Component {
     }
 
     handleClickRevertLastMove(): void {
-        const newState = this.gameController.revertLastMove();
+        const newState: GameState = this.gameController.revertLastMove();
         this.makeSetState(newState, this);
     }
 
     handleClickGiveUpTurn(): void {
-        const result = this.gameController.giveUpTurn(this.computerMode);
+        const result: GameState|number[][] = this.gameController.giveUpTurn(this.computerMode);
         if (Array.isArray(result)) {
             this.setState({endOfGame: true});
             this.endGame(result, this.computerMode, this.selfTeaching);
@@ -115,14 +122,14 @@ export default class Game extends Component {
     }
 
     endGame(board: number[][], computerMode: boolean, selfTeaching: boolean): void {
-        const [pointsPlayer1, pointsPlayer2] = Utils.countPoints(board);
+        const [pointsPlayer1, pointsPlayer2]: number[] = Utils.countPoints(board);
         if (computerMode && !selfTeaching) {
             this.sendGame(pointsPlayer1, pointsPlayer2);
         }
     }
 
     sendGame(computerPoints: number, playerPoints: number): void {
-        const game = {
+        const game: sendGame = {
             'player_name': localStorage.getItem("player_name"),
             'level': Utils.deletePolishSigns(Utils.getChosenLevel()),
             'player_points': playerPoints,
@@ -139,7 +146,7 @@ export default class Game extends Component {
 
     makeSetStateToParent(): void {
         if (window.confirm("Czy na pewno chcesz rozpocząć nową grę?")) {
-            const initialGameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
+            const initialGameState: GameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
             this.gameController = new GameController(initialGameState);
             this.makeSetState(initialGameState, this);
         }
@@ -147,7 +154,7 @@ export default class Game extends Component {
 
     render() {
         const [pointsPlayer1, pointsPlayer2]: number[] = Utils.countPoints(this.state.actualBoard);
-        const giveUpTurnButtonText = this.state.canMove ? '' : this.gameController.engine.setTextOfGiveUpTurnButton(
+        const giveUpTurnButtonText: string = this.state.canMove ? '' : this.gameController.engine.setTextOfGiveUpTurnButton(
             this.state.actualBoard, this.state.activePlayer);
 
         return (

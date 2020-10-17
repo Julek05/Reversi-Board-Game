@@ -6,7 +6,7 @@ import {
 
 class Utils {
     static getChosenLevel(): string {
-        return (<HTMLInputElement>document.querySelector("#selectLevels")).value;
+        return (document.querySelector("#selectLevels") as HTMLInputElement).value;
     }
 
     static upperCaseFirstCharacter(phrase: string): string {
