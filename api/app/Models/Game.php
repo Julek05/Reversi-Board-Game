@@ -31,7 +31,7 @@ class Game extends Model
 
     public static function getBestGames(string $level) : Collection
     {
-        return self::select('player_name', 'level', 'player_points',
+        return self::select('id', 'player_name', 'level', 'player_points',
             'computer_points', 'image_path', 'created_at')
             ->where('level', $level)
             ->orderByRaw('player_points - computer_points DESC')
