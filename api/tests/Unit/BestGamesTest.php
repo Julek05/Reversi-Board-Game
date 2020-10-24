@@ -4,24 +4,13 @@ namespace Tests\Unit;
 
 use App\Models\Game;
 use Tests\TestCase;
+use Tests\UtilsTests\UtilsTests;
 
 class BestGamesTest extends TestCase
 {
-    private function initDatabase()
-    {
-        factory(Game::class, 13)->create(['level' => 'easy']);
-        factory(Game::class, 12)->create(['level' => 'middle']);
-        factory(Game::class, 14)->create(['level' => 'hard']);
-    }
-
-    private function clearDatabase()
-    {
-        Game::truncate();
-    }
-
     public function test_amount_of_best_games()
     {
-        $this->initDatabase();
+        UtilsTests::initDatabase();
 
         $bestGames = Game::getBestGames('middle');
         $this->assertCount(10, $bestGames);
@@ -32,12 +21,12 @@ class BestGamesTest extends TestCase
         $bestGames = Game::getBestGames('easy');
         $this->assertCount(10, $bestGames);
 
-        $this->clearDatabase();
+        UtilsTests::clearDatabase();
     }
 
     public function test_levels_of_best_games()
     {
-        $this->initDatabase();
+        UtilsTests::initDatabase();
 
         $bestGames = Game::getBestGames('middle');
 
@@ -57,12 +46,12 @@ class BestGamesTest extends TestCase
             $this->assertEquals('easy', $bestGame['level']);
         }
 
-        $this->clearDatabase();
+        UtilsTests::clearDatabase();
     }
 
     public function test_keys_of_best_games()
     {
-        $this->initDatabase();
+        UtilsTests::initDatabase();
 
         $bestGames = Game::getBestGames('middle');
 
@@ -76,7 +65,7 @@ class BestGamesTest extends TestCase
 
         $this->checkAllKeysOfGame($bestGames);
 
-        $this->clearDatabase();
+        UtilsTests::clearDatabase();
     }
 
     private function checkAllKeysOfGame($bestGames)
@@ -94,14 +83,13 @@ class BestGamesTest extends TestCase
 
     public function test_order_of_best_games()
     {
-        $this->initDatabase();
+        UtilsTests::initDatabase();
 
         $bestGames = Game::getBestGames('easy');
         $sortedBestGames = $bestGames->toBase()->sortByDesc(fn($game) => $game['player_points'] - $game['computer_points']);
 
        $this->assertSame($bestGames->all(), $sortedBestGames->all());
 
-       $this->clearDatabase();
-
+        UtilsTests::clearDatabase();
     }
 }

@@ -8,9 +8,9 @@ use App\Models\Game;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class GamesController extends Controller
+final class GamesController extends Controller
 {
-    final public function store(Request $request) : int
+    public function store(Request $request) : int
     {
         $game = $request->all();
         $game['level'] = Game::LEVELS_DICTIONARY[$game['level']];
@@ -24,12 +24,12 @@ class GamesController extends Controller
         return $lastGameId;
     }
 
-    final public function show(string $level) : Collection
+    public function show(string $level) : Collection
     {
         return Game::getBestGames(Game::LEVELS_DICTIONARY[$level]);
     }
 
-    final public function saveImage(Request $request, int $gameId) : void
+    public function saveImage(Request $request, int $gameId) : void
     {
         Game::saveImage($request->file('image'), $gameId);
     }
