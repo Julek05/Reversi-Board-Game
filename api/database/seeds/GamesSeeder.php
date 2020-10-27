@@ -4,7 +4,7 @@ use App\Models\Game;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 
-class GameSeeder extends Seeder
+class GamesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,7 +21,8 @@ class GameSeeder extends Seeder
                 'level' => 'easy',
                 'player_points' => $i + 20,
                 'computer_points' => $i + 17,
-                'image_path' => 'photos/plansza.PNG'
+                'image_path' => 'photos/plansza.PNG',
+                'user_id' => 1,
             ]);
         }
 
@@ -31,7 +32,8 @@ class GameSeeder extends Seeder
                 'level' => 'middle',
                 'player_points' => $i + 30,
                 'computer_points' => $i + 10,
-                'image_path' => 'photos/plansza.PNG'
+                'image_path' => 'photos/plansza.PNG',
+                'user_id' => 2,
             ]);
         }
 
@@ -41,7 +43,8 @@ class GameSeeder extends Seeder
                 'level' => 'hard',
                 'player_points' => $i + 10,
                 'computer_points' => $i + 30,
-                'image_path' => 'photos/plansza.PNG'
+                'image_path' => 'photos/plansza.PNG',
+                'user_id' => 3,
             ]);
         }
     }

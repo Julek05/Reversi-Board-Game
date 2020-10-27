@@ -20,6 +20,7 @@ class CreateGamesTable extends Migration
             $table->tinyInteger('player_points');
             $table->tinyInteger('computer_points');
             $table->string('image_path')->default('');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
@@ -31,6 +32,9 @@ class CreateGamesTable extends Migration
      */
     public function down()
     {
+        Schema::table('games', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('games');
     }
 }
