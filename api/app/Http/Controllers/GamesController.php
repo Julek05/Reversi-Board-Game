@@ -16,12 +16,17 @@ final class GamesController extends Controller
         $game['level'] = Game::LEVELS_DICTIONARY[$game['level']];
         $lastGameId = Game::getLastId();
 
-        if ($game['player_name'] === null || trim($game['player_name']) === '') {
-            $game['player_name'] = Game::PLAYER . (1 + $lastGameId);
+        if (self::isEmptyPlayerNameField($game['player_name'])) {
+            $game['player_name'] = Game::PLAYER_DEFAULT_NAME . (1 + $lastGameId);
         }
         Game::create($game);
 
         return $lastGameId;
+    }
+
+    private static function isEmptyPlayerNameField(string $playerName): boolean
+    {
+        return $playerName === null || trim($playerName) === '';
     }
 
     public function show(string $level) : Collection

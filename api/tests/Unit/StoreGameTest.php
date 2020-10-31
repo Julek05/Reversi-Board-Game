@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Http\Controllers\GamesController;
-use App\Models\Game;
+use App\Game;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 use Tests\UtilsTests\UtilsTests;

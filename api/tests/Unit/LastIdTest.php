@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Models\Game;
+use App\Game;
 use Tests\TestCase;
 use Tests\UtilsTests\UtilsTests;
 

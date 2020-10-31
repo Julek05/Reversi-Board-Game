@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
-use App\Models\Game;
+use App\Game;
 use Tests\TestCase;
 use Tests\UtilsTests\UtilsTests;
 
@@ -13,13 +15,13 @@ class BestGamesTest extends TestCase
         UtilsTests::initDatabase();
 
         $bestGames = Game::getBestGames('middle');
-        $this->assertCount(10, $bestGames);
+        $this->assertCount(Game::AMOUNT_OF_BEST_PLAYERS_TO_LEVEL, $bestGames);
 
         $bestGames = Game::getBestGames('hard');
-        $this->assertCount(10, $bestGames);
+        $this->assertCount(Game::AMOUNT_OF_BEST_PLAYERS_TO_LEVEL, $bestGames);
 
         $bestGames = Game::getBestGames('easy');
-        $this->assertCount(10, $bestGames);
+        $this->assertCount(Game::AMOUNT_OF_BEST_PLAYERS_TO_LEVEL, $bestGames);
 
         UtilsTests::clearDatabase();
     }
@@ -68,16 +70,20 @@ class BestGamesTest extends TestCase
         UtilsTests::clearDatabase();
     }
 
+    private static function getAllKeys() : array
+    {
+        return ['id', 'player_name', 'level', 'player_points', 'computer_points',
+            'image_path', 'created_at'];
+    }
+
     private function checkAllKeysOfGame($bestGames)
     {
+        $keys = BestGamesTest::getAllKeys();
+
         foreach ($bestGames as $bestGame) {
-            $this->assertArrayHasKey('id', $bestGame);
-            $this->assertArrayHasKey('player_name', $bestGame);
-            $this->assertArrayHasKey('level', $bestGame);
-            $this->assertArrayHasKey('player_points', $bestGame);
-            $this->assertArrayHasKey('computer_points', $bestGame);
-            $this->assertArrayHasKey('image_path', $bestGame);
-            $this->assertArrayHasKey('created_at', $bestGame);
+            foreach ($keys as $key) {
+                $this->assertArrayHasKey($key, $bestGame);            
+            }
         }
     }
 
@@ -88,7 +94,7 @@ class BestGamesTest extends TestCase
         $bestGames = Game::getBestGames('easy');
         $sortedBestGames = $bestGames->toBase()->sortByDesc(fn($game) => $game['player_points'] - $game['computer_points']);
 
-       $this->assertSame($bestGames->all(), $sortedBestGames->all());
+        $this->assertSame($bestGames->all(), $sortedBestGames->all());
 
         UtilsTests::clearDatabase();
     }

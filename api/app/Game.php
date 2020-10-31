@@ -19,9 +19,10 @@ class Game extends Model
         'image_path'
     ];
 
-    const PLAYER = 'Gracz';
-    const UPLOAD_PATH = 'public_uploads';
-    const UPLOAD_PHOTOS_FOLDER = 'photos';
+    const PLAYER_DEFAULT_NAME = 'Gracz';
+    const BASE_UPLOAD_DIRECTORY = 'public_uploads';
+    const UPLOAD_IMAGES_DIRECTORY = 'images';
+    const AMOUNT_OF_GAMES_TO_LEVEL = 10;
 
     const LEVELS_DICTIONARY = [
         'latwy' => 'easy',
@@ -35,7 +36,7 @@ class Game extends Model
             'computer_points', 'image_path', 'created_at')
             ->where('level', $level)
             ->orderByRaw('player_points - computer_points DESC')
-            ->take(10)
+            ->take(self::AMOUNT_OF_GAMES_TO_LEVEL)
             ->get();
     }
 
@@ -53,8 +54,8 @@ class Game extends Model
 
     public static function saveImage(UploadedFile $image, int $gameId) : void
     {
-        $game = self::find($gameId);
-        $imagePath = Storage::disk(self::UPLOAD_PATH)->put(self::UPLOAD_PHOTOS_FOLDER, $image);
+        $game = self::findOrFail($gameId);
+        $imagePath = Storage::disk(self::BASE_UPLOAD_DIRECTORY)->put(self::UPLOAD_IMAGES_DIRECTORY, $image);
         $game['image_path'] = $imagePath;
         $game->save();
     }

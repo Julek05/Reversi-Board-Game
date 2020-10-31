@@ -2,7 +2,7 @@
 
 namespace Tests\UtilsTests;
 
-use App\Models\Game;
+use App\Game;
 
 class UtilsTests
 {
