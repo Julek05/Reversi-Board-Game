@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Game;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GamesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,17 +19,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('game', 'GamesController@store');
-Route::get('game/{level}', 'GamesController@show');
-Route::post('game/image/{id}', 'GamesController@saveImage');
+Route::post('game', [GamesController::class, 'store']);
+Route::get('game/{level}', [GamesController::class, 'show']);
+Route::post('game/image/{id}', [GamesController::class, 'saveImage']);
 
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('register', 'JWTAuthController@register');
-    Route::post('login', 'JWTAuthController@login');
-    Route::post('logout', 'JWTAuthController@logout');
-    Route::post('refresh', 'JWTAuthController@refresh');
-    Route::get('profile', 'JWTAuthController@profile');
+    Route::post('register', [JWTAuthController::class, 'register']);
+    Route::post('login', [JWTAuthController::class, 'login']);
+    Route::post('logout', [JWTAuthController::class, 'logout']);
+    Route::post('refresh', [JWTAuthController::class, 'refresh']);
+    Route::get('profile', [JWTAuthController::class, 'profile']);
 });
