@@ -1,4 +1,4 @@
-export const LEVELS = {
+export const LEVELS: { [key: string]: string } = {
     EASY: 'łatwy',
     MIDDLE: 'średni',
     HARD: 'trudny',
@@ -6,7 +6,7 @@ export const LEVELS = {
 
 export const IMAGES_FOLDER_PATH: string = 'images';
 
-export const DISKS_IMAGES = {
+export const DISKS_IMAGES: { [key: string]: string } = {
     BLACK: 'black_disk.png',
     BLUE: 'blue_disk.png',
     POSSIBILITY_BLUE: 'blue_possibility.png',
@@ -23,12 +23,12 @@ export const IMG_FIELDS_PATHS: string[] = [
     `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.POSSIBILITY_BLACK}`
 ];
 
-export const MAIN_PAGE_IMAGES = {
+export const MAIN_PAGE_IMAGES: { [key: string]: string } = {
     MAIN_PAGE: 'main_page.jpg',
     LOGO: 'logo.png',
 }
 
-export const PAGE_URLS = {
+export const PAGE_URLS: { [key: string]: string } = {
     TWO_PLAYERS_MODE: 'tryb_dla_dwoch_graczy',
     COMPUTER_GAME: 'gra_z_komputerem',
     SELF_TEACHING: 'samouczek',
@@ -40,7 +40,7 @@ export const PAGE_URLS = {
 
 export const BASE_API_URL: string = 'http://localhost:8000';
 
-export const API_URLS = {
+export const API_URLS: { [key: string]: string } = {
     UPLOADS: `${BASE_API_URL}/uploads`,
     GAMES: `${BASE_API_URL}/api/game`,
     IMAGE: `${BASE_API_URL}/api/game/image`
@@ -51,7 +51,7 @@ export const TURN_BUTTON_INFO = {
     GIVE_UP_TURN: 'Oddaj Turę'
 }
 
-export const SUBPAGES = {
+export const SUBPAGES: { [key: string]: string } = {
     TWO_PLAYERS_MODE: 'Tryb dla dwóch graczy',
     COMPUTER_GAME: 'Gra z komputerem',
     SELF_TEACHING: 'Samouczek',
@@ -83,12 +83,12 @@ export const VALUATING_BOARD: number[][] = [
     [99, -8, 12, 6, 6, 12, -8, 99]
 ];
 
-export const BOARD_DIMENSIONS = {
+export const BOARD_DIMENSIONS: { [key: string]: number } = {
     WIDTH: 8,
     HEIGHT: 8
 };
 
-export const PLAYERS = {
+export const PLAYERS: { [key: string]: number } = {
     FIRST_PLAYER: 1,
     SECOND_PLAYER: 2
 }
@@ -104,15 +104,15 @@ export const BOARD_RANGE: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
 
 export const EMPTY_FIELD: number = 0;
 
-export const VISIBILITY_OF_ELEMENT = {
+export const VISIBILITY_OF_ELEMENT: { [key: string]: string } = {
     VISIBLE: 'visible',
     HIDDEN: 'hidden'
 }
 
 export const TIME_TO_WAIT_COMPUTER_MOVE: number = 500; //miliseconds
 
-export const LEVELS_DICTIONARY = {
-    'easy': 'łatwy',
-    'middle': 'średni',
-    'hard': 'trudny'
+export const LEVELS_DICTIONARY: { [key: string]: string } = {
+    easy: 'łatwy',
+    middle: 'średni',
+    hard: 'trudny'
 };
