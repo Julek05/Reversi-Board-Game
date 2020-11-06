@@ -16,7 +16,8 @@ class Game extends Model
         'level',
         'player_points',
         'computer_points',
-        'image_path'
+        'image_path',
+        'user_id'
     ];
 
     const PLAYER_DEFAULT_NAME = 'Gracz';
@@ -52,11 +53,17 @@ class Game extends Model
         }
     }
 
-    public static function saveImage(UploadedFile $image, int $gameId) : void
+    public static function saveImage(UploadedFile $image, int $gameId) : bool
     {
-        $game = self::findOrFail($gameId);
-        $imagePath = Storage::disk(self::BASE_UPLOAD_DIRECTORY)->put(self::UPLOAD_IMAGES_DIRECTORY, $image);
-        $game['image_path'] = $imagePath;
-        $game->save();
+        try {
+            $game = self::findOrFail($gameId);
+            $imagePath = Storage::disk(self::BASE_UPLOAD_DIRECTORY)->put(self::UPLOAD_IMAGES_DIRECTORY, $image);
+            $game['image_path'] = $imagePath;
+            $game->save();
+            return true;
+        } catch (\Exception $e) {
+            Log::info('save image failed: ' . $e->getMessage());
+            return false;
+        }
     }
 }

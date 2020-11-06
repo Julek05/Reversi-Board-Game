@@ -50,7 +50,9 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
         const screen: FormData = new FormData();
         screen.append('image', image);
 
-        axios.post(`${API_URLS.IMAGE}/${localStorage.getItem('id')}`, screen).then(response => {
+        const lastGameId: number = parseInt(localStorage.getItem('id') || '-1');
+
+        axios.post(`${API_URLS.IMAGE}/${lastGameId}`, screen).then(response => {
             localStorage.removeItem('id');
             setScreenSenderVisibility(Utils.getVisibilityOfElement(false));
             setIsSendingData(false);

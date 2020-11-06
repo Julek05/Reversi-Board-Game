@@ -25,7 +25,6 @@ export const Tr: FunctionComponent<TrProps> = ({game, index}) => {
         <tr key={id}>
             <td>{index + 1}</td>
             <td>{player_name}</td>
-            {/*@ts-ignore*/}
             <td>{LEVELS_DICTIONARY[level]}</td>
             <td>{player_points}</td>
             <td>{computer_points}</td>

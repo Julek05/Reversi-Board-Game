@@ -3,7 +3,7 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {API_URLS, LEVELS, PAGE_URLS} from "./constants";
+import {API_URLS, LEVELS, PAGE_URLS, LEVELS_DICTIONARY} from "./constants";
 import Utils from "./Utils";
 import {Tr} from "./Tr";
 import {Loader} from "./Loader";
@@ -26,7 +26,7 @@ const Ranking: FunctionComponent<RankingProps> = ({history}) => {
             history.push(`/${PAGE_URLS.RANKING}/${Utils.deletePolishSigns(level)}`);
         }).then(error => {
             console.log(error);
-            setIsLoadingData(false);
+            // setIsLoadingData(false);
         });
     }
 
