@@ -139,8 +139,8 @@ export default class Game extends Component {
         axios.post(API_URLS.GAMES, game).then(response => {
             this.setState({isSendingData: false});
             localStorage.setItem('id', response.data.lastGameId);
-        }).then(error => {
-            console.log(error);
+        }).catch(error => {
+            alert(error);
         });
     }
 

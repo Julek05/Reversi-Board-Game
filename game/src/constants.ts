@@ -29,21 +29,27 @@ export const MAIN_PAGE_IMAGES: { [key: string]: string } = {
 }
 
 export const PAGE_URLS: { [key: string]: string } = {
-    TWO_PLAYERS_MODE: 'tryb_dla_dwoch_graczy',
-    COMPUTER_GAME: 'gra_z_komputerem',
-    SELF_TEACHING: 'samouczek',
-    RULES: 'zasady_gry',
-    ADVICES: 'porady_strategie',
-    RANKING: 'ranking',
-    MAIN_PAGE: 'strona_glowna',
+    TWO_PLAYERS_MODE: '/tryb_dla_dwoch_graczy',
+    COMPUTER_GAME: '/gra_z_komputerem',
+    SELF_TEACHING: '/samouczek',
+    RULES: '/zasady_gry',
+    ADVICES: '/porady_strategie',
+    RANKING: '/ranking',
+    MAIN_PAGE: '/strona_glowna',
+    REGISTER: '/rejestracja',
+    LOGIN: '/'
 }
 
-export const BASE_API_URL: string = 'http://localhost:8000';
+const BASE_API_URL: string = 'http://localhost:8000';
+const BASE_AUTH_URL: string = 'api/auth';
 
 export const API_URLS: { [key: string]: string } = {
     UPLOADS: `${BASE_API_URL}/uploads`,
     GAMES: `${BASE_API_URL}/api/game`,
-    IMAGE: `${BASE_API_URL}/api/game/image`
+    IMAGE: `${BASE_API_URL}/api/game/image`,
+    REGISTER: `${BASE_API_URL}/${BASE_AUTH_URL}/register`,
+    LOGIN: `${BASE_API_URL}/${BASE_AUTH_URL}/login`,
+    LOGOUT: `${BASE_API_URL}/${BASE_AUTH_URL}/logout`,
 };
 
 export const TURN_BUTTON_INFO = {

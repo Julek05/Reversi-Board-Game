@@ -3,6 +3,12 @@
     text-align: center;
 }
 
+.alignMiddle {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 #levels {
     /*outline: none !important;*/
     max-width: 22rem;
@@ -27,7 +33,7 @@
     font-size: 30px;
 }
 
-#labelForm {
+.labelForm {
     width: 400px;
 }
 

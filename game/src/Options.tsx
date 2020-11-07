@@ -56,8 +56,8 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
             localStorage.removeItem('id');
             setScreenSenderVisibility(Utils.getVisibilityOfElement(false));
             setIsSendingData(false);
-        }).then(error => {
-            console.log(error);
+        }).catch(error => {
+            alert(error);
             setIsSendingData(false);
         });
     }
