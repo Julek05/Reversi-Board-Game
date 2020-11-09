@@ -1,4 +1,4 @@
-import {
+import {ObjectStrings,
     BOARD_RANGE, EMPTY_FIELD,
     IMG_FIELDS_PATHS, PLAYERS,
     VISIBILITY_OF_ELEMENT
@@ -118,8 +118,12 @@ class Utils {
         return level.replace(/ł/g, 'l').replace(/ś/g, 's');
     }
 
-    static getVisibilityOfElement(result: boolean): object {
+    static getVisibilityOfElement(result: boolean): ObjectStrings {
         return {visibility: result ? VISIBILITY_OF_ELEMENT.VISIBLE : VISIBILITY_OF_ELEMENT.HIDDEN};
+    }
+
+    static getToken(): string|null {
+        return localStorage.getItem('token');
     }
 }
 

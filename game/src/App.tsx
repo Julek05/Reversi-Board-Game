@@ -7,7 +7,7 @@ import {
     Link
 } from 'react-router-dom';
 import {PlayerGame} from './PlayerGame'
-import {MainPage} from './MainPage'
+import MainPage from './MainPage'
 import Rules from './Rules'
 import {Advices} from './Advices'
 import {SelfTeaching} from './SelfTeaching'
@@ -16,6 +16,7 @@ import Ranking from "./Ranking";
 import {PAGE_URLS, SUBPAGES} from "./constants";
 import Login from './Login';
 import Register from './Register';
+import { Profile } from './Profile';
 
 export const App: FunctionComponent = () => {
     return (
@@ -40,6 +41,7 @@ export const App: FunctionComponent = () => {
             <Route path={PAGE_URLS.RULES} component={Rules}/>
             <Route path={PAGE_URLS.ADVICES} component={Advices}/>
             <Route path={PAGE_URLS.RANKING} component={Ranking}/>
+            <Route path={PAGE_URLS.PROFILE} component={Profile}/>
         </Router>
     );
 }

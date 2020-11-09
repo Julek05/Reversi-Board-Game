@@ -1,4 +1,12 @@
-export const LEVELS: { [key: string]: string } = {
+export interface ObjectStrings { 
+    [key: string]: string 
+}
+
+interface ObjectNumbers { 
+    [key: string]: number 
+}
+
+export const LEVELS: ObjectStrings = {
     EASY: 'łatwy',
     MIDDLE: 'średni',
     HARD: 'trudny',
@@ -6,7 +14,7 @@ export const LEVELS: { [key: string]: string } = {
 
 export const IMAGES_FOLDER_PATH: string = 'images';
 
-export const DISKS_IMAGES: { [key: string]: string } = {
+export const DISKS_IMAGES: ObjectStrings = {
     BLACK: 'black_disk.png',
     BLUE: 'blue_disk.png',
     POSSIBILITY_BLUE: 'blue_possibility.png',
@@ -23,12 +31,12 @@ export const IMG_FIELDS_PATHS: string[] = [
     `${IMAGES_FOLDER_PATH}/${DISKS_IMAGES.POSSIBILITY_BLACK}`
 ];
 
-export const MAIN_PAGE_IMAGES: { [key: string]: string } = {
+export const MAIN_PAGE_IMAGES: ObjectStrings = {
     MAIN_PAGE: 'main_page.jpg',
     LOGO: 'logo.png',
 }
 
-export const PAGE_URLS: { [key: string]: string } = {
+export const PAGE_URLS: ObjectStrings = {
     TWO_PLAYERS_MODE: '/tryb_dla_dwoch_graczy',
     COMPUTER_GAME: '/gra_z_komputerem',
     SELF_TEACHING: '/samouczek',
@@ -37,27 +45,29 @@ export const PAGE_URLS: { [key: string]: string } = {
     RANKING: '/ranking',
     MAIN_PAGE: '/strona_glowna',
     REGISTER: '/rejestracja',
-    LOGIN: '/'
+    LOGIN: '/',
+    PROFILE: '/profil'
 }
 
-const BASE_API_URL: string = 'http://localhost:8000';
-const BASE_AUTH_URL: string = 'api/auth';
+export const BASE_API_URL: string = 'http://localhost:8000';
+export const BASE_AUTH_URL: string = 'api/auth';
 
-export const API_URLS: { [key: string]: string } = {
+export const API_URLS: ObjectStrings = {
     UPLOADS: `${BASE_API_URL}/uploads`,
     GAMES: `${BASE_API_URL}/api/game`,
     IMAGE: `${BASE_API_URL}/api/game/image`,
     REGISTER: `${BASE_API_URL}/${BASE_AUTH_URL}/register`,
     LOGIN: `${BASE_API_URL}/${BASE_AUTH_URL}/login`,
     LOGOUT: `${BASE_API_URL}/${BASE_AUTH_URL}/logout`,
+    PROFILE: `${BASE_API_URL}/${BASE_AUTH_URL}/profile`,
 };
 
-export const TURN_BUTTON_INFO = {
+export const TURN_BUTTON_INFO: ObjectStrings = {
     END_OF_GAME: 'Koniec Gry',
     GIVE_UP_TURN: 'Oddaj Turę'
 }
 
-export const SUBPAGES: { [key: string]: string } = {
+export const SUBPAGES: ObjectStrings = {
     TWO_PLAYERS_MODE: 'Tryb dla dwóch graczy',
     COMPUTER_GAME: 'Gra z komputerem',
     SELF_TEACHING: 'Samouczek',
@@ -65,6 +75,7 @@ export const SUBPAGES: { [key: string]: string } = {
     ADVICES: 'Strategie i porady',
     RANKING: 'Ranking',
     MAIN_PAGE: 'Strona główna',
+    PROFILE: 'Profil'
 }
 
 export const INITIAL_BOARD: number[][] = [
@@ -72,8 +83,8 @@ export const INITIAL_BOARD: number[][] = [
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 4, 0, 0, 0, 0],
     [0, 0, 4, 1, 2, 0, 0, 0],
-    [0, 0, 0, 2, 1, 4, 0, 0],
-    [0, 0, 0, 0, 4, 0, 0, 0],
+    [0, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0]
 ];
@@ -89,12 +100,12 @@ export const VALUATING_BOARD: number[][] = [
     [99, -8, 12, 6, 6, 12, -8, 99]
 ];
 
-export const BOARD_DIMENSIONS: { [key: string]: number } = {
+export const BOARD_DIMENSIONS: ObjectNumbers = {
     WIDTH: 8,
     HEIGHT: 8
 };
 
-export const PLAYERS: { [key: string]: number } = {
+export const PLAYERS: ObjectNumbers = {
     FIRST_PLAYER: 1,
     SECOND_PLAYER: 2
 }
@@ -110,14 +121,14 @@ export const BOARD_RANGE: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
 
 export const EMPTY_FIELD: number = 0;
 
-export const VISIBILITY_OF_ELEMENT: { [key: string]: string } = {
+export const VISIBILITY_OF_ELEMENT: ObjectStrings = {
     VISIBLE: 'visible',
     HIDDEN: 'hidden'
 }
 
 export const TIME_TO_WAIT_COMPUTER_MOVE: number = 500; //miliseconds
 
-export const LEVELS_DICTIONARY: { [key: string]: string } = {
+export const LEVELS_DICTIONARY: ObjectStrings = {
     easy: 'łatwy',
     middle: 'średni',
     hard: 'trudny'

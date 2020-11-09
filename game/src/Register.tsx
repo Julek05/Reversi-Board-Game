@@ -55,7 +55,7 @@ const Register: FunctionComponent<RegisterProps> = ({history}) => {
         ?
             <div className="alignMiddle">
                 <h3>Zajerestrowano pomyślnie!</h3>
-                <button style={{background: 'green'}} className="btn btn-primary" 
+                <button className="btn btn-primary greenColor" 
                     onClick={() => history.push(PAGE_URLS.LOGIN)}>
                     Zaloguj się
                 </button>
@@ -84,7 +84,7 @@ const Register: FunctionComponent<RegisterProps> = ({history}) => {
                     <input className="btn btn-primary" type="submit" value="Zajerestruj się"/>
                 </form><br/>
                 
-                <button style={{background: 'green'}} className="btn btn-primary alignMiddle"
+                <button className="btn btn-primary alignMiddle greenColor"
                     onClick={() => history.push(PAGE_URLS.LOGIN)}>
                     Zaloguj się
                 </button>

@@ -10,6 +10,11 @@ use Illuminate\Http\JsonResponse;
 
 final class GamesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function store(Request $request) : JsonResponse
     {
         try {
@@ -47,11 +52,11 @@ final class GamesController extends Controller
         ], 200);
     }
 
-    public function saveImage(Request $request, int $gameId) : JsonResponse
+    public function saveImage(Request $request, $lastGameId)
     {
-        [$message, $status] = Game::saveImage($request->file('image'), $gameId) 
-            ? [200, 'Screen dodany prawidłowo']
-            : [500, 'Błąd przy dodawaniu screena'];
+        [$message, $status] = Game::saveImage($request->file('image'), intval($lastGameId)) 
+            ? ['Screen dodany prawidłowo', 200]
+            : ['Błąd przy dodawaniu screena', 500];
 
         return response()->json([
             'message' => $message

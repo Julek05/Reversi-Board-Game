@@ -5,10 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\JWTAuthController;
 
-Route::post('game', [GamesController::class, 'store']);
-Route::get('game/{level}', [GamesController::class, 'show']);
-Route::post('game/image/{id}', [GamesController::class, 'saveImage']);
-
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -18,4 +14,13 @@ Route::group([
     Route::post('logout', [JWTAuthController::class, 'logout']);
     Route::post('refresh', [JWTAuthController::class, 'refresh']);
     Route::get('profile', [JWTAuthController::class, 'profile']);
+});
+
+
+Route::group([
+    'middleware' => 'api'
+], function ($router) {
+    Route::post('game', [GamesController::class, 'store']);
+    Route::get('game/{level}', [GamesController::class, 'show']);
+    Route::post('game/image/{lastGameId}', [GamesController::class, 'saveImage']);
 });

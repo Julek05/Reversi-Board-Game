@@ -1,6 +1,6 @@
 import React, {FormEvent, FunctionComponent, useState} from 'react'
 import axios from "axios";
-import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "./constants";
+import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS, ObjectStrings} from "./constants";
 import Utils from "./Utils";
 import {Loader} from "./Loader";
 import ImageValidator from "./ImageValidator";
@@ -30,13 +30,13 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
     const [screenSenderVisibility, setScreenSenderVisibility] =
         useState(Utils.getVisibilityOfElement(endOfGame && computerMode && !selfTeaching));
 
-    const backMovementButtonVisibility: object = Utils.getVisibilityOfElement(!endOfGame && selfTeaching);
+    const backMovementButtonVisibility: ObjectStrings = Utils.getVisibilityOfElement(!endOfGame && selfTeaching);
 
-    const levelsVisibility: object = Utils.getVisibilityOfElement(computerMode);
+    const levelsVisibility: ObjectStrings = Utils.getVisibilityOfElement(computerMode);
 
-    const giveUpTurnVisibility: object = Utils.getVisibilityOfElement(!canMove && !endOfGame);
+    const giveUpTurnVisibility: ObjectStrings = Utils.getVisibilityOfElement(!canMove && !endOfGame);
 
-    const endOfGameInfoVisibility: object = Utils.getVisibilityOfElement(endOfGame);
+    const endOfGameInfoVisibility: ObjectStrings = Utils.getVisibilityOfElement(endOfGame);
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -47,12 +47,14 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
             return;
         }
         setIsSendingData(true);
+        const lastGameId: string = localStorage.getItem('id') || '-1';
+
         const screen: FormData = new FormData();
         screen.append('image', image);
 
-        const lastGameId: number = parseInt(localStorage.getItem('id') || '-1');
+        const token = Utils.getToken();
 
-        axios.post(`${API_URLS.IMAGE}/${lastGameId}`, screen).then(response => {
+        axios.post(`${API_URLS.IMAGE}/${lastGameId}?token=${token}`, screen).then(response => {
             localStorage.removeItem('id');
             setScreenSenderVisibility(Utils.getVisibilityOfElement(false));
             setIsSendingData(false);

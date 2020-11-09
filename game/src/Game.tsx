@@ -12,6 +12,7 @@ import {
 } from "./constants";
 import axios from "axios";
 import {Loader} from "./Loader";
+import { Api } from './Api';
 
 interface GameProps {
     computerMode: boolean,
@@ -135,8 +136,10 @@ export default class Game extends Component {
             'player_points': playerPoints,
             'computer_points': computerPoints
         }
+        const token = Utils.getToken();
+
         this.setState({isSendingData: true})
-        axios.post(API_URLS.GAMES, game).then(response => {
+        axios.post(`${API_URLS.GAMES}?token=${token}`, game).then(response => {
             this.setState({isSendingData: false});
             localStorage.setItem('id', response.data.lastGameId);
         }).catch(error => {

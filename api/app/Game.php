@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class Game extends Model
 {
@@ -62,6 +63,7 @@ class Game extends Model
             $game->save();
             return true;
         } catch (\Exception $e) {
+            //TODO usunac w tym miejscu zdjecie z dysku
             Log::info('save image failed: ' . $e->getMessage());
             return false;
         }

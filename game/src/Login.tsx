@@ -56,7 +56,7 @@ const Login: FunctionComponent<LoginProps> = ({history}) => {
                         <input className="form-control" name="value" type="password" value={password}
                             id='formInput' onChange={handleChangePassword}/>
                     </label><br/>
-                    <input style={{background: 'green'}} className="btn btn-primary" type="submit" value="Zaloguj się"/>
+                    <input className="btn btn-primary greenColor" type="submit" value="Zaloguj się"/>
                     <br/>
                 </form><br/>
                 <button className="btn btn-primary" onClick={() => history.push(PAGE_URLS.REGISTER)}>

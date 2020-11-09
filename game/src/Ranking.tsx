@@ -8,6 +8,7 @@ import Utils from "./Utils";
 import {Tr} from "./Tr";
 import {Loader} from "./Loader";
 import {withRouter, RouteComponentProps} from "react-router-dom";
+import {Api} from './Api';
 
 interface RankingProps extends RouteComponentProps<any> {}
 
@@ -20,7 +21,7 @@ const Ranking: FunctionComponent<RankingProps> = ({history}) => {
 
     function getGames(level: string): void {
         setIsLoadingData(true);
-        axios.get(`${API_URLS.GAMES}/${Utils.deletePolishSigns(level)}`).then(response => {
+        Api.get(`api/game/${Utils.deletePolishSigns(level)}`).then(response => {
             setGames(response.data.bestGames);
             setIsLoadingData(false);
             history.push(`${PAGE_URLS.RANKING}/${Utils.deletePolishSigns(level)}`);
