@@ -1,10 +1,5 @@
-export interface ObjectStrings { 
-    [key: string]: string 
-}
+import { ObjectStrings, ObjectNumbers } from "./interfaces";
 
-interface ObjectNumbers { 
-    [key: string]: number 
-}
 
 export const LEVELS: ObjectStrings = {
     EASY: 'łatwy',

@@ -7,7 +7,7 @@ class Engine {
     private currentCheckingY: number;
     private currentCheckingX: number;
     public allDisksToTurn: number[][];
-    private options: any[];
+    private options: number[][];
     constructor() {
         this.options = [];
         this.allDisksToTurn = [];

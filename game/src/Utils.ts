@@ -1,8 +1,9 @@
-import {ObjectStrings,
+import {
     BOARD_RANGE, EMPTY_FIELD,
     IMG_FIELDS_PATHS, PLAYERS,
     VISIBILITY_OF_ELEMENT
 } from "./constants";
+import { ObjectStrings } from "./interfaces";
 
 class Utils {
     static getChosenLevel(): string {

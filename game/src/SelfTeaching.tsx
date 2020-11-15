@@ -1,10 +1,6 @@
 import React, {FunctionComponent} from 'react'
 import Game from './Game'
-
-interface GameProps {
-    computerMode: boolean,
-    selfTeaching: boolean
-}
+import { GameProps } from './interfaces';
 
 export const SelfTeaching: FunctionComponent = () => {
     const gameProps: GameProps = {

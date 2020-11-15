@@ -3,6 +3,7 @@ import {PAGE_URLS, API_URLS} from "./constants";
 import axios from 'axios';
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Loader } from './Loader';
+import FormValidator from './FormValidator';
 
 interface LoginProps extends RouteComponentProps<any> {}
 
@@ -22,8 +23,13 @@ const Login: FunctionComponent<LoginProps> = ({history}) => {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
+
+        const formValidator: FormValidator = new FormValidator(password);
+        if (!formValidator.fieldsArentEmpty()) {
+            alert('Pole hasło jest puste!');
+            return;
+        }
         setIsLoading(true);
-        //TODO input validators
         const loginData: FormData = new FormData();
         loginData.append('email', email);
         loginData.append('password', password);
@@ -47,14 +53,14 @@ const Login: FunctionComponent<LoginProps> = ({history}) => {
                 <form id='nameForm' onSubmit={handleSubmit}><br/><br/>
                     <label className='labelForm'>
                         Email:<br/>
-                        <input className="form-control" name="value" type="text" value={email}
-                            id='formInput' onChange={handleChangeEmail}/>
+                        <input className="form-control" name="value" type="email" value={email}
+                            id='formInput' onChange={handleChangeEmail} required/>
                     </label><br/>
 
                     <label className='labelForm'>
                         Hasło:<br/>
                         <input className="form-control" name="value" type="password" value={password}
-                            id='formInput' onChange={handleChangePassword}/>
+                            id='formInput' onChange={handleChangePassword} required/>
                     </label><br/>
                     <input className="btn btn-primary greenColor" type="submit" value="Zaloguj się"/>
                     <br/>

@@ -9,7 +9,7 @@ class GameController {
     private strategies: Strategies;
     public engine: Engine;
     public gameState: GameState;
-    firstMove: boolean;
+    public firstMove: boolean;
     constructor(gameState: GameState) {
         this.strategies = new Strategies();
         this.engine = this.strategies.engine;
@@ -106,13 +106,13 @@ class GameController {
 
     makeMove(y: number, x: number, computerMode: boolean, chosenStrategy: string,
              callback: (newState: GameState, obj: Game) => void, obj: Game): void {
-        const newState = this.makeManualMove(y, x, computerMode);
+        const newState: GameState = this.makeManualMove(y, x, computerMode);
         this.gameState = newState;
         callback(newState, obj);
 
         if (computerMode && newState['canMove'] && !newState['computerBlock']) {
             setTimeout(() => {
-                const newState = this.makeAutomaticMove(chosenStrategy);
+                const newState: GameState = this.makeAutomaticMove(chosenStrategy);
                 this.gameState = newState;
                 callback(newState, obj);
             }, TIME_TO_WAIT_COMPUTER_MOVE);
