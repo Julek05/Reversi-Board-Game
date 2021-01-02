@@ -38,7 +38,7 @@ class JWTAuthController extends Controller
         ], 201);
     }
 
-    /*
+    /**
      * Get a JWT via given credentials.
      */
     public function login(Request $request) : JsonResponse

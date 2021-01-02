@@ -11,8 +11,8 @@ class GameController {
     public gameState: GameState;
     public firstMove: boolean;
     constructor(gameState: GameState) {
-        this.strategies = new Strategies();
-        this.engine = this.strategies.engine;
+        this.engine = new Engine();
+        this.strategies = new Strategies(this.engine);
         this.gameState = gameState;
         this.firstMove = false;
     }

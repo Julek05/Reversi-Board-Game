@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 final class GamesController extends Controller
 {
@@ -15,7 +16,7 @@ final class GamesController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function store(Request $request) : JsonResponse
+    public function store(Request $request): JsonResponse
     {
         try {
             $game = $request->all();
@@ -34,32 +35,32 @@ final class GamesController extends Controller
                 'message' => 'Błąd przy zapisie gry'
             ], 500);
         }
-        
+
         return response()->json([
             'lastGameId' => $lastGameId
         ], 200);
     }
 
-    private static function isEmptyPlayerNameField($playerName): bool
+    private static function isEmptyPlayerNameField(string|null $playerName): bool //TODO zmienic wersje php w composerze, zeby union types dzialalo
     {
         return $playerName === null || trim($playerName) === '';
     }
 
-    public function show(string $level) : JsonResponse
+    public function show(string $level): JsonResponse
     {
         return response()->json([
             'bestGames' => Game::getBestGames(Game::LEVELS_DICTIONARY[$level])
         ], 200);
     }
 
-    public function saveImage(Request $request, $lastGameId)
+    public function saveImage(Request $request, string $lastGameId): JsonResponse
     {
-        [$message, $status] = Game::saveImage($request->file('image'), intval($lastGameId)) 
+        [$message, $status] = Game::saveImage($request->file('image'), intval($lastGameId))
             ? ['Screen dodany prawidłowo', 200]
             : ['Błąd przy dodawaniu screena', 500];
 
         return response()->json([
             'message' => $message
-        ], $status); 
+        ], $status);
     }
 }

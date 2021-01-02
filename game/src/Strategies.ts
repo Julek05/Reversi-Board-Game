@@ -11,8 +11,8 @@ import {
 
 class Strategies {
     public engine: Engine;
-    constructor() {
-        this.engine = new Engine();
+    constructor(engine: Engine) {
+        this.engine = engine;
     }
 
     maximisationStrategy(board: number[][]): number[][] {

@@ -38,8 +38,8 @@ export default class Game extends Component {
     public state: State;
     public computerMode: boolean;
     public selfTeaching: boolean;
-    constructor(props: GameProps) {
-        super(props);
+    constructor({computerMode, selfTeaching}: GameProps) {
+        super({computerMode, selfTeaching});
         this.state = {
             actualBoard: INITIAL_BOARD,
             boards: [INITIAL_BOARD],
@@ -53,8 +53,8 @@ export default class Game extends Component {
         };
         const initialGameState: GameState = new GameState([INITIAL_BOARD], PLAYERS.SECOND_PLAYER, true, false);
         this.gameController = new GameController(initialGameState);
-        this.computerMode = props.computerMode;
-        this.selfTeaching = props.selfTeaching;
+        this.computerMode = computerMode;
+        this.selfTeaching = selfTeaching;
     }
 
     renderField(y: number, x: number, valueField: number): JSX.Element {

@@ -3,8 +3,7 @@ export interface GameProps {
     selfTeaching: boolean
 }
 
-
-export interface ObjectStrings { 
+export interface ObjectStrings {
     [key: string]: string 
 }
 
