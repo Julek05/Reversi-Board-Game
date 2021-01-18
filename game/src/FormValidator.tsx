@@ -1,7 +1,7 @@
 class FormValidator {
-    private password: string;
-    private passwordConfirmation: string|undefined;
-    private name: string|undefined;
+    private readonly password: string;
+    private readonly passwordConfirmation: string|undefined;
+    private readonly name: string|undefined;
 
     constructor(password: string, passwordConfirmation?: string, name?: string) {
         this.password = password;
@@ -15,14 +15,14 @@ class FormValidator {
 
     public fieldsArentEmpty(): boolean {
         if (this.name !== undefined && this.passwordConfirmation !== undefined) {
-            return this.isEmptyField(this.password) || this.isEmptyField(this.passwordConfirmation) ||
-                this.isEmptyField(this.name);
+            return FormValidator.isEmptyField(this.password) || FormValidator.isEmptyField(this.passwordConfirmation) ||
+                FormValidator.isEmptyField(this.name);
         }
 
-        return this.isEmptyField(this.password);
+        return FormValidator.isEmptyField(this.password);
     }
 
-    private isEmptyField(field: string|undefined): boolean {
+    private static isEmptyField(field: string|undefined): boolean {
         return field !== undefined ? field.trim() === '' : true;
     }
 

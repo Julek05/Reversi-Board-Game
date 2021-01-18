@@ -48,15 +48,13 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
             return;
         }
         setIsSendingData(true);
-        const lastGameId: string = localStorage.getItem('id') || '-1';
 
         const screen: FormData = new FormData();
         screen.append('image', image);
 
         const token = Utils.getToken();
 
-        axios.post(`${API_URLS.IMAGE}/${lastGameId}?token=${token}`, screen).then(response => {
-            localStorage.removeItem('id');
+        axios.post(`${API_URLS.IMAGE}?token=${token}`, screen).then(response => {
             setScreenSenderVisibility(Utils.getVisibilityOfElement(false));
             setIsSendingData(false);
         }).catch(error => {

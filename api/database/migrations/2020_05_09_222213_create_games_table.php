@@ -15,7 +15,6 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('player_name')->default('');
             $table->enum('level', ['easy', 'middle', 'hard']);
             $table->tinyInteger('player_points');
             $table->tinyInteger('computer_points');

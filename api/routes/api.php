@@ -21,5 +21,5 @@ Route::group([
 ], function ($router) {
     Route::post('game', [GamesController::class, 'store']);
     Route::get('game/{level}', [GamesController::class, 'show']);
-    Route::post('game/image/{lastGameId}', [GamesController::class, 'saveImage']);
+    Route::post('game/image', [GamesController::class, 'saveImage']);
 });

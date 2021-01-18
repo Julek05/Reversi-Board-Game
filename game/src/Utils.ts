@@ -126,6 +126,10 @@ class Utils {
     static getToken(): string|null {
         return localStorage.getItem('token');
     }
+
+    static clearToken(): void {
+        localStorage.removeItem('token');
+    }
 }
 
 export default Utils;

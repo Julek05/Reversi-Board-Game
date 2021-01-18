@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 
-class JWTAuthController extends Controller
+final class JWTAuthController extends Controller
 {
     public function __construct()
     {

@@ -18,6 +18,7 @@ const MainPage: FunctionComponent<MainPageProps> = ({history}) => {
         //jest problem tylko w przypadku wylogowaniu gdy token przesylany jest headerem, natomiast w url-u jest ok
         axios.post(`${API_URLS.LOGOUT}?token=${token}`).then(response => {
             history.push(PAGE_URLS.LOGIN);
+            Utils.clearToken();
             setIsLoading(false);
         }).catch(error => {
             setIsLoading(false);

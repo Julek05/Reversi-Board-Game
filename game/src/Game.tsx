@@ -27,7 +27,6 @@ interface State {
 }
 
 interface sendGame {
-    player_name: string|null,
     level: string,
     player_points: number,
     computer_points: number
@@ -126,7 +125,6 @@ export default class Game extends Component {
 
     sendGame(computerPoints: number, playerPoints: number): void {
         const game: sendGame = {
-            player_name: localStorage.getItem("player_name"),
             level: Utils.deletePolishSigns(Utils.getChosenLevel()),
             player_points: playerPoints,
             computer_points: computerPoints
@@ -136,7 +134,6 @@ export default class Game extends Component {
         this.setState({isSendingData: true})
         axios.post(`${API_URLS.GAMES}?token=${token}`, game).then(response => {
             this.setState({isSendingData: false});
-            localStorage.setItem('id', response.data.lastGameId);
         }).catch(error => {
             alert(error);
         });

@@ -25,7 +25,7 @@ const Login: FunctionComponent<LoginProps> = ({history}) => {
         event.preventDefault();
 
         const formValidator: FormValidator = new FormValidator(password);
-        if (!formValidator.fieldsArentEmpty()) {
+        if (formValidator.fieldsArentEmpty()) {
             alert('Pole hasło jest puste!');
             return;
         }

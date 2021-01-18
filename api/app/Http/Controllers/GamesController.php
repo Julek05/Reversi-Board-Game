@@ -21,29 +21,17 @@ final class GamesController extends Controller
         try {
             $game = $request->all();
             $game['level'] = Game::LEVELS_DICTIONARY[$game['level']];
-            $lastGameId = Game::getLastId();
 
-            if (self::isEmptyPlayerNameField($game['player_name'])) {
-                $game['player_name'] = Game::PLAYER_DEFAULT_NAME . (1 + $lastGameId);
-            }
-
-            $game['user_id'] = 1;
+            $game['user_id'] = auth()->id();
             Game::create($game);
         } catch (\Exception $e) {
-            Log::info('store game failed: ' . $e->getMessage());
+            Log::info("store game failed: {$e->getMessage()}");
             return response()->json([
                 'message' => 'Błąd przy zapisie gry'
             ], 500);
         }
 
-        return response()->json([
-            'lastGameId' => $lastGameId
-        ], 200);
-    }
-
-    private static function isEmptyPlayerNameField(string|null $playerName): bool //TODO zmienic wersje php w composerze, zeby union types dzialalo
-    {
-        return $playerName === null || trim($playerName) === '';
+        return response()->json();
     }
 
     public function show(string $level): JsonResponse
@@ -53,9 +41,9 @@ final class GamesController extends Controller
         ], 200);
     }
 
-    public function saveImage(Request $request, string $lastGameId): JsonResponse
+    public function saveImage(Request $request): JsonResponse
     {
-        [$message, $status] = Game::saveImage($request->file('image'), intval($lastGameId))
+        [$message, $status] = Game::saveImage($request->file('image'))
             ? ['Screen dodany prawidłowo', 200]
             : ['Błąd przy dodawaniu screena', 500];
 
