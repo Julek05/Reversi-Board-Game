@@ -37,7 +37,7 @@
     width: 400px;
 }
 
-#subpagesRow {
+.subpageRow {
     width: 600px;
     background-color: deepskyblue;
     color: whitesmoke;
@@ -46,7 +46,7 @@
     cursor: pointer;
 }
 
-#subpages {
+.subpages {
     color: coral;
     font-size: 22px;
     text-align: center;

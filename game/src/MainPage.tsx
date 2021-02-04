@@ -28,27 +28,27 @@ const MainPage: FunctionComponent<MainPageProps> = ({history}) => {
 
     return (
         isLoading
-        ? 
+        ?
             <Loader/>
         :
             <>
-                <div className="row" id="subpages">
+                <div className="row subpages">
                     <div className="list-group" id="list-tab" role="tablist">
-                        <Link className="list-group-item list-group-item-action" id="subpagesRow" data-toggle="list"
+                        <Link className="list-group-item list-group-item-action subpageRow" data-toggle="list"
                             to={PAGE_URLS.TWO_PLAYERS_MODE} role="tab" aria-controls="settings">{SUBPAGES.TWO_PLAYERS_MODE}</Link>
-                        <Link className="list-group-item list-group-item-action" id="subpagesRow" data-toggle="list"
+                        <Link className="list-group-item list-group-item-action subpageRow" data-toggle="list"
                             to={PAGE_URLS.COMPUTER_GAME} role="tab" aria-controls="messages">{SUBPAGES.COMPUTER_GAME}</Link>
-                        <Link className="list-group-item list-group-item-action" data-toggle="list" id="subpagesRow"
+                        <Link className="list-group-item list-group-item-action subpageRow" data-toggle="list"
                             to={PAGE_URLS.SELF_TEACHING} role="tab" aria-controls="profile">{SUBPAGES.SELF_TEACHING}</Link>
-                        <Link className="list-group-item list-group-item-action" id="subpagesRow"
+                        <Link className="list-group-item list-group-item-action subpageRow"
                             to={PAGE_URLS.RULES}>{SUBPAGES.RULES}</Link>
-                        <Link className="list-group-item list-group-item-action" id="subpagesRow"
+                        <Link className="list-group-item list-group-item-action subpageRow"
                             to={PAGE_URLS.ADVICES}>{SUBPAGES.ADVICES}</Link>
-                        <Link className="list-group-item list-group-item-action" id="subpagesRow"
+                        <Link className="list-group-item list-group-item-action subpageRow"
                             to={PAGE_URLS.RANKING}>{SUBPAGES.RANKING}</Link>
-                        <Link className="list-group-item list-group-item-action" id="subpagesRow"
+                        <Link className="list-group-item list-group-item-action subpageRow"
                             to={PAGE_URLS.PROFILE}>{SUBPAGES.PROFILE}</Link>
-                        <button className="list-group-item list-group-item-action greenColor" id="subpagesRow"
+                        <button className="list-group-item list-group-item-action greenColor subpageRow"
                             onClick={logout}>Wyloguj</button>
                     </div>
                 </div>

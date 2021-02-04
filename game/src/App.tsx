@@ -21,10 +21,10 @@ import { Profile } from './Profile';
 export const App: FunctionComponent = () => {
     return (
         <Router>
-            <div className="row" id="subpages">
+            <div className="row subpages">
                 <div className="list-group" id="list-tab" role="tablist">
                     <div>
-                        <Link className="list-group-item list-group-item-action" data-toggle="list" id="subpagesRow"
+                        <Link className="list-group-item list-group-item-action subpageRow" data-toggle="list"
                             style={{backgroundColor: "coral"}} to={PAGE_URLS.MAIN_PAGE} role="tab" aria-controls="profile">
                             {SUBPAGES.MAIN_PAGE}
                         </Link>
