@@ -7,6 +7,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -52,15 +53,20 @@ final class Game extends Model
 
     public static function saveImage(UploadedFile $image): bool
     {
+        DB::beginTransaction();
         try {
             $lastGameId = Game::getLastGameId(auth()->id());
 
             $imagePath = Storage::disk(self::BASE_UPLOAD_DIRECTORY)
                 ->put(self::UPLOAD_IMAGES_DIRECTORY, $image);
             self::where('id', $lastGameId)->update(['image_path' => $imagePath]);
+
+            DB::commit();
             return true;
         } catch (\Exception $e) {
-            //TODO usunac w tym miejscu zdjecie z dysku
+            DB::rollBack();
+            Storage::disk(self::BASE_UPLOAD_DIRECTORY)
+                ->delete(self::UPLOAD_IMAGES_DIRECTORY . '/' .  $image);
             Log::info("save image failed: {$e->getMessage()}");
             return false;
         }
