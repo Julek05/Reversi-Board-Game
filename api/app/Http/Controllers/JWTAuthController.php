@@ -64,7 +64,10 @@ final class JWTAuthController extends Controller
      */
     public function profile() : JsonResponse
     {
-        return response()->json(auth()->user());
+        return response()->json([
+            'user' => auth()->user(),
+            'games' => (new User())->getGamesForUser()
+        ]);
     }
 
     /**
