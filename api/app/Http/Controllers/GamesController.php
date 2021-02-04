@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Contracts\GameRepositoryInterface;
 use App\Game;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -11,19 +12,18 @@ use Illuminate\Support\Facades\Log;
 
 final class GamesController extends Controller
 {
-    public function __construct()
+    private GameRepositoryInterface $gameRepository;
+
+    public function __construct(GameRepositoryInterface $gameRepository)
     {
         $this->middleware('auth:api');
+        $this->gameRepository = $gameRepository;
     }
 
     public function store(Request $request): JsonResponse
     {
         try {
-            $game = $request->all();
-            $game['level'] = Game::LEVELS_DICTIONARY[$game['level']];
-
-            $game['user_id'] = auth()->id();
-            Game::create($game);
+            $this->gameRepository->create($request->all());
         } catch (\Exception $e) {
             Log::info("store game failed: {$e->getMessage()}");
             return response()->json([
@@ -37,13 +37,13 @@ final class GamesController extends Controller
     public function show(string $level): JsonResponse
     {
         return response()->json([
-            'bestGames' => Game::getBestGames(Game::LEVELS_DICTIONARY[$level])
+            'bestGames' => $this->gameRepository->getBestGames(Game::LEVELS_DICTIONARY[$level])
         ], 200);
     }
 
     public function saveImage(Request $request): JsonResponse
     {
-        [$message, $status] = Game::saveImage($request->file('image'))
+        [$message, $status] = $this->gameRepository->saveImage($request->file('image'))
             ? ['Screen dodany prawidłowo', 200]
             : ['Błąd przy dodawaniu screena', 500];
 
