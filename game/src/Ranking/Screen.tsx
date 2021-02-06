@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useState} from 'react';
 import Modal from 'react-modal';
 import Button from "react-bootstrap/Button";
-import {API_URLS} from "./constants";
+import {API_URLS} from "../Common/constants";
 
 Modal.setAppElement('#root');
 

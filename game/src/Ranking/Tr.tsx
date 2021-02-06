@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from "react";
 import {Screen} from "./Screen";
-import {LEVELS_DICTIONARY} from "./constants";
+import {LEVELS_DICTIONARY} from "../Common/constants";
 
 interface GameObjectType {
     id: number,

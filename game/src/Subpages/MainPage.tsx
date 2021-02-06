@@ -1,9 +1,9 @@
 import React, {FunctionComponent, useState} from 'react'
-import {IMAGES_FOLDER_PATH, MAIN_PAGE_IMAGES, PAGE_URLS, SUBPAGES, API_URLS} from "./constants";
+import {IMAGES_FOLDER_PATH, MAIN_PAGE_IMAGES, PAGE_URLS, SUBPAGES, API_URLS, VISIBILITY_OF_ELEMENT} from "../Common/constants";
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
-import { Loader } from './Loader';
-import Utils from "./Utils";
+import { Loader } from '../Common/Loader';
+import Utils from "../Common/Utils";
 
 interface MainPageProps extends RouteComponentProps<any> {}
 

@@ -6,22 +6,22 @@ import {
     Route,
     Link
 } from 'react-router-dom';
-import {PlayerGame} from './PlayerGame'
-import MainPage from './MainPage'
-import Rules from './Rules'
+import {PlayerGame} from './Subpages/PlayerGame'
+import MainPage from './Subpages/MainPage'
+import Rules from './Subpages/Rules'
 import {Advices} from './Advices'
-import {SelfTeaching} from './SelfTeaching'
-import {ComputerGame} from './ComputerGame'
-import Ranking from "./Ranking";
-import {PAGE_URLS, SUBPAGES} from "./constants";
-import Login from './Login';
-import Register from './Register';
-import { Profile } from './Profile';
+import {SelfTeaching} from './Subpages/SelfTeaching'
+import {ComputerGame} from './Subpages/ComputerGame'
+import Ranking from "./Ranking/Ranking";
+import {PAGE_URLS, SUBPAGES} from "./Common/constants";
+import Login from './User/Login';
+import Register from './User/Register';
+import { Profile } from './User/Profile';
 
 export const App: FunctionComponent = () => {
     return (
         <Router>
-            <div className="row subpages">
+            <div id="mainPageButton" className="row subpages">
                 <div className="list-group" id="list-tab" role="tablist">
                     <div>
                         <Link className="list-group-item list-group-item-action subpageRow" data-toggle="list"

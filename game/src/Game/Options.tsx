@@ -1,10 +1,10 @@
 import React, {FormEvent, FunctionComponent, useState} from 'react'
 import axios from "axios";
-import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "./constants";
-import Utils from "./Utils";
-import {Loader} from "./Loader";
-import ImageValidator from "./ImageValidator";
-import { ObjectStrings } from './interfaces';
+import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "../Common/constants";
+import Utils from "../Common/Utils";
+import {Loader} from "../Common/Loader";
+import ImageValidator from "../ImageValidator";
+import { ObjectStrings } from '../Common/interfaces';
 
 interface OptionsProps {
     scoredDisksFirstPlayer: number,

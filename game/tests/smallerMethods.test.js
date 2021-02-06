@@ -1,6 +1,6 @@
-import {PLAYERS} from "./constants";
+import {PLAYERS} from "../src/Common/constants";
 
-const Engine = require('./Engine');
+const Engine = require('../src/Game/Engine');
 const engine = new Engine();
 
 const testBoard1 = [

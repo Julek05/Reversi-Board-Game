@@ -2,12 +2,12 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {LEVELS, PAGE_URLS} from "./constants";
-import Utils from "./Utils";
+import {LEVELS, PAGE_URLS} from "../Common/constants";
+import Utils from "../Common/Utils";
 import {Tr} from "./Tr";
-import {Loader} from "./Loader";
+import {Loader} from "../Common/Loader";
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import {Api} from './Api';
+import {Api} from '../Common/Api';
 
 interface RankingProps extends RouteComponentProps<any> {}
 

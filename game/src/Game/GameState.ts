@@ -1,4 +1,4 @@
-import Utils from "./Utils";
+import Utils from "../Common/Utils";
 
 class GameState {
     public readonly boards: number[][][];

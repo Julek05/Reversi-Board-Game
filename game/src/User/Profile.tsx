@@ -1,8 +1,8 @@
 import React, {FunctionComponent, useState, useEffect} from "react";
-import {Api} from './Api';
-import { BASE_AUTH_URL } from "./constants";
-import { Loader } from "./Loader";
-import {Tr} from "./Tr";
+import {Api} from '../Common/Api';
+import { BASE_AUTH_URL } from "../Common/constants";
+import { Loader } from "../Common/Loader";
+import {Tr} from "../Ranking/Tr";
 import Table from "react-bootstrap/Table";
 
 export const Profile: FunctionComponent = () => {

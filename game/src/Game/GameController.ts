@@ -1,7 +1,7 @@
 import Strategies from "./Strategies";
 import GameState from "./GameState";
-import Utils from "./Utils";
-import {LEVELS, PLAYERS, TIME_TO_WAIT_COMPUTER_MOVE} from "./constants";
+import Utils from "../Common/Utils";
+import {LEVELS, PLAYERS, TIME_TO_WAIT_COMPUTER_MOVE} from "../Common/constants";
 import Engine from "./Engine";
 import Game from "./Game";
 

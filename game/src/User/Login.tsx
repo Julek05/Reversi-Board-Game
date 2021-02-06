@@ -1,8 +1,8 @@
-import React, {FormEvent, FunctionComponent, useState} from 'react';
-import {PAGE_URLS, API_URLS} from "./constants";
+import React, {FormEvent, FunctionComponent, useEffect, useState} from 'react';
+import {PAGE_URLS, API_URLS, VISIBILITY_OF_ELEMENT} from "../Common/constants";
 import axios from 'axios';
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { Loader } from './Loader';
+import { Loader } from '../Common/Loader';
 import FormValidator from './FormValidator';
 
 interface LoginProps extends RouteComponentProps<any> {}
@@ -12,6 +12,12 @@ const Login: FunctionComponent<LoginProps> = ({history}) => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    useEffect(() => hideMainPageButton(), []);
+
+    function hideMainPageButton(): void {
+        // @ts-ignore
+        document.querySelector('#mainPageButton').style.visibility = VISIBILITY_OF_ELEMENT.HIDDEN;
+    }
 
     function handleChangeEmail(event: FormEvent<HTMLInputElement>): void {
         setEmail(event.currentTarget.value);

@@ -2,17 +2,17 @@ import React, {Component} from 'react'
 import {Options} from "./Options";
 import GameController from "./GameController";
 import GameState from "./GameState";
-import Utils from "./Utils";
+import Utils from "../Common/Utils";
 import {Field} from "./Field";
 import {
     API_URLS,
     INITIAL_BOARD,
     PLAYERS,
     TIME_TO_WAIT_COMPUTER_MOVE
-} from "./constants";
+} from "../Common/constants";
 import axios from "axios";
-import {Loader} from "./Loader";
-import { GameProps } from './interfaces';
+import {Loader} from "../Common/Loader";
+import { GameProps } from '../Common/interfaces';
 
 interface State {
     actualBoard: number[][],

@@ -1,7 +1,7 @@
-import {PLAYERS} from "./constants";
+import {PLAYERS} from "../src/Common/constants";
 
-const GameController = require('./GameController');
-const GameState = require('./GameState');
+const GameController = require('../src/Game/GameController');
+const GameState = require('../src/Game/GameState');
 
 const testBoard = [
     [0, 0, 0, 0, 0, 0, 0, 0],

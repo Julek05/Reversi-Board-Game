@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react'
-import Game from './Game'
-import { GameProps } from './interfaces';
+import Game from '../Game/Game'
+import { GameProps } from '../Common/interfaces';
 
 export const ComputerGame: FunctionComponent = () => {
     const gameProps: GameProps = {

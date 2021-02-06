@@ -1,7 +1,7 @@
 import {
     BOARD_DIMENSIONS, EMPTY_FIELD, TURN_BUTTON_INFO,
-} from './constants';
-import Utils from "./Utils";
+} from '../Common/constants';
+import Utils from "../Common/Utils";
 
 class Engine {
     private currentCheckingY: number;

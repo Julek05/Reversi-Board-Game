@@ -1,5 +1,5 @@
 import Engine from "./Engine";
-import Utils from "./Utils";
+import Utils from "../Common/Utils";
 import {
     BOARD_DIMENSIONS, C_SQUARE_FIELDS,
     PLAYERS,
@@ -7,7 +7,7 @@ import {
     POINTS_FOR_X_SQUARE,
     VALUATING_BOARD,
     X_SQUARE_FIELDS
-} from "./constants";
+} from "../Common/constants";
 
 class Strategies {
     public engine: Engine;

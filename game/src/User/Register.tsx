@@ -1,9 +1,9 @@
 import React, {FormEvent, FunctionComponent, useState} from 'react';
-import {PAGE_URLS, API_URLS} from "./constants";
+import {PAGE_URLS, API_URLS} from "../Common/constants";
 import axios from 'axios';
 
 import {withRouter, RouteComponentProps} from "react-router-dom";
-import { Loader } from './Loader';
+import { Loader } from '../Common/Loader';
 import FormValidator from './FormValidator';
 interface RegisterProps extends RouteComponentProps<any> {}
 
