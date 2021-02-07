@@ -19,7 +19,7 @@ final class JWTAuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function register(Request $request) : JsonResponse
+    public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|between:2,100',
@@ -41,7 +41,7 @@ final class JWTAuthController extends Controller
     /**
      * Get a JWT via given credentials.
      */
-    public function login(Request $request) : JsonResponse
+    public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -62,7 +62,7 @@ final class JWTAuthController extends Controller
     /**
      * Get the authenticated User.
      */
-    public function profile() : JsonResponse
+    public function profile(): JsonResponse
     {
         return response()->json([
             'user' => auth()->user(),
@@ -73,7 +73,7 @@ final class JWTAuthController extends Controller
     /**
      * Log the user out (Invalidate the token).
      */
-    public function logout() : JsonResponse
+    public function logout(): JsonResponse
     {
         auth()->logout();
 
@@ -83,7 +83,7 @@ final class JWTAuthController extends Controller
     /**
      * Refresh a token.
      */
-    public function refresh() : JsonResponse
+    public function refresh(): JsonResponse
     {
         return $this->createNewToken(auth()->refresh());
     }
@@ -91,7 +91,7 @@ final class JWTAuthController extends Controller
     /**
      * Get the token array structure.
      */
-    protected function createNewToken(string $token) : JsonResponse
+    protected function createNewToken(string $token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,

@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react'
+import React, {FunctionComponent, useEffect, useState} from 'react'
 import {IMAGES_FOLDER_PATH, MAIN_PAGE_IMAGES, PAGE_URLS, SUBPAGES, API_URLS, VISIBILITY_OF_ELEMENT} from "../Common/constants";
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
@@ -10,12 +10,18 @@ interface MainPageProps extends RouteComponentProps<any> {}
 const MainPage: FunctionComponent<MainPageProps> = ({history}) => {
     const [isLoading, setIsLoading] = useState(false);
 
+    useEffect(() => showMainPageButton(), []);
+
+    function showMainPageButton(): void {
+        // @ts-ignore
+        document.querySelector('#mainPageButton').style.visibility = VISIBILITY_OF_ELEMENT.VISIBLE;
+    }
+
     function logout(event: any) {
         event.preventDefault();
         const token = Utils.getToken();
 
         setIsLoading(true);
-        //jest problem tylko w przypadku wylogowaniu gdy token przesylany jest headerem, natomiast w url-u jest ok
         axios.post(`${API_URLS.LOGOUT}?token=${token}`).then(response => {
             history.push(PAGE_URLS.LOGIN);
             Utils.clearToken();

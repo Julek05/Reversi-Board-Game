@@ -15,11 +15,11 @@ Route::group([
     Route::get('profile', [JWTAuthController::class, 'profile']);
 });
 
-
 Route::group([
-    'middleware' => 'api'
-], function ($router) {
-    Route::post('game', [GamesController::class, 'store']);
-    Route::get('game/{level}', [GamesController::class, 'show']);
-    Route::post('game/image', [GamesController::class, 'saveImage']);
+    'middleware' => 'api',
+    'prefix' => 'game'
+], function () {
+    Route::post('', [GamesController::class, 'store']);
+    Route::get('{level}', [GamesController::class, 'show']);
+    Route::put('', [GamesController::class, 'saveImage']);
 });
