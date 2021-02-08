@@ -2,7 +2,7 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {LEVELS, PAGE_URLS} from "../Common/constants";
+import {API_URLS, LEVELS, PAGE_URLS} from "../Common/constants";
 import Utils from "../Common/Utils";
 import {Tr} from "./Tr";
 import {Loader} from "../Common/Loader";
@@ -20,7 +20,7 @@ const Ranking: FunctionComponent<RankingProps> = ({history}) => {
 
     function getGames(level: string): void {
         setIsLoadingData(true);
-        Api.get(`api/game/${Utils.deletePolishSigns(level)}`).then(response => {
+        Api.get(`${API_URLS.GAMES}/${Utils.deletePolishSigns(level)}`).then(response => {
             setGames(response.data.bestGames);
             setIsLoadingData(false);
             history.push(`${PAGE_URLS.RANKING}/${Utils.deletePolishSigns(level)}`);

@@ -17,7 +17,7 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'game'
+    'prefix' => 'games'
 ], function () {
     Route::post('', [GamesController::class, 'store']);
     Route::get('{level}', [GamesController::class, 'show']);

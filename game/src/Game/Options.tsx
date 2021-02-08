@@ -1,10 +1,10 @@
 import React, {FormEvent, FunctionComponent, useState} from 'react'
-import axios from "axios";
 import {API_URLS, DISKS_IMAGES, IMAGES_FOLDER_PATH, LEVELS} from "../Common/constants";
 import Utils from "../Common/Utils";
 import {Loader} from "../Common/Loader";
 import ImageValidator from "../ImageValidator";
-import { ObjectStrings } from '../Common/interfaces';
+import {ObjectStrings} from '../Common/interfaces';
+import {Api} from '../Common/Api';
 
 interface OptionsProps {
     scoredDisksFirstPlayer: number,
@@ -50,11 +50,10 @@ export const Options: FunctionComponent<OptionsProps> = (props: OptionsProps) =>
         setIsSendingData(true);
 
         const screen: FormData = new FormData();
+        screen.append('_method', 'PUT');
         screen.append('image', image);
 
-        const token = Utils.getToken();
-
-        axios.post(`${API_URLS.IMAGE}?token=${token}`, screen).then(response => {
+        Api.post(API_URLS.GAMES, screen).then(response => {
             setScreenSenderVisibility(Utils.getVisibilityOfElement(false));
             setIsSendingData(false);
         }).catch(error => {

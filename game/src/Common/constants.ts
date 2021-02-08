@@ -49,8 +49,7 @@ export const BASE_AUTH_URL: string = 'api/auth';
 
 export const API_URLS: ObjectStrings = {
     UPLOADS: `${BASE_API_URL}/uploads`,
-    GAMES: `${BASE_API_URL}/api/game`,
-    IMAGE: `${BASE_API_URL}/api/game/image`,
+    GAMES: `${BASE_API_URL}/api/games`,
     REGISTER: `${BASE_API_URL}/${BASE_AUTH_URL}/register`,
     LOGIN: `${BASE_API_URL}/${BASE_AUTH_URL}/login`,
     LOGOUT: `${BASE_API_URL}/${BASE_AUTH_URL}/logout`,
