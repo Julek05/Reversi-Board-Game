@@ -6,6 +6,7 @@
 
 ## General info
 This project is a board game to play 1v1 or vs computer.<br/><br/>
+There are few computer difficulty levels based on implemented reversi game strategies.<br/><br/>
 Project is using Client - REST API Architecture.<br/><br/>
 Users are authenticated with JSON Web Token.
 
@@ -29,6 +30,7 @@ npm start
 Api:
 cd api
 composer install
+configure database and .env file
+php artisan migrate
 php artisan serve
 
-Also is needed to configure database and .env file.
