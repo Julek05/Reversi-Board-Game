@@ -31,13 +31,14 @@ class GameRepository implements GameRepositoryInterface
             ->get();
     }
 
-    public function getLastGameId($userId): int
+    public function getLastGameId(int $userId): ?int
     {
-        return $this->model->select('id')
+        $lastId = $this->model->select('id')
             ->where('user_id', $userId)
             ->orderByDesc('id')
-            ->firstOrFail()
-            ->id;
+            ->first();
+
+        return is_null($lastId) ? $lastId : $lastId->id;
     }
 
     public function saveImage(UploadedFile $image): bool

@@ -11,7 +11,7 @@ interface GameRepositoryInterface
 {
     public function getBestGames(string $level): Collection;
 
-    public function getLastGameId($userId): int;
+    public function getLastGameId(int $userId): ?int;
 
     public function saveImage(UploadedFile $image): bool;
 

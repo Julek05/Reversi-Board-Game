@@ -20,7 +20,7 @@ class UtilsTests
         User::factory()->create();
 
         foreach (Game::getLevelsEng() as $level) {
-            Game::factory()->count(13)->create(['level' => $level]);
+            Game::factory()->count(15)->create(['level' => $level]);
         }
     }
 
