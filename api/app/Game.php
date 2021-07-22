@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 final class Game extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'player_name',
         'level',
@@ -26,4 +29,9 @@ final class Game extends Model
         'sredni' => 'middle',
         'trudny' => 'hard'
     ];
+
+    public static function getLevelsEng(): array
+    {
+        return array_values(Game::LEVELS_DICTIONARY);
+    }
 }
