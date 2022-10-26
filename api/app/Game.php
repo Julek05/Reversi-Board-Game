@@ -12,7 +12,6 @@ final class Game extends Model
     use HasFactory;
 
     protected $fillable = [
-        'player_name',
         'level',
         'player_points',
         'computer_points',
@@ -24,14 +23,5 @@ final class Game extends Model
     public const UPLOAD_IMAGES_DIRECTORY = 'images';
     public const AMOUNT_OF_GAMES_TO_LEVEL = 10;
 
-    public const LEVELS_DICTIONARY = [
-        'latwy' => 'easy',
-        'sredni' => 'middle',
-        'trudny' => 'hard'
-    ];
-
-    public static function getLevelsEng(): array
-    {
-        return array_values(Game::LEVELS_DICTIONARY);
-    }
+    public const LEVELS = ['easy', 'middle', 'hard'];
 }

@@ -1,0 +1,114 @@
+{
+  "bestGames": [
+    {
+      "id": 11,
+      "level": "easy",
+      "player_points": 53,
+      "computer_points": 21,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 2,
+      "level": "easy",
+      "player_points": 32,
+      "computer_points": 5,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 14,
+      "level": "easy",
+      "player_points": 34,
+      "computer_points": 7,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 4,
+      "level": "easy",
+      "player_points": 22,
+      "computer_points": 9,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 3,
+      "level": "easy",
+      "player_points": 18,
+      "computer_points": 12,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 6,
+      "level": "easy",
+      "player_points": 56,
+      "computer_points": 51,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 12,
+      "level": "easy",
+      "player_points": 22,
+      "computer_points": 18,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 5,
+      "level": "easy",
+      "player_points": 52,
+      "computer_points": 52,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 1,
+      "level": "easy",
+      "player_points": 42,
+      "computer_points": 43,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    },
+    {
+      "id": 8,
+      "level": "easy",
+      "player_points": 41,
+      "computer_points": 48,
+      "image_path": "",
+      "user_id": 1,
+      "created_at": "2022-10-26T21:04:25.000000Z",
+      "updated_at": "2022-10-26T21:04:25.000000Z",
+      "user_name": "Ms. Alta Price"
+    }
+  ]
+}

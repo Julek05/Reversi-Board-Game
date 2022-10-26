@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 class Authenticate extends Middleware
 {
@@ -11,7 +12,7 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         if ($this->authenticate($request, $guards) === 'authentication_failed') {
-            return response()->json(['error'=>'Unauthorized'],400);
+            return response()->json(['error'=>'Unauthorized'],Response::HTTP_UNAUTHORIZED);
         }
         return $next($request);
     }

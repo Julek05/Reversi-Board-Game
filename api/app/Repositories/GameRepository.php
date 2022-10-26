@@ -64,8 +64,6 @@ class GameRepository implements GameRepositoryInterface
 
     public function create(array $game): void
     {
-        $game['level'] = Game::LEVELS_DICTIONARY[$game['level']];
-
         $game['user_id'] = auth()->id();
 
         $this->model->create($game);

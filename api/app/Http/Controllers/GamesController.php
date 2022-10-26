@@ -23,7 +23,10 @@ final class GamesController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $this->gameRepository->create($request->all());
+            $data = $request->all();
+            $data['image_path'] = $data['image_path'] ?? '';
+
+            $this->gameRepository->create($data);
         } catch (\Exception $e) {
             Log::info("store game failed: {$e->getMessage()}");
             return response()->json([
@@ -36,9 +39,7 @@ final class GamesController extends Controller
 
     public function show(string $level): JsonResponse
     {
-        return response()->json([
-            'bestGames' => $this->gameRepository->getBestGames(Game::LEVELS_DICTIONARY[$level])
-        ], 200);
+        return response()->json($this->gameRepository->getBestGames($level), 200);
     }
 
     public function saveImage(Request $request): JsonResponse
