@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\Validator;
 
 final class JWTAuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
-
     public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -38,9 +33,6 @@ final class JWTAuthController extends Controller
         ], 201);
     }
 
-    /**
-     * Get a JWT via given credentials.
-     */
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -59,9 +51,6 @@ final class JWTAuthController extends Controller
         return $this->createNewToken($token);
     }
 
-    /**
-     * Get the authenticated User.
-     */
     public function profile(): JsonResponse
     {
         return response()->json([
@@ -70,9 +59,6 @@ final class JWTAuthController extends Controller
         ]);
     }
 
-    /**
-     * Log the user out (Invalidate the token).
-     */
     public function logout(): JsonResponse
     {
         auth()->logout();
@@ -80,18 +66,12 @@ final class JWTAuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    /**
-     * Refresh a token.
-     */
     public function refresh(): JsonResponse
     {
         return $this->createNewToken(auth()->refresh());
     }
 
-    /**
-     * Get the token array structure.
-     */
-    protected function createNewToken(string $token): JsonResponse
+    private function createNewToken(string $token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,

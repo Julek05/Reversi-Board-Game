@@ -7,10 +7,6 @@ namespace App\Repositories;
 use App\Contracts\GameRepositoryInterface;
 use App\Game;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class GameRepository implements GameRepositoryInterface
 {
@@ -31,41 +27,8 @@ class GameRepository implements GameRepositoryInterface
             ->get();
     }
 
-    public function getLastGameId(int $userId): ?int
-    {
-        $lastId = $this->model->select('id')
-            ->where('user_id', $userId)
-            ->orderByDesc('id')
-            ->first();
-
-        return is_null($lastId) ? $lastId : $lastId->id;
-    }
-
-    public function saveImage(UploadedFile $image): bool
-    {
-        DB::beginTransaction();
-        try {
-            $lastGameId = $this->getLastGameId(auth()->id());
-
-            $imagePath = Storage::disk(Game::BASE_UPLOAD_DIRECTORY)
-                ->put(Game::UPLOAD_IMAGES_DIRECTORY, $image);
-            $this->model->where('id', $lastGameId)->update(['image_path' => $imagePath]);
-
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Storage::disk(Game::BASE_UPLOAD_DIRECTORY)
-                ->delete(Game::UPLOAD_IMAGES_DIRECTORY . '/' .  $image);
-            Log::info("save image failed: {$e->getMessage()}");
-            return false;
-        }
-    }
-
     public function create(array $game): void
     {
-        $game['user_id'] = auth()->id();
-
-        $this->model->create($game);
+        $this->model->create(array_merge($game, ['user_id' => auth()->id()]));
     }
 }

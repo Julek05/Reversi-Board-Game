@@ -16,7 +16,7 @@ class BestGamesTest extends TestCase
         $user = UtilsTests::initDatabase();
 
         foreach (Game::LEVELS as $level) {
-            $response = $this->actingAs($user)->get("/api/games/$level");
+            $response = $this->actingAs($user)->get("/api/games?level=$level");
 
             $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
 
@@ -31,7 +31,7 @@ class BestGamesTest extends TestCase
         $user = UtilsTests::initDatabase();
 
         foreach (Game::LEVELS as $level) {
-            $response = $this->actingAs($user)->get("/api/games/$level");
+            $response = $this->actingAs($user)->get("/api/games?level=$level");
 
             $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
 
@@ -50,7 +50,7 @@ class BestGamesTest extends TestCase
         $user = UtilsTests::initDatabase();
 
         foreach (Game::LEVELS as $level) {
-            $response = $this->actingAs($user)->get("/api/games/$level");
+            $response = $this->actingAs($user)->get("/api/games?level=$level");
 
             $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
 

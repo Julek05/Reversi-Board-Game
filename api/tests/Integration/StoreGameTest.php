@@ -16,21 +16,22 @@ class StoreGameTest extends TestCase
         DB::setDefaultConnection(UtilsTests::TESTING_DB_CONNECTION_NAME);
         $user = User::factory()->create();
 
-        $fillable = (new Game())->getFillable();
-
-        $values = ['easy', 20, 17, '', 1];
-
-        $gameToStore = array_combine($fillable, $values);
+        $gameToStore = [
+            'level' => 'easy',
+            'player_points' => 20,
+            'computer_points' => 17
+        ];
 
         $response = $this->actingAs($user)->postJson("/api/games", $gameToStore);
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
 
-        $game = Game::select('level', 'player_points', 'computer_points', 'image_path', 'user_id')
+        $game = Game::select('level', 'player_points', 'computer_points', 'user_id')
+            ->where('user_id', '=', $user->id)
             ->firstOrFail()
             ->toArray();
 
-        $this->assertSame($gameToStore, $game);
+        $this->assertSame(array_merge($gameToStore, ['user_id' => $user->id]), $game);
 
         UtilsTests::clearDatabase();
     }
